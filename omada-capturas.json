@@ -1,0 +1,1573 @@
+{
+  "timestamp": "2026-09-08T18:19:32.120Z",
+  "method": "GET",
+  "url": "/?clientMac=3E-1D-EF-D0-BC-66&clientIp=192.168.99.7&t=1788891533&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "3E-1D-EF-D0-BC-66",
+    "clientIp": "192.168.99.7",
+    "t": "1788891533",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "cache-control": "max-age=0",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7",
+    "if-none-match": "W/\"92b-3NUhKMsIZExy6lR3VabtXZy7oos\""
+  }
+},
+{
+  "timestamp": "2026-09-08T18:23:28.643Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.3&t=1788891418&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.3",
+    "t": "1788891418",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"806-ejP4tAWw12MyTGH5pb7pGwDhMVo\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-08T18:28:54.798Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.3&t=1788891418&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.3",
+    "t": "1788891418",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"5be-ZT0fCE8xvTit5C7186Wuvi1fVbA\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-08T20:24:22.593Z",
+  "method": "GET",
+  "url": "/?clientMac=96-08-E8-67-E0-45&clientIp=192.168.99.8&t=1788899040&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "96-08-E8-67-E0-45",
+    "clientIp": "192.168.99.8",
+    "t": "1788899040",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-08T20:24:26.323Z",
+  "method": "GET",
+  "url": "/?clientMac=96-08-E8-67-E0-45&clientIp=192.168.99.8&t=1788899040&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "96-08-E8-67-E0-45",
+    "clientIp": "192.168.99.8",
+    "t": "1788899040",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "cache-control": "max-age=0",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7",
+    "if-none-match": "W/\"655-pqUwq4ZlwO4rrfuK1DwjoZBM7j4\""
+  }
+},
+{
+  "timestamp": "2026-09-08T20:28:46.456Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.3&t=1788899304&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.3",
+    "t": "1788899304",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-08T20:30:03.438Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.3&t=1788899381&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.3",
+    "t": "1788899381",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-08T20:30:09.557Z",
+  "method": "GET",
+  "url": "/?clientMac=3E-1D-EF-D0-BC-66&clientIp=192.168.99.7&t=1788899387&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "3E-1D-EF-D0-BC-66",
+    "clientIp": "192.168.99.7",
+    "t": "1788899387",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-09T15:59:10.205Z",
+  "method": "GET",
+  "url": "/",
+  "query": {},
+  "headers": {
+    "host": "localhost:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-09T17:47:41.812Z",
+  "method": "GET",
+  "url": "/",
+  "query": {},
+  "headers": {
+    "host": "localhost:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "if-none-match": "W/\"425-R/sE4qo/wSi2nKmfFS2lL9bE6QE\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-09T18:22:40.229Z",
+  "method": "GET",
+  "url": "/",
+  "query": {},
+  "headers": {
+    "host": "localhost:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "if-none-match": "W/\"461-IQdtLj5gaN/Ou5f9g5ne0w80Y6w\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-09T20:39:09.924Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.3&t=1788986329&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.3",
+    "t": "1788986329",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-09T20:41:18.092Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.3&t=1788986458&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.3",
+    "t": "1788986458",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-09T20:43:25.557Z",
+  "method": "GET",
+  "url": "/?clientMac=3E-1D-EF-D0-BC-66&clientIp=192.168.99.11&t=1788986582&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "3E-1D-EF-D0-BC-66",
+    "clientIp": "192.168.99.11",
+    "t": "1788986582",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-09T20:43:53.508Z",
+  "method": "GET",
+  "url": "/?clientMac=3E-1D-EF-D0-BC-66&clientIp=192.168.99.11&t=1788986613&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "3E-1D-EF-D0-BC-66",
+    "clientIp": "192.168.99.11",
+    "t": "1788986613",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-09T20:53:08.009Z",
+  "method": "GET",
+  "url": "/?clientMac=3E-1D-EF-D0-BC-66&clientIp=192.168.99.11&t=1788987167&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "3E-1D-EF-D0-BC-66",
+    "clientIp": "192.168.99.11",
+    "t": "1788987167",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.3:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T16:10:10.334Z",
+  "method": "GET",
+  "url": "/?clientMac=96-08-E8-67-E0-45&clientIp=192.168.99.3&t=1789056588&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "96-08-E8-67-E0-45",
+    "clientIp": "192.168.99.3",
+    "t": "1789056588",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T16:10:27.665Z",
+  "method": "GET",
+  "url": "/?clientMac=96-08-E8-67-E0-45&clientIp=192.168.99.3&t=1789056605&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "96-08-E8-67-E0-45",
+    "clientIp": "192.168.99.3",
+    "t": "1789056605",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T16:10:31.342Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789056609&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789056609",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T16:12:16.681Z",
+  "method": "GET",
+  "url": "/?clientMac=3E-1D-EF-D0-BC-66&clientIp=192.168.99.2&t=1789056711&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "3E-1D-EF-D0-BC-66",
+    "clientIp": "192.168.99.2",
+    "t": "1789056711",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T16:16:53.038Z",
+  "method": "GET",
+  "url": "/?clientMac=62-8B-41-EA-1E-8A&clientIp=192.168.99.4&t=1789056983&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.google.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "62-8B-41-EA-1E-8A",
+    "clientIp": "192.168.99.4",
+    "t": "1789056983",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.google.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 16; motorola edge 60 fusion Build/W1VCS36H.14-20-19-7; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://www.google.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T17:38:16.644Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789061874&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789061874",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:07:08.587Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789063606&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789063606",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:16:43.501Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789064181&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789064181",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:30:55.691Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065033&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065033",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:30:58.423Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065033&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065033",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "cache-control": "max-age=0",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7",
+    "if-none-match": "W/\"cb0-S2cpjEVVpswewRNFKkYkxGaHn/s\""
+  }
+},
+{
+  "timestamp": "2026-09-10T18:31:08.668Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065033&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065033",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "cache-control": "max-age=0",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7",
+    "if-none-match": "W/\"cb0-S2cpjEVVpswewRNFKkYkxGaHn/s\""
+  }
+},
+{
+  "timestamp": "2026-09-10T18:31:59.220Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065097&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065097",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:32:32.479Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065097&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065097",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:35:39.461Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065097&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065097",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:35:40.011Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065097&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065097",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:35:53.029Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065331&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065331",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:37:40.366Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065438&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065438",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:39:19.759Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789065438&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789065438",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:45:05.332Z",
+  "method": "GET",
+  "url": "/",
+  "query": {}
+},
+{
+  "timestamp": "2026-09-10T18:46:57.918Z",
+  "method": "GET",
+  "url": "/",
+  "query": {}
+},
+{
+  "timestamp": "2026-09-10T18:48:16.762Z",
+  "method": "GET",
+  "url": "/",
+  "query": {},
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"43-u2gsgDps1LflbdcRtEeJeqG9Spw\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T18:55:20.252Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789066498&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789066498",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:23:28.630Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071786&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071786",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:23:28.696Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071786&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071786",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"ce8-P3tm1L8qALbzxPmN32QfgEc78hs\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:23:34.546Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071792&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071792",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:23:34.971Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071793&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071793",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:24:11.159Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071793&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071793",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:24:12.177Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071793&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071793",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:24:13.136Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071793&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071793",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:24:35.431Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789071853&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789071853",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:24:59.650Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071877&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071877",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:25:07.119Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071885&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071885",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:25:49.318Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071885&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071885",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:25:50.379Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071885&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071885",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:25:51.160Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071885&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071885",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:26:00.225Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789071938&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789071938",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:27:14.405Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071885&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071885",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:27:16.157Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789072014&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789072014",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:27:42.144Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789071885&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789071885",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"cf1-Y3jm9IoCqcT8IaSM8LfN9UmhNyI\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:28:02.012Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.7&t=1789072060&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.7",
+    "t": "1789072060",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:28:31.595Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789072089&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789072089",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-10T20:28:34.427Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.12&t=1789072092&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Ffirefox-portal-detection.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.12",
+    "t": "1789072092",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://firefox-portal-detection.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.12:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://firefox-portal-detection.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-14T16:01:34.458Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.13&t=1789401674&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.13",
+    "t": "1789401674",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-14T16:01:36.705Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789401676&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.google.com%2Fgen_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789401676",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.google.com/gen_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://www.google.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-14T16:02:25.886Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.13&t=1789401726&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.13",
+    "t": "1789401726",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-14T16:02:38.501Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.13&t=1789401726&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.13",
+    "t": "1789401726",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "if-none-match": "W/\"ce8-P3tm1L8qALbzxPmN32QfgEc78hs\"",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-14T16:03:01.767Z",
+  "method": "GET",
+  "url": "/?clientMac=40-C2-BA-4B-04-BF&clientIp=192.168.99.13&t=1789401762&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "40-C2-BA-4B-04-BF",
+    "clientIp": "192.168.99.13",
+    "t": "1789401762",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "referer": "http://www.msftconnecttest.com/",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-14T16:33:20.034Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789403579&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789403579",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-14T19:00:11.013Z",
+  "method": "GET",
+  "url": "/",
+  "query": {},
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "es-MX,es;q=0.9,en-US;q=0.8",
+    "accept-encoding": "gzip, deflate",
+    "sec-gpc": "1",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "priority": "u=0, i"
+  }
+},
+{
+  "timestamp": "2026-09-14T20:35:27.685Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.18&t=1789418108&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&gatewayMac=60-83-E7-F8-4B-D5&vid=99",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.18",
+    "t": "1789418108",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "gatewayMac": "60-83-E7-F8-4B-D5",
+    "vid": "99"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://connectivitycheck.gstatic.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-14T20:36:04.909Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.18&t=1789418167&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.18",
+    "t": "1789418167",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.13:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.13:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.18&t=1789418167&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
