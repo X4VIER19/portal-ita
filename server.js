@@ -2,6 +2,9 @@ const express = require("express");
 const fs = require("fs");
 require("dotenv").config();
 
+const pool = require("./services/database");
+const bcrypt = require("bcrypt");
+
 const { testAPI, authClient, unauthClient } = require("./services/omada");
 
 const app = express();
@@ -17,8 +20,6 @@ const USUARIOS_PRUEBA = [
         password: "12345678"
     }
 ];
-
-const sesionesActivas = {};
 
 function guardarRequest(req) {
     const data = {
@@ -128,6 +129,49 @@ app.get("/", (req, res) => {
     `);
 });
 
+async function buscarUsuarioPorCorreo(correo) {
+    const [rows] = await pool.query(
+        `SELECT id, nombre, apellido, correo, contrasena_hash, rol, activo
+         FROM usuarios
+         WHERE correo = ?
+         LIMIT 1`,
+        [correo]
+    );
+
+    return rows[0] || null;
+}
+
+async function buscarSesionActiva(usuarioId) {
+    const [rows] = await pool.query(
+        `SELECT usuario_id, mac, autorizado_en
+         FROM sesiones_activas
+         WHERE usuario_id = ?
+         LIMIT 1`,
+        [usuarioId]
+    );
+
+    return rows[0] || null;
+}
+
+async function guardarSesionActiva(usuarioId, mac) {
+    await pool.query(
+        `INSERT INTO sesiones_activas (usuario_id, mac)
+         VALUES (?, ?)
+         ON DUPLICATE KEY UPDATE
+             mac = VALUES(mac),
+             autorizado_en = CURRENT_TIMESTAMP`,
+        [usuarioId, mac]
+    );
+}
+
+async function eliminarSesionActiva(usuarioId) {
+    await pool.query(
+        `DELETE FROM sesiones_activas
+         WHERE usuario_id = ?`,
+        [usuarioId]
+    );
+}
+
 // Valida credenciales y aplica la regla de 1 MAC por usuario.
 app.post("/login", async (req, res) => {
     const { correo, password, clientMac } = req.body;
@@ -136,38 +180,61 @@ app.post("/login", async (req, res) => {
         return res.status(400).json({ ok: false, mensaje: "Faltan datos." });
     }
 
-    const usuario = USUARIOS_PRUEBA.find(u => u.correo === correo);
+    const usuario = await buscarUsuarioPorCorreo(correo);
     if (!usuario) {
         return res.json({ ok: false, mensaje: "Usuario no encontrado." });
     }
 
-    // Validación en texto plano (sin bcrypt) -- SOLO PRUEBA, corregir antes de BD real
-    if (password !== usuario.password) {
+    if (!usuario.activo) {
+        return res.json({ ok: false, mensaje: "La cuenta está desactivada." });
+    }
+
+    const passwordCorrecta = await bcrypt.compare(
+        password,
+        usuario.contrasena_hash
+    );
+
+    if (!passwordCorrecta) {
         return res.json({ ok: false, mensaje: "Contraseña incorrecta." });
     }
 
-    // --- Lógica de 1 MAC por usuario ---
-    const sesionPrevia = sesionesActivas[correo];
+    // --- Lógica de 1 MAC por usuario usando MySQL ---
+    const sesionPrevia = await buscarSesionActiva(usuario.id);
 
     if (sesionPrevia && sesionPrevia.mac !== clientMac) {
-        console.log(`Usuario ${correo} cambia de MAC: ${sesionPrevia.mac} -> ${clientMac}`);
-        await unauthClient(sesionPrevia.mac);
-    } else if (sesionPrevia && sesionPrevia.mac === clientMac) {
-        console.log(`Usuario ${correo} vuelve a loguearse desde la misma MAC.`);
+        console.log(
+            `Usuario ${correo} cambia de MAC: ${sesionPrevia.mac} -> ${clientMac}`
+        );
+
+        const resultadoUnauth = await unauthClient(sesionPrevia.mac);
+
+        if (resultadoUnauth.errorCode !== 0) {
+            console.error(
+                `No se pudo desautorizar la MAC anterior ${sesionPrevia.mac}:`,
+                resultadoUnauth
+            );
+
+            return res.json({
+                ok: false,
+                mensaje: "No se pudo cerrar la sesión anterior."
+            });
+        }
     }
 
     const resultado = await authClient(clientMac);
 
     if (resultado.errorCode !== 0) {
-        return res.json({ ok: false, mensaje: "Error al autorizar: " + resultado.msg });
+        return res.json({
+            ok: false,
+            mensaje: "Error al autorizar: " + resultado.msg
+        });
     }
 
-    sesionesActivas[correo] = {
-        mac: clientMac,
-        autorizadoEn: new Date().toISOString()
-    };
+    await guardarSesionActiva(usuario.id, clientMac);
 
-    console.log("Sesiones activas actuales:", sesionesActivas);
+    console.log(
+        `Sesión activa: usuario ${usuario.id} (${correo}) -> ${clientMac}`
+    );
 
     res.json({ ok: true, mensaje: "Acceso concedido." });
 });

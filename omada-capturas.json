@@ -1571,3 +1571,347 @@
     "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
   }
 },
+{
+  "timestamp": "2026-09-15T17:34:42.134Z",
+  "method": "GET",
+  "url": "/",
+  "query": {},
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "user-agent": "curl/8.21.0",
+    "accept": "*/*"
+  }
+},
+{
+  "timestamp": "2026-09-15T17:37:39.338Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789493863&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789493863",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.14:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789493863&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-15T17:47:14.747Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789494438&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.google.com%2Fgen_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789494438",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.google.com/gen_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.14:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789494438&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.google.com%2Fgen_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-15T19:23:49.810Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789500201&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789500201",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://192.168.99.14:3000/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789500201&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5"
+  }
+},
+{
+  "timestamp": "2026-09-15T19:23:54.750Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789500201&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789500201",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "cache-control": "max-age=0",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://192.168.99.14:3000/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789500201&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5",
+    "if-none-match": "W/\"ce8-jOANfj5Xi01dENeUtQhbF6bdoS4\""
+  }
+},
+{
+  "timestamp": "2026-09-15T19:32:48.466Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789500772&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789500772",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.14:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789500772&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-15T19:33:22.321Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789500805&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789500805",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://192.168.99.14:3000/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789500805&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5"
+  }
+},
+{
+  "timestamp": "2026-09-15T19:34:16.070Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789500860&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789500860",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.14:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789500860&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-15T19:44:23.044Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789501466&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789501466",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://192.168.99.14:3000/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789501466&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5"
+  }
+},
+{
+  "timestamp": "2026-09-15T20:17:28.955Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789501466&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789501466",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://192.168.99.14:3000/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789501466&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5"
+  }
+},
+{
+  "timestamp": "2026-09-15T20:17:41.126Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789503465&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789503465",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://www.msftconnecttest.com/",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5"
+  }
+},
+{
+  "timestamp": "2026-09-15T20:18:35.295Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789503519&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789503519",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.14:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789503519&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
+{
+  "timestamp": "2026-09-15T20:19:07.178Z",
+  "method": "GET",
+  "url": "/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789503548&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+  "query": {
+    "clientMac": "2C-33-7A-2E-55-8B",
+    "clientIp": "192.168.99.6",
+    "t": "1789503548",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://www.msftconnecttest.com/redirect",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "0"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "referer": "http://192.168.99.14:3000/?clientMac=2C-33-7A-2E-55-8B&clientIp=192.168.99.6&t=1789503548&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=0",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-419,es;q=0.9,es-ES;q=0.8,en;q=0.7,en-GB;q=0.6,en-US;q=0.5"
+  }
+},
+{
+  "timestamp": "2026-09-15T20:20:12.475Z",
+  "method": "GET",
+  "url": "/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789503616&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+  "query": {
+    "clientMac": "1A-58-B2-46-4A-67",
+    "clientIp": "192.168.99.2",
+    "t": "1789503616",
+    "site": "6633facd77043a4df21a5038",
+    "redirectUrl": "http://connectivitycheck.gstatic.com/generate_204",
+    "apMac": "48-22-54-E8-3C-18",
+    "ssidName": "Portal_Docentes_Prueba",
+    "radioId": "1"
+  },
+  "headers": {
+    "host": "192.168.99.14:3000",
+    "connection": "keep-alive",
+    "upgrade-insecure-requests": "1",
+    "user-agent": "Mozilla/5.0 (Linux; Android 15; 23028RA60L Build/AQ3A.240829.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.199 Mobile Safari/537.36",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "x-requested-with": "com.google.android.captiveportallogin",
+    "referer": "http://192.168.99.14:3000/?clientMac=1A-58-B2-46-4A-67&clientIp=192.168.99.2&t=1789503616&site=6633facd77043a4df21a5038&redirectUrl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&apMac=48-22-54-E8-3C-18&ssidName=Portal_Docentes_Prueba&radioId=1",
+    "accept-encoding": "gzip, deflate",
+    "accept-language": "es-US,es;q=0.9,en-US;q=0.8,en;q=0.7"
+  }
+},
