@@ -1,0 +1,24 @@
+CREATE DATABASE IF NOT EXISTS portal_ita CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE portal_ita;
+
+CREATE TABLE usuarios (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    correo VARCHAR(150) NOT NULL,
+    contrasena_hash VARCHAR(255) NOT NULL,
+    rol ENUM('admin', 'docente', 'alumno') NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_usuarios_correo (correo)
+);
+
+CREATE TABLE sesiones_activas (
+    usuario_id BIGINT UNSIGNED PRIMARY KEY,
+    mac VARCHAR(17) NOT NULL,
+    autorizado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_sesiones_mac (mac),
+    CONSTRAINT fk_sesiones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+);
