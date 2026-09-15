@@ -41,6 +41,7 @@ data/
 *.swp
 .DS_Store
 Thumbs.db
+omada-capturas.json
 
 
 # ==============================
