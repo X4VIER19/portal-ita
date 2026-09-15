@@ -8,18 +8,12 @@ const client = axios.create({
     })
 });
 
-// Estado del token en memoria (simple para laboratorio; en producción
-// conviene persistirlo, ej. en un archivo o base de datos, para no
-// perderlo si el proceso se reinicia).
 let tokenState = {
     accessToken: null,
     refreshToken: null,
-    expiresAt: 0 // timestamp en ms
+    expiresAt: 0
 };
 
-/**
- * Obtiene un access token nuevo usando Client Credentials mode.
- */
 async function obtenerToken() {
     try {
         const response = await client.post(
@@ -44,7 +38,6 @@ async function obtenerToken() {
         tokenState = {
             accessToken,
             refreshToken,
-            // Restamos 60s de margen para refrescar antes de que expire de verdad
             expiresAt: Date.now() + (expiresIn - 60) * 1000
         };
 
@@ -63,10 +56,6 @@ async function obtenerToken() {
     }
 }
 
-/**
- * Usa el refresh token para obtener un access token nuevo sin
- * volver a autenticar desde cero.
- */
 async function refrescarToken() {
     try {
         const response = await client.post(
@@ -101,16 +90,10 @@ async function refrescarToken() {
 
     } catch (error) {
         console.log("ERROR AL REFRESCAR TOKEN, intentando obtener uno nuevo desde cero");
-        // Si el refresh token también expiró (14 días), hay que reautenticar
         return obtenerToken();
     }
 }
 
-/**
- * Devuelve un access token válido, obteniéndolo o refrescándolo
- * automáticamente según haga falta. Úsalo antes de cualquier
- * llamada a la API de Omada.
- */
 async function getValidToken() {
     if (!tokenState.accessToken) {
         return obtenerToken();
@@ -121,10 +104,6 @@ async function getValidToken() {
     return tokenState.accessToken;
 }
 
-/**
- * Prueba de conexión autenticada: pide el listado de sites,
- * que sí requiere token válido (a diferencia de /openapi/info).
- */
 async function testAPI() {
     try {
         const token = await getValidToken();
@@ -154,10 +133,6 @@ async function testAPI() {
     }
 }
 
-/**
- * Autoriza a un cliente (le da internet) dado su MAC.
- * Formato esperado de mac: AA-BB-CC-DD-EE-FF (con guiones).
- */
 async function authClient(clientMac) {
     try {
         const token = await getValidToken();
@@ -166,12 +141,8 @@ async function authClient(clientMac) {
 
         const response = await client.post(
             `/openapi/v1/${omadacId}/sites/${siteId}/hotspot/clients/${clientMac}/auth`,
-            null, // no requiere body
-            {
-                headers: {
-                    "Authorization": `AccessToken=${token}`
-                }
-            }
+            null,
+            { headers: { "Authorization": `AccessToken=${token}` } }
         );
 
         console.log(`AUTH -> ${clientMac}:`, response.data);
@@ -190,9 +161,6 @@ async function authClient(clientMac) {
     }
 }
 
-/**
- * Desautoriza a un cliente (le quita internet) dado su MAC.
- */
 async function unauthClient(clientMac) {
     try {
         const token = await getValidToken();
@@ -202,11 +170,7 @@ async function unauthClient(clientMac) {
         const response = await client.post(
             `/openapi/v1/${omadacId}/sites/${siteId}/hotspot/clients/${clientMac}/unauth`,
             null,
-            {
-                headers: {
-                    "Authorization": `AccessToken=${token}`
-                }
-            }
+            { headers: { "Authorization": `AccessToken=${token}` } }
         );
 
         console.log(`UNAUTH -> ${clientMac}:`, response.data);
