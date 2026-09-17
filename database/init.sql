@@ -22,3 +22,10 @@ CREATE TABLE sesiones_activas (
     UNIQUE KEY uq_sesiones_mac (mac),
     CONSTRAINT fk_sesiones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
 );
+
+CREATE TABLE sessions (
+    session_id VARCHAR(128) COLLATE utf8mb4_bin NOT NULL,
+    expires INT(11) UNSIGNED NOT NULL,
+    data MEDIUMTEXT COLLATE utf8mb4_bin,
+    PRIMARY KEY (session_id)
+) ENGINE = InnoDB;

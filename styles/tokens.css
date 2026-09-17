@@ -1,71 +1,51 @@
 :root {
-  /* ===== Principales ===== */
+  /* ===== Marca ===== */
   --color-marca-primario: #1B396A;
   --color-marca-primario-rgb: 27, 57, 106;
   --color-marca-primario-hover: #2C4F8C;
   --color-marca-secundario: #0F2547;
 
-  /* Sidebar */
-  --color-sidebar-fondo: #0A1220;
-  --color-sidebar-texto: #ffffff;
-  --color-sidebar-texto-tenue: #8FA0C4;
+  /* ===== Sidebar ===== */
+  --color-sidebar-fondo: #09111F;
+  --color-sidebar-superficie: #101A2B;
+  --color-sidebar-borde: rgba(255, 255, 255, 0.055);
+
+  --color-sidebar-texto: #F5F7FB;
+  --color-sidebar-texto-tenue: #8493B1;
+
+  --color-sidebar-hover: rgba(255, 255, 255, 0.045);
   --color-sidebar-activo: #1B396A;
+  --color-sidebar-activo-hover: #24477F;
+  --color-sidebar-activo-brillo: rgba(27, 57, 106, 0.35);
 
-  /* Topbar */
+  /* ===== Topbar ===== */
   --color-topbar-fondo: #131B2E;
-  --color-topbar-borde: #223252;
+  --color-topbar-borde: rgba(255, 255, 255, 0.06);
 
-  /* Fondos y superficies */
-  --color-fondo-app: #0D1526;
+  /* ===== Aplicación ===== */
+  --color-fondo-app: #0A1120;
   --color-superficie: #131B2E;
   --color-borde: #223252;
 
-  /* Texto */
+  /* ===== Texto ===== */
   --color-texto-titulo: #F3F5FA;
   --color-texto-titulo-rgb: 243, 245, 250;
   --color-texto-normal: #D3D9E6;
   --color-texto-tenue: #8B96AE;
 
-  /* Estados / badges (ajustados para contraste sobre fondo oscuro) */
+  /* ===== Estados ===== */
   --color-exito: #4FB477;
   --color-exito-fondo: rgba(79, 180, 119, 0.16);
+
   --color-info: #5E9BE8;
   --color-info-fondo: rgba(94, 155, 232, 0.16);
+
   --color-peligro: #E8814D;
   --color-peligro-fondo: rgba(232, 129, 77, 0.16);
 
-  /* Utilidad */
+  /* ===== Utilidad ===== */
   --radio-base: 8px;
   --color-fondo-panel: var(--color-superficie);
-}
-
-/* ===== Tema claro (secundario) ===== */
-[data-theme="light"] {
-  --color-marca-primario-hover: #163055;
-
-  --color-sidebar-fondo: #1B396A;
-  --color-sidebar-texto: #ffffff;
-  --color-sidebar-texto-tenue: #B7C6E2;
-  --color-sidebar-activo: #0F2547;
-
-  --color-topbar-fondo: #ffffff;
-  --color-topbar-borde: #e0e0e0;
-
-  --color-fondo-app: #f5f6f8;
-  --color-superficie: #ffffff;
-  --color-borde: #e2e5ea;
-
-  --color-texto-titulo: #0F2547;
-  --color-texto-titulo-rgb: 15, 37, 71;
-  --color-texto-normal: #333333;
-  --color-texto-tenue: #757575;
-
-  --color-exito: #2E7D4F;
-  --color-exito-fondo: #e5f3ea;
-  --color-info: #1B396A;
-  --color-info-fondo: #e6ecf5;
-  --color-peligro: #C6540E;
-  --color-peligro-fondo: #fdece0;
 }
 
 /* Transición suave al cambiar de tema */

@@ -1,0 +1,79 @@
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header" title="Portal Cautivo">
+        <div class="sidebar-logo">
+            <span>ITA</span>
+        </div>
+        <div class="sidebar-marca-texto">
+            <span class="sidebar-marca-titulo">Portal Cautivo</span>
+            <span class="sidebar-marca-sub">Instituto Tecnológico de Altamira</span>
+        </div>
+    </div>
+    <div class="sidebar-scroll">
+        <div class="sidebar-seccion">
+            <span class="sidebar-seccion-titulo">
+                Administración
+            </span>
+                <a href="/admin/inicio"
+                class="sidebar-link <%= activo === 'inicio' ? 'activo' : '' %>"
+                title="Inicio">
+                <span class="sidebar-link-icon">
+                    <i class="ph ph-squares-four"></i>
+                </span>
+                <span class="sidebar-link-texto">
+                    Inicio
+                </span>
+            </a>
+            <a
+                href="/admin/usuarios"
+                class="sidebar-link <%= activo === 'usuarios' ? 'activo' : '' %>"
+                title="Usuarios">
+                <span class="sidebar-link-icon">
+                    <i class="ph ph-users-three"></i>
+                </span>
+                <span class="sidebar-link-texto">
+                    Usuarios
+                </span>
+            </a>
+            <a
+                href="/admin/sesiones"
+                class="sidebar-link <%= activo === 'sesiones' ? 'activo' : '' %>"
+                title="Sesiones activas">
+                <span class="sidebar-link-icon">
+                    <i class="ph ph-wifi-high"></i>
+                </span>
+                <span class="sidebar-link-texto">
+                    Sesiones activas
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="sidebar-bottom">
+        <a
+            href="/admin/logout"
+            class="sidebar-link sidebar-link-salir"
+            title="Cerrar sesión">
+            <span class="sidebar-link-icon">
+                <i class="ph ph-sign-out"></i>
+            </span>
+
+            <span class="sidebar-link-texto">
+                Cerrar sesión
+            </span>
+        </a>
+    </div>
+
+    <div class="sidebar-perfil">
+        <div class="sidebar-avatar">
+            <%= admin.nombre.charAt(0).toUpperCase() %><%= admin.apellido.charAt(0).toUpperCase() %>
+        </div>
+        <div class="sidebar-perfil-info">
+            <span class="sidebar-perfil-nombre">
+                <%= admin.nombre %> <%= admin.apellido %>
+            </span>
+            <span class="sidebar-perfil-rol">
+                Administrador
+            </span>
+        </div>
+    </div>
+</nav>

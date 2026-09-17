@@ -6,6 +6,7 @@ require("dotenv").config();
 const portalRoutes = require("./routes/portal.routes");
 const adminRoutes = require("./routes/admin.routes");
 const errorHandler = require("./middleware/errorHandler");
+const sessionStore = require("./services/sessionStore");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,9 +19,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/styles", express.static(path.join(__dirname, "styles")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use('/icons/phosphor',
+    express.static(
+        path.join(__dirname, 'node_modules/@phosphor-icons/web')
+    )
+);
 
 app.use(session({
     secret: process.env.SESSION_SECRET || "cambia_esto",
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {

@@ -1,12 +1,76 @@
 <%- include('../partials/head', { titulo: 'Inicio' }) %>
+
 <body>
+
     <style>
-        body { background: var(--color-fondo-app); padding: 2rem; }
-        h1 { color: var(--color-texto-titulo); }
-        p { color: var(--color-texto-tenue); }
+        .inicio-presentacion {
+            max-width: 700px;
+            padding: 34px;
+            border: 1px solid var(--color-borde);
+            border-radius: 14px;
+            background: linear-gradient(135deg,
+                    rgba(27, 57, 106, 0.14),
+                    rgba(27, 57, 106, 0.025));
+        }
+
+        .inicio-etiqueta {
+            display: inline-flex;
+            padding: 5px 9px;
+            border-radius: 6px;
+            background-color: rgba(27, 57, 106, 0.18);
+            color: #6F9CDA;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .inicio-presentacion h2 {
+            margin: 16px 0 8px;
+            color: var(--color-texto-titulo);
+            font-size: 27px;
+            font-weight: 650;
+            letter-spacing: -0.025em;
+        }
+
+        .inicio-presentacion p {
+            margin: 0;
+            color: var(--color-texto-tenue);
+            font-size: 14px;
+        }
+
+        .inicio-presentacion strong {
+            color: var(--color-texto-normal);
+            font-weight: 600;
+        }
     </style>
 
-    <h1>Bienvenido, <%= nombre %> <%= apellido %></h1>
-    <p>Rol: <%= rol %></p>
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'inicio',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', {
+                tituloSeccion: 'Inicio'
+            }) %>
+
+            <main class="contenido-pagina">
+                <section class="inicio-presentacion">
+                    <span class="inicio-etiqueta">
+                        Panel de administración
+                    </span>
+                    <h2>
+                        Bienvenido, <%= nombre %>
+                    </h2>
+                    <p>
+                        Has iniciado sesión como
+                        <strong><%= rol %></strong>.
+                    </p>
+                </section>
+            </main>
+        </div>
+    </div>
 </body>
 </html>
