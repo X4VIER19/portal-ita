@@ -1,8 +1,6 @@
 const bcrypt = require("bcrypt");
 
 const { buscarUsuarioPorCorreo } = require("../services/usuarios.service");
-const { paginaLoginAdmin } = require("../views/admin/loginPage");
-const { paginaInicioAdmin } = require("../views/admin/inicioPage");
 
 // GET /admin -> redirige según si ya hay sesión o no.
 function raizAdmin(req, res) {
@@ -14,7 +12,7 @@ function raizAdmin(req, res) {
 
 // GET /admin/login
 function mostrarLogin(req, res) {
-    res.send(paginaLoginAdmin());
+    res.render("admin/login", { error: null });
 }
 
 // POST /admin/login
@@ -22,22 +20,22 @@ async function login(req, res) {
     const { correo, password } = req.body;
 
     if (!correo || !password) {
-        return res.send(paginaLoginAdmin({ error: "Faltan datos." }));
+        return res.render("admin/login", { error: "Faltan datos." });
     }
 
     const usuario = await buscarUsuarioPorCorreo(correo);
 
     if (!usuario || usuario.rol !== "admin") {
-        return res.send(paginaLoginAdmin({ error: "Credenciales inválidas." }));
+        return res.render("admin/login", { error: "Credenciales inválidas." });
     }
 
     if (!usuario.activo) {
-        return res.send(paginaLoginAdmin({ error: "La cuenta está desactivada." }));
+        return res.render("admin/login", { error: "La cuenta está desactivada." });
     }
 
     const passwordCorrecta = await bcrypt.compare(password, usuario.contrasena_hash);
     if (!passwordCorrecta) {
-        return res.send(paginaLoginAdmin({ error: "Credenciales inválidas." }));
+        return res.render("admin/login", { error: "Credenciales inválidas." });
     }
 
     req.session.admin = {
@@ -59,7 +57,7 @@ function logout(req, res) {
 
 // GET /admin/inicio (protegida por middleware requiereAdmin)
 function inicio(req, res) {
-    res.send(paginaInicioAdmin(req.session.admin));
+    res.render("admin/inicio", req.session.admin);
 }
 
 module.exports = {

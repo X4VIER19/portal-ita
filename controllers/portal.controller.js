@@ -7,7 +7,6 @@ const {
     buscarSesionActiva,
     guardarSesionActiva
 } = require("../services/usuarios.service");
-const { paginaSinMac, paginaLogin } = require("../views/portalPage");
 
 function guardarRequest(req) {
     const data = {
@@ -34,10 +33,10 @@ function mostrarPortal(req, res) {
     const { clientMac, redirectUrl } = req.query;
 
     if (!clientMac) {
-        return res.send(paginaSinMac());
+        return res.render("portal/sinMac");
     }
 
-    res.send(paginaLogin({ clientMac, redirectUrl }));
+    res.render("portal/login", { clientMac, redirectUrl });
 }
 
 // POST /login -> Valida credenciales y aplica la regla de 1 MAC por usuario.

@@ -1,11 +1,9 @@
 :root {
-  /* ===== Marca (invariante entre temas) ===== */
+  /* ===== Principales ===== */
   --color-marca-primario: #1B396A;
   --color-marca-primario-rgb: 27, 57, 106;
   --color-marca-primario-hover: #2C4F8C;
   --color-marca-secundario: #0F2547;
-
-  /* ===== Tema oscuro (PRINCIPAL / default) ===== */
 
   /* Sidebar */
   --color-sidebar-fondo: #0A1220;

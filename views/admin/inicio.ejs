@@ -1,0 +1,12 @@
+<%- include('../partials/head', { titulo: 'Inicio' }) %>
+<body>
+    <style>
+        body { background: var(--color-fondo-app); padding: 2rem; }
+        h1 { color: var(--color-texto-titulo); }
+        p { color: var(--color-texto-tenue); }
+    </style>
+
+    <h1>Bienvenido, <%= nombre %> <%= apellido %></h1>
+    <p>Rol: <%= rol %></p>
+</body>
+</html>

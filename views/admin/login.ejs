@@ -1,0 +1,201 @@
+<%- include('../partials/head', { titulo: 'Iniciar Sesión' }) %>
+<body>
+    <style>
+        body {
+            background-image:
+                linear-gradient(160deg, rgba(8,14,26,0.92) 0%, rgba(8,14,26,0.80) 60%, rgba(8,14,26,0.90) 100%),
+                url('/assets/fondo_ITA.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .marca-superior { text-align: center; margin-bottom: 1.75rem; }
+
+        .marca-superior .sigla {
+            font-size: 0.8rem;
+            letter-spacing: 0.03em;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0.3rem;
+        }
+
+        .marca-superior .titulo {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.92);
+        }
+
+        .login-card {
+            background: rgba(19, 27, 46, 0.42);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            width: 100%;
+            max-width: 400px;
+            padding: 2.75rem 2.25rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+        }
+
+        .login-card h1 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+
+        .login-card .subtitulo {
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.75rem;
+        }
+
+        .error-box {
+            background: rgba(232, 129, 77, 0.18);
+            color: #ff9d76;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            text-align: center;
+            border: 1px solid rgba(232, 129, 77, 0.3);
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .input-wrapper input::placeholder { color: rgba(255, 255, 255, 0.30); }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--color-marca-primario-hover);
+            box-shadow: 0 0 0 3px rgba(var(--color-marca-primario-rgb), 0.30);
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .input-wrapper input:-webkit-autofill,
+        .input-wrapper input:-webkit-autofill:hover,
+        .input-wrapper input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #ffffff;
+            -webkit-box-shadow: 0 0 0px 1000px rgba(10, 14, 24, 0.55) inset;
+            box-shadow: 0 0 0px 1000px rgba(10, 14, 24, 0.55) inset;
+            transition: background-color 9999s ease-in-out 0s;
+            caret-color: #ffffff;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            transition: color 0.15s ease;
+        }
+
+        .toggle-password:hover { color: #ffffff; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--color-marca-primario);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.97rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.25rem;
+            transition: background-color 0.15s ease;
+        }
+
+        .btn-submit:hover { background: var(--color-marca-primario-hover); }
+    </style>
+
+    <div class="marca-superior">
+        <p class="sigla">Instituto Tecnológico de Altamira</p>
+        <p class="titulo">Panel de administración — Portal Cautivo</p>
+    </div>
+
+    <div class="login-card">
+        <h1>Iniciar sesión</h1>
+        <p class="subtitulo">Accede con tu cuenta de administrador</p>
+
+        <form method="POST" action="/admin/login">
+            <% if (error) { %>
+                <div class="error-box"><%= error %></div>
+            <% } %>
+
+            <div class="form-group">
+                <label for="correo">Usuario</label>
+                <div class="input-wrapper">
+                    <input id="correo" name="correo" type="text" placeholder="usuario" required autofocus>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="input-wrapper">
+                    <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" required>
+                    <button type="button" class="toggle-password" id="toggleBtn" aria-label="Mostrar contraseña">
+                        <svg id="eye-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const eyeIcon = document.getElementById('eye-icon');
+
+        toggleBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            if (type === 'text') {
+                eyeIcon.innerHTML = '<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"/>';
+            } else {
+                eyeIcon.innerHTML = '<path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" stroke-linecap="round" stroke-linejoin="round"/>';
+            }
+        });
+    </script>
+</body>
+</html>
