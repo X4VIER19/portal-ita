@@ -1,0 +1,147 @@
+<%- include('../partials/head', { titulo: 'Sesiones activas' }) %>
+<body>
+    <style>
+        .aviso {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-peligro-fondo);
+            color: var(--color-peligro);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radio-base);
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .tabla-panel {
+            background: var(--color-superficie);
+            border: 1px solid var(--color-borde);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+
+        thead th {
+            text-align: left;
+            padding: 0.85rem 1.25rem;
+            color: var(--color-texto-tenue);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        tbody td {
+            padding: 0.9rem 1.25rem;
+            border-bottom: 1px solid var(--color-borde);
+            color: var(--color-texto-normal);
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+
+        .mac { font-family: monospace; font-size: 0.85rem; color: var(--color-texto-tenue); }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-activo { background: var(--color-exito-fondo); color: var(--color-exito); }
+        .badge-expirado { background: var(--color-peligro-fondo); color: var(--color-peligro); }
+        .badge-sin_registro { background: rgba(139, 150, 174, 0.16); color: var(--color-texto-tenue); }
+        .badge-desconocido { background: rgba(139, 150, 174, 0.16); color: var(--color-texto-tenue); }
+
+        .btn-desconectar {
+            background: none;
+            border: 1px solid var(--color-peligro);
+            color: var(--color-peligro);
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radio-base);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .btn-desconectar:hover { background: var(--color-peligro-fondo); }
+
+        .vacio {
+            padding: 2.5rem;
+            text-align: center;
+            color: var(--color-texto-tenue);
+        }
+    </style>
+
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'sesiones',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'Sesiones activas' }) %>
+
+            <main class="contenido-pagina">
+                <% if (omadaError) { %>
+                    <div class="aviso">
+                        <i class="ph ph-warning"></i>
+                        No se pudo verificar el estado en vivo con Omada. Se muestra únicamente
+                        la información guardada localmente.
+                    </div>
+                <% } %>
+
+                <div class="tabla-panel">
+                    <% if (sesiones.length === 0) { %>
+                        <div class="vacio">No hay sesiones activas en este momento.</div>
+                    <% } else { %>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>MAC</th>
+                                    <th>Autorizado desde</th>
+                                    <th>Estado en Omada</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% sesiones.forEach(s => { %>
+                                    <tr>
+                                        <td>
+                                            <%= s.nombre %> <%= s.apellido %><br>
+                                            <span class="mac"><%= s.correo %></span>
+                                        </td>
+                                        <td class="mac"><%= s.mac %></td>
+                                        <td><%= new Date(s.autorizado_en).toLocaleString('es-MX') %></td>
+                                        <td>
+                                            <span class="badge badge-<%= s.estadoOmada %>">
+                                                <%
+                                                    const etiquetas = {
+                                                        activo: 'Activo',
+                                                        expirado: 'Expirado en Omada',
+                                                        sin_registro: 'Sin registro',
+                                                        desconocido: 'Sin verificar'
+                                                    };
+                                                %>
+                                                <%= etiquetas[s.estadoOmada] %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <form method="POST" action="/admin/sesiones/<%= s.usuario_id %>/desconectar">
+                                                <input type="hidden" name="mac" value="<%= s.mac %>">
+                                                <button type="submit" class="btn-desconectar">Desconectar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

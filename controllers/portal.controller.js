@@ -123,9 +123,7 @@ async function testOmada(req, res) {
 
 // GET /oauth/callback
 function oauthCallback(req, res) {
-    console.log("\n================================");
-    console.log("OAUTH CALLBACK RECIBIDO");
-    console.log("================================");
+    console.log("=== OAUTH CALLBACK RECIBIDO ===");
     console.log("Query:", req.query);
     console.log("================================\n");
 

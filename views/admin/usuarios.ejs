@@ -1,0 +1,158 @@
+<%- include('../partials/head', { titulo: 'Usuarios' }) %>
+<body>
+    <style>
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-nuevo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.1rem;
+            background: var(--color-marca-primario);
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radio-base);
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .btn-nuevo:hover { background: var(--color-marca-primario-hover); }
+
+        .tabla-panel {
+            background: var(--color-superficie);
+            border: 1px solid var(--color-borde);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem, table-layout: fixed; }
+
+        thead th:nth-child(1) { width: 25%; }
+        thead th:nth-child(2) { width: 25%; }
+        thead th:nth-child(3) { width: 15%; }
+        thead th:nth-child(5) { width: 18%; }
+        thead th:nth-child(4) { width: 17%; }
+
+        thead th {
+            text-align: left;
+            padding: 0.85rem 1.25rem;
+            color: var(--color-texto-tenue);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        tbody td {
+            padding: 0.9rem 1.25rem;
+            border-bottom: 1px solid var(--color-borde);
+            color: var(--color-texto-normal);
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-rol-admin { background: var(--color-info-fondo); color: var(--color-info); }
+        .badge-rol-docente { background: rgba(79, 180, 119, 0.16); color: var(--color-exito); }
+        .badge-rol-alumno { background: rgba(232, 129, 77, 0.16); color: var(--color-peligro); }
+
+        .badge-activo { background: var(--color-exito-fondo); color: var(--color-exito); }
+        .badge-inactivo { background: var(--color-peligro-fondo); color: var(--color-peligro); }
+
+        .btn-toggle {
+            display: inline-block;
+            background: none;
+            border: 1px solid var(--color-borde);
+            color: var(--color-texto-tenue);
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radio-base);
+            font-size: 0.8rem;
+            text-decoration: none;
+            margin-right: 0.4rem;
+            cursor: pointer;
+        }
+
+        .btn-toggle:hover { border-color: var(--color-marca-primario-hover); color: var(--color-texto-normal); }
+
+        .vacio {
+            padding: 2.5rem;
+            text-align: center;
+            color: var(--color-texto-tenue);
+        }
+
+        tbody td:last-child {
+            text-align: right;
+        }
+    </style>
+
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'usuarios',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'Usuarios' }) %>
+
+            <main class="contenido-pagina">
+                <div class="toolbar">
+                    <a href="/admin/usuarios/nuevo" class="btn-nuevo">
+                        <i class="ph ph-plus"></i> Nuevo usuario
+                    </a>
+                </div>
+
+                <div class="tabla-panel">
+                    <% if (usuarios.length === 0) { %>
+                        <div class="vacio">Todavía no hay usuarios registrados.</div>
+                    <% } else { %>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% usuarios.forEach(u => { %>
+                                    <tr>
+                                        <td><%= u.nombre %> <%= u.apellido %></td>
+                                        <td><%= u.correo %></td>
+                                        <td><span class="badge badge-rol-<%= u.rol %>"><%= u.rol %></span></td>
+                                        <td>
+                                            <span class="badge <%= u.activo ? 'badge-activo' : 'badge-inactivo' %>">
+                                                <%= u.activo ? 'Activo' : 'Inactivo' %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/usuarios/editar/<%= u.id %>" class="btn-toggle">Editar</a>
+                                            <form method="POST" action="/admin/usuarios/<%= u.id %>/toggle" style="display:inline;">
+                                                <button type="submit" class="btn-toggle">
+                                                    <%= u.activo ? 'Desactivar' : 'Activar' %>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

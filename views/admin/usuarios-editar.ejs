@@ -1,0 +1,167 @@
+<%- include('../partials/head', { titulo: 'Editar usuario' }) %>
+<body>
+    <style>
+        .form-panel {
+            max-width: 480px;
+            background: var(--color-superficie);
+            border: 1px solid var(--color-borde);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .campo { margin-bottom: 1.1rem; }
+
+        .campo label {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--color-texto-tenue);
+            margin-bottom: 0.4rem;
+        }
+
+        .campo input, .campo select {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            background: var(--color-fondo-app);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-base);
+            color: var(--color-texto-normal);
+            font-size: 0.92rem;
+        }
+
+        .campo input:focus, .campo select:focus {
+            outline: none;
+            border-color: var(--color-marca-primario-hover);
+            box-shadow: 0 0 0 3px rgba(var(--color-marca-primario-rgb), 0.25);
+        }
+
+        .campo-ayuda {
+            font-size: 0.78rem;
+            color: var(--color-texto-tenue);
+            margin-top: 0.35rem;
+        }
+
+        .campo-password-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .campo-password-wrapper input { flex: 1; }
+
+        .btn-generar {
+            white-space: nowrap;
+            padding: 0 0.9rem;
+            background: var(--color-fondo-app);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-base);
+            color: var(--color-texto-normal);
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+
+        .btn-generar:hover { border-color: var(--color-marca-primario-hover); }
+
+        .btn-guardar {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--color-marca-primario);
+            color: #fff;
+            border: none;
+            border-radius: var(--radio-base);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .btn-guardar:hover { background: var(--color-marca-primario-hover); }
+
+        .error-box {
+            background: var(--color-peligro-fondo);
+            color: var(--color-peligro);
+            padding: 0.7rem 0.9rem;
+            border-radius: var(--radio-base);
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 1.25rem;
+            color: var(--color-texto-tenue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .volver:hover { color: var(--color-texto-normal); }
+    </style>
+
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'usuarios',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'Editar usuario' }) %>
+
+            <main class="contenido-pagina">
+                <a href="/admin/usuarios" class="volver">&larr; Volver a usuarios</a>
+
+                <div class="form-panel">
+                    <% if (error) { %>
+                        <div class="error-box"><%= error %></div>
+                    <% } %>
+
+                    <form method="POST" action="/admin/usuarios/editar/<%= valores.id %>">
+                        <div class="campo">
+                            <label for="nombre">Nombre</label>
+                            <input id="nombre" name="nombre" type="text" value="<%= valores.nombre || '' %>" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="apellido">Apellido</label>
+                            <input id="apellido" name="apellido" type="text" value="<%= valores.apellido || '' %>" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="correo">Correo</label>
+                            <input id="correo" name="correo" type="text" value="<%= valores.correo || '' %>" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="rol">Rol</label>
+                            <select id="rol" name="rol" required>
+                                <option value="">Selecciona un rol</option>
+                                <option value="docente" <%= valores.rol === 'docente' ? 'selected' : '' %>>Docente</option>
+                                <option value="alumno" <%= valores.rol === 'alumno' ? 'selected' : '' %>>Alumno</option>
+                                <option value="admin" <%= valores.rol === 'admin' ? 'selected' : '' %>>Admin</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="contrasena">Nueva contraseña</label>
+                            <div class="campo-password-wrapper">
+                                <input id="contrasena" name="contrasena" type="text" placeholder="Dejar en blanco para no cambiarla">
+                                <button type="button" class="btn-generar" onclick="generarPassword()">Generar aleatoria</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-guardar">Guardar cambios</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function generarPassword() {
+            const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+            let resultado = "";
+            for (let i = 0; i < 12; i++) {
+                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            document.getElementById("contrasena").value = resultado;
+        }
+    </script>
+</body>
+</html>

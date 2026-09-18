@@ -189,9 +189,41 @@ async function unauthClient(clientMac) {
     }
 }
 
+async function listarAuthedRecords() {
+    try {
+        const token = await getValidToken();
+        const siteId = process.env.OMADA_SITE_ID;
+        const omadacId = process.env.OMADA_OMADAC_ID;
+
+        const response = await client.get(
+            `/openapi/v1/${omadacId}/sites/${siteId}/hotspot/authed-records`,
+            {
+                params: { page: 1, pageSize: 200 },
+                headers: { "Authorization": `AccessToken=${token}` }
+            }
+        );
+
+        if (response.data.errorCode !== 0) {
+            throw new Error(`Omada error: ${response.data.msg}`);
+        }
+
+        return response.data.result.data;
+    } catch (error) {
+        console.log("ERROR AL LISTAR AUTHED-RECORDS");
+        if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+        } else {
+            console.log(error.message);
+        }
+        throw error;
+    }
+}
+
 module.exports = {
     testAPI,
     getValidToken,
     authClient,
-    unauthClient
+    unauthClient,
+    listarAuthedRecords
 };
