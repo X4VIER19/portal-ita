@@ -21,5 +21,6 @@ router.post("/usuarios/editar/:id", requiereAdmin, asyncHandler(adminController.
 
 router.get("/sesiones", requiereAdmin, asyncHandler(adminController.mostrarSesiones));
 router.post("/sesiones/:usuarioId/desconectar", requiereAdmin, asyncHandler(adminController.desconectarSesion));
+router.post("/sesiones/sincronizar", requiereAdmin, asyncHandler(adminController.sincronizarSesionesManual));
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 
-const { authClient, unauthClient, testAPI } = require("../services/omada");
+const { authClient, unauthClient, unauthEfectivo, testAPI } = require("../services/omada");
 const {
     buscarUsuarioPorCorreo,
     buscarSesionActiva,
@@ -67,9 +67,14 @@ async function login(req, res) {
         console.log(`Usuario ${correo} cambia de MAC: ${sesionPrevia.mac} -> ${clientMac}`);
 
         const resultadoUnauth = await unauthClient(sesionPrevia.mac);
-        if (resultadoUnauth.errorCode !== 0) {
+
+        if (!unauthEfectivo(resultadoUnauth)) {
             console.error(`No se pudo desautorizar la MAC anterior ${sesionPrevia.mac}:`, resultadoUnauth);
             return res.json({ ok: false, mensaje: "No se pudo cerrar la sesión anterior." });
+        }
+
+        if (resultadoUnauth.errorCode !== 0) {
+            console.log(`Unauth de ${sesionPrevia.mac} tratado como resuelto (errorCode ${resultadoUnauth.errorCode}: ${resultadoUnauth.msg}). Continuando con el login.`);
         }
     }
 

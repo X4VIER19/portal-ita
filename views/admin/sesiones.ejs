@@ -13,6 +13,42 @@
             margin-bottom: 1.25rem;
         }
 
+        .aviso-exito {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-exito-fondo);
+            color: var(--color-exito);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radio-base);
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .toolbar-sesiones {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .btn-sincronizar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 0.9rem;
+            border-radius: var(--radio-base);
+            border: 1px solid var(--color-borde);
+            background: var(--color-superficie);
+            color: var(--color-texto-normal);
+            font-size: 0.84rem;
+            cursor: pointer;
+        }
+
+        .btn-sincronizar:hover {
+            border-color: var(--color-marca-primario-hover);
+            color: #ffffff;
+        }
+
         .filtros {
             display: flex;
             align-items: center;
@@ -189,6 +225,33 @@
                     </div>
                 <% } %>
 
+                <% if (sync === "ok") { %>
+                    <div class="aviso-exito">
+                        <i class="ph ph-check-circle"></i>
+                        Sincronización completada.
+                        <% if (eliminadas > 0) { %>
+                            Se limpiaron <strong><%= eliminadas %></strong> sesión(es) que ya no estaban vigentes en Omada.
+                        <% } else { %>
+                            Todas las sesiones registradas siguen vigentes en Omada.
+                        <% } %>
+                    </div>
+                <% } else if (sync === "error") { %>
+                    <div class="aviso">
+                        <i class="ph ph-warning"></i>
+                        No se pudo completar la sincronización porque Omada no respondió. Intenta de nuevo en unos minutos.
+                    </div>
+                <% } %>
+
+                <div class="toolbar-sesiones">
+                    <form method="POST" action="/admin/sesiones/sincronizar">
+                        <input type="hidden" name="busqueda" value="<%= busqueda %>">
+                        <input type="hidden" name="rol" value="<%= filtroRol %>">
+                        <button type="submit" class="btn-sincronizar">
+                            <i class="ph ph-arrows-clockwise"></i> Sincronizar con Omada
+                        </button>
+                    </form>
+                </div>
+
                 <form method="GET" action="/admin/sesiones" class="filtros">
                     <div class="campo-busqueda">
                         <input
@@ -289,4 +352,3 @@
     </div>
 </body>
 </html>
-

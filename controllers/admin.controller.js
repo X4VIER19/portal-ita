@@ -13,6 +13,7 @@ const {
     actualizarUsuario: actualizarUsuarioEnBD
 } = require("../services/usuarios.service");
 const { unauthClient, listarAuthedRecords } = require("../services/omada");
+const { sincronizarSesiones } = require("../services/sync");
 
 // GET /admin -> redirige según si ya hay sesión o no.
 function raizAdmin(req, res) {
@@ -261,13 +262,27 @@ async function mostrarSesiones(req, res) {
         omadaError = true;
     }
 
+    // Igual que en services/sync.js: nos quedamos con el registro MÁS
+    // RECIENTE de cada MAC (por `start`), porque Omada nunca actualiza un
+    // registro existente, siempre crea uno nuevo por cada auth/unauth.
+    let estadoPorMac = null;
+    if (registrosOmada) {
+        estadoPorMac = new Map();
+        for (const registro of registrosOmada) {
+            const mac = (registro.mac || "").toUpperCase();
+            if (!mac) continue;
+            const actual = estadoPorMac.get(mac);
+            if (!actual || (registro.start || 0) > (actual.start || 0)) {
+                estadoPorMac.set(mac, registro);
+            }
+        }
+    }
+
     const sesionesConEstado = sesiones.map(s => {
         let estadoOmada = "desconocido";
 
-        if (registrosOmada) {
-            const registro = registrosOmada.find(
-                r => (r.mac || "").toLowerCase() === s.mac.toLowerCase()
-            );
+        if (estadoPorMac) {
+            const registro = estadoPorMac.get((s.mac || "").toUpperCase());
             estadoOmada = registro ? (registro.valid ? "activo" : "expirado") : "sin_registro";
         }
 
@@ -276,6 +291,11 @@ async function mostrarSesiones(req, res) {
 
     const inicio = total === 0 ? 0 : offset + 1;
     const fin = Math.min(offset + sesionesConEstado.length, total);
+
+    // Feedback de la sincronización manual (si el usuario acaba de
+    // presionar el botón "Sincronizar con Omada").
+    const sync = ["ok", "error"].includes(req.query.sync) ? req.query.sync : null;
+    const eliminadas = Number.parseInt(req.query.eliminadas, 10) || 0;
 
     res.render("admin/sesiones", {
         sesiones: sesionesConEstado,
@@ -287,6 +307,8 @@ async function mostrarSesiones(req, res) {
         inicio,
         fin,
         omadaError,
+        sync,
+        eliminadas,
         ...req.session.admin
     });
 }
@@ -305,6 +327,22 @@ async function desconectarSesion(req, res) {
     res.redirect("/admin/sesiones");
 }
 
+// POST /admin/sesiones/sincronizar (protegida)
+// Dispara manualmente la misma lógica que corre automáticamente cada
+// N minutos (services/sync.js), y regresa a /admin/sesiones conservando
+// los filtros activos, con un resumen de cuántas sesiones se limpiaron.
+async function sincronizarSesionesManual(req, res) {
+    const resultado = await sincronizarSesiones();
+
+    const params = new URLSearchParams();
+    if (req.body.busqueda) params.set("busqueda", req.body.busqueda);
+    if (req.body.rol) params.set("rol", req.body.rol);
+    params.set("sync", resultado.error ? "error" : "ok");
+    params.set("eliminadas", resultado.eliminadas);
+
+    res.redirect(`/admin/sesiones?${params.toString()}`);
+}
+
 module.exports = {
     raizAdmin,
     mostrarLogin,
@@ -318,5 +356,6 @@ module.exports = {
     mostrarFormularioEditar,
     actualizarUsuario,
     mostrarSesiones,
-    desconectarSesion
+    desconectarSesion,
+    sincronizarSesionesManual
 };

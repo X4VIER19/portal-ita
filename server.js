@@ -7,6 +7,7 @@ const portalRoutes = require("./routes/portal.routes");
 const adminRoutes = require("./routes/admin.routes");
 const errorHandler = require("./middleware/errorHandler");
 const sessionStore = require("./services/sessionStore");
+const { iniciarSincronizacionPeriodica } = require("./services/sync");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,4 +45,8 @@ app.listen(PORT, "0.0.0.0", () => {
     console.log("PORTAL ITA - SERVER");
     console.log(`Local: http://localhost:${PORT}`);
     console.log("--------------------------------");
+
+    // Arranca la sincronización BD <-> Omada cada 5 minutos.
+    // También se puede disparar manualmente desde /admin/sesiones.
+    iniciarSincronizacionPeriodica(5 * 60 * 1000);
 });
