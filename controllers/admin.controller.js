@@ -2,11 +2,13 @@ const bcrypt = require("bcrypt");
 
 const {
     buscarUsuarioPorCorreo,
-    listarUsuarios,
+    listarUsuariosPaginados,
+    contarUsuarios,
     buscarUsuarioPorId,
     crearUsuario: crearUsuarioEnBD,
     cambiarEstadoUsuario,
-    listarSesionesActivas,
+    listarSesionesPaginadas,
+    contarSesiones,
     eliminarSesionActiva,
     actualizarUsuario: actualizarUsuarioEnBD
 } = require("../services/usuarios.service");
@@ -72,9 +74,41 @@ function inicio(req, res) {
 
 // GET /admin/usuarios (protegida)
 async function mostrarUsuarios(req, res) {
-    const usuarios = await listarUsuarios();
+    const limite = 10;
+    const paginaSolicitada = Number.parseInt(req.query.page, 10);
+    const paginaActual = Number.isInteger(paginaSolicitada) && paginaSolicitada > 0
+        ? paginaSolicitada
+        : 1;
+
+    const busqueda = typeof req.query.busqueda === "string" ? req.query.busqueda.trim() : "";
+    const rol = ["admin", "docente", "alumno"].includes(req.query.rol) ? req.query.rol : "";
+    const estado = ["activo", "inactivo"].includes(req.query.estado) ? req.query.estado : "";
+
+    const filtros = { busqueda, rol, estado };
+    const total = await contarUsuarios(filtros);
+    const totalPaginas = Math.max(1, Math.ceil(total / limite));
+    const paginaValida = Math.min(paginaActual, totalPaginas);
+    const offset = (paginaValida - 1) * limite;
+
+    const usuarios = await listarUsuariosPaginados({
+        ...filtros,
+        limite,
+        offset
+    });
+
+    const inicio = total === 0 ? 0 : offset + 1;
+    const fin = Math.min(offset + usuarios.length, total);
+
     res.render("admin/usuarios", {
         usuarios,
+        busqueda,
+        rol,
+        estado,
+        paginaActual: paginaValida,
+        totalPaginas,
+        total,
+        inicio,
+        fin,
         ...req.session.admin
     });
 }
@@ -193,7 +227,26 @@ async function actualizarUsuario(req, res) {
 
 // GET /admin/sesiones (protegida)
 async function mostrarSesiones(req, res) {
-    const sesiones = await listarSesionesActivas();
+    const limite = 10;
+    const paginaSolicitada = Number.parseInt(req.query.page, 10);
+    const paginaActual = Number.isInteger(paginaSolicitada) && paginaSolicitada > 0
+        ? paginaSolicitada
+        : 1;
+
+    const busqueda = typeof req.query.busqueda === "string" ? req.query.busqueda.trim() : "";
+    const rol = ["admin", "docente", "alumno"].includes(req.query.rol) ? req.query.rol : "";
+
+    const filtros = { busqueda, rol };
+    const total = await contarSesiones(filtros);
+    const totalPaginas = Math.max(1, Math.ceil(total / limite));
+    const paginaValida = Math.min(paginaActual, totalPaginas);
+    const offset = (paginaValida - 1) * limite;
+
+    const sesiones = await listarSesionesPaginadas({
+        ...filtros,
+        limite,
+        offset
+    });
 
     // Intentamos cruzar con el estado real de Omada. Si Omada no
     // responde (Controller apagado, red caída, etc.)
@@ -221,8 +274,18 @@ async function mostrarSesiones(req, res) {
         return { ...s, estadoOmada };
     });
 
+    const inicio = total === 0 ? 0 : offset + 1;
+    const fin = Math.min(offset + sesionesConEstado.length, total);
+
     res.render("admin/sesiones", {
         sesiones: sesionesConEstado,
+        busqueda,
+        rol,
+        paginaActual: paginaValida,
+        totalPaginas,
+        total,
+        inicio,
+        fin,
         omadaError,
         ...req.session.admin
     });

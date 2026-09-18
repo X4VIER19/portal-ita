@@ -1,0 +1,72 @@
+<%
+    const pagina = Number(paginaActual) || 1;
+    const paginas = Number(totalPaginas) || 1;
+    const parametros = new URLSearchParams();
+
+    if (typeof busqueda === 'string' && busqueda) parametros.set('busqueda', busqueda);
+    if (typeof rol === 'string' && rol) parametros.set('rol', rol);
+    if (typeof estado === 'string' && estado) parametros.set('estado', estado);
+
+    const construirUrl = (numero) => {
+        const params = new URLSearchParams(parametros);
+        params.set('page', numero);
+        return `${ruta}?${params.toString()}`;
+    };
+
+    const paginasVisibles = [];
+    if (paginas <= 7) {
+        for (let i = 1; i <= paginas; i++) paginasVisibles.push(i);
+    } else {
+        paginasVisibles.push(1);
+        if (pagina > 4) paginasVisibles.push('...');
+
+        const inicio = Math.max(2, pagina - 1);
+        const fin = Math.min(paginas - 1, pagina + 1);
+        for (let i = inicio; i <= fin; i++) paginasVisibles.push(i);
+
+        if (pagina < paginas - 3) paginasVisibles.push('...');
+        paginasVisibles.push(paginas);
+    }
+%>
+
+<% if (total > 0) { %>
+    <div class="paginacion">
+        <div class="paginacion-resumen">
+            Mostrando <strong><%= inicio %>–<%= fin %></strong> de <strong><%= total %></strong>
+        </div>
+
+        <% if (paginas > 1) { %>
+            <nav class="paginacion-controles" aria-label="Paginación">
+                <a
+                    class="pagina-boton <%= pagina <= 1 ? 'deshabilitado' : '' %>"
+                    href="<%= pagina <= 1 ? '#' : construirUrl(pagina - 1) %>"
+                    <%= pagina <= 1 ? 'aria-disabled="true" tabindex="-1"' : '' %>
+                >
+                    <i class="ph ph-caret-left"></i>
+                    <span>Anterior</span>
+                </a>
+
+                <% paginasVisibles.forEach(numero => { %>
+                    <% if (numero === '...') { %>
+                        <span class="pagina-ellipsis">…</span>
+                    <% } else { %>
+                        <a
+                            class="pagina-numero <%= numero === pagina ? 'actual' : '' %>"
+                            href="<%= construirUrl(numero) %>"
+                            <%= numero === pagina ? 'aria-current="page"' : '' %>
+                        ><%= numero %></a>
+                    <% } %>
+                <% }) %>
+
+                <a
+                    class="pagina-boton <%= pagina >= paginas ? 'deshabilitado' : '' %>"
+                    href="<%= pagina >= paginas ? '#' : construirUrl(pagina + 1) %>"
+                    <%= pagina >= paginas ? 'aria-disabled="true" tabindex="-1"' : '' %>
+                >
+                    <span>Siguiente</span>
+                    <i class="ph ph-caret-right"></i>
+                </a>
+            </nav>
+        <% } %>
+    </div>
+<% } %>

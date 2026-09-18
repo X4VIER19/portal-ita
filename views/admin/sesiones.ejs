@@ -13,6 +13,58 @@
             margin-bottom: 1.25rem;
         }
 
+        .filtros {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+        }
+
+        .campo-busqueda { flex: 1 1 300px; min-width: 220px; }
+
+        .campo-busqueda input,
+        .filtros select {
+            width: 100%;
+            min-height: 38px;
+            box-sizing: border-box;
+            padding: 0.55rem 0.75rem;
+            background: var(--color-superficie);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-base);
+            color: var(--color-texto-normal);
+            font: inherit;
+            outline: none;
+        }
+
+        .filtros select { width: auto; min-width: 150px; }
+        .campo-busqueda input:focus, .filtros select:focus { border-color: var(--color-marca-primario); }
+
+        .btn-filtro, .btn-limpiar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            min-height: 38px;
+            box-sizing: border-box;
+            padding: 0.55rem 0.9rem;
+            border-radius: var(--radio-base);
+            font-size: 0.84rem;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-filtro {
+            border: 1px solid var(--color-marca-primario);
+            background: var(--color-marca-primario);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-filtro:hover { background: var(--color-marca-primario-hover); }
+        .btn-limpiar { border: 1px solid var(--color-borde); color: var(--color-texto-tenue); }
+        .btn-limpiar:hover { color: var(--color-texto-normal); border-color: var(--color-texto-tenue); }
+
         .tabla-panel {
             background: var(--color-superficie);
             border: 1px solid var(--color-borde);
@@ -20,7 +72,8 @@
             overflow: hidden;
         }
 
-        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .tabla-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 820px; }
 
         thead th {
             text-align: left;
@@ -39,7 +92,6 @@
         }
 
         tbody tr:last-child td { border-bottom: none; }
-
         .mac { font-family: monospace; font-size: 0.85rem; color: var(--color-texto-tenue); }
 
         .badge {
@@ -66,11 +118,47 @@
         }
 
         .btn-desconectar:hover { background: var(--color-peligro-fondo); }
+        .vacio { padding: 2.5rem; text-align: center; color: var(--color-texto-tenue); }
 
-        .vacio {
-            padding: 2.5rem;
-            text-align: center;
+        .paginacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1.1rem;
+            border-top: 1px solid var(--color-borde);
             color: var(--color-texto-tenue);
+            font-size: 0.82rem;
+        }
+
+        .paginacion-controles { display: flex; align-items: center; gap: 0.25rem; }
+        .pagina-boton, .pagina-numero {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            box-sizing: border-box;
+            padding: 0 0.45rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            color: var(--color-texto-tenue);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .pagina-boton { gap: 0.25rem; border-color: var(--color-borde); }
+        .pagina-numero:hover, .pagina-boton:hover { color: var(--color-texto-normal); border-color: var(--color-borde); }
+        .pagina-numero.actual { background: var(--color-info-fondo); color: var(--color-info); border-color: transparent; font-weight: 700; }
+        .pagina-boton.deshabilitado { opacity: 0.45; pointer-events: none; }
+        .pagina-ellipsis { padding: 0 0.25rem; }
+
+        @media (max-width: 700px) {
+            .filtros { flex-direction: column; align-items: stretch; }
+            .campo-busqueda, .filtros select, .btn-filtro, .btn-limpiar { width: 100%; }
+            .paginacion { align-items: stretch; flex-direction: column; }
+            .paginacion-controles { justify-content: center; flex-wrap: wrap; }
+            .pagina-boton span { display: none; }
         }
     </style>
 
@@ -92,52 +180,96 @@
                     </div>
                 <% } %>
 
+                <form method="GET" action="/admin/sesiones" class="filtros">
+                    <div class="campo-busqueda">
+                        <input
+                            type="search"
+                            name="busqueda"
+                            value="<%= busqueda %>"
+                            placeholder="Buscar por nombre, apellido, correo o MAC..."
+                            aria-label="Buscar sesiones"
+                        >
+                    </div>
+
+                    <select name="rol" aria-label="Filtrar por rol">
+                        <option value="">Todos los roles</option>
+                        <option value="admin" <%= rol === 'admin' ? 'selected' : '' %>>Administrador</option>
+                        <option value="docente" <%= rol === 'docente' ? 'selected' : '' %>>Docente</option>
+                        <option value="alumno" <%= rol === 'alumno' ? 'selected' : '' %>>Alumno</option>
+                    </select>
+
+                    <button type="submit" class="btn-filtro">
+                        <i class="ph ph-magnifying-glass"></i> Buscar
+                    </button>
+
+                    <% if (busqueda || rol) { %>
+                        <a href="/admin/sesiones" class="btn-limpiar">Limpiar</a>
+                    <% } %>
+                </form>
+
                 <div class="tabla-panel">
                     <% if (sesiones.length === 0) { %>
-                        <div class="vacio">No hay sesiones activas en este momento.</div>
+                        <div class="vacio">
+                            <%= (busqueda || rol)
+                                ? 'No se encontraron sesiones con los criterios de búsqueda.'
+                                : 'No hay sesiones activas en este momento.' %>
+                        </div>
                     <% } else { %>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Usuario</th>
-                                    <th>MAC</th>
-                                    <th>Autorizado desde</th>
-                                    <th>Estado en Omada</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% sesiones.forEach(s => { %>
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <%= s.nombre %> <%= s.apellido %><br>
-                                            <span class="mac"><%= s.correo %></span>
-                                        </td>
-                                        <td class="mac"><%= s.mac %></td>
-                                        <td><%= new Date(s.autorizado_en).toLocaleString('es-MX') %></td>
-                                        <td>
-                                            <span class="badge badge-<%= s.estadoOmada %>">
-                                                <%
-                                                    const etiquetas = {
-                                                        activo: 'Activo',
-                                                        expirado: 'Expirado en Omada',
-                                                        sin_registro: 'Sin registro',
-                                                        desconocido: 'Sin verificar'
-                                                    };
-                                                %>
-                                                <%= etiquetas[s.estadoOmada] %>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <form method="POST" action="/admin/sesiones/<%= s.usuario_id %>/desconectar">
-                                                <input type="hidden" name="mac" value="<%= s.mac %>">
-                                                <button type="submit" class="btn-desconectar">Desconectar</button>
-                                            </form>
-                                        </td>
+                                        <th>Usuario</th>
+                                        <th>MAC</th>
+                                        <th>Autorizado desde</th>
+                                        <th>Estado en Omada</th>
+                                        <th></th>
                                     </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <% sesiones.forEach(s => { %>
+                                        <tr>
+                                            <td>
+                                                <%= s.nombre %> <%= s.apellido %><br>
+                                                <span class="mac"><%= s.correo %></span>
+                                            </td>
+                                            <td class="mac"><%= s.mac %></td>
+                                            <td><%= new Date(s.autorizado_en).toLocaleString('es-MX') %></td>
+                                            <td>
+                                                <span class="badge badge-<%= s.estadoOmada %>">
+                                                    <%
+                                                        const etiquetas = {
+                                                            activo: 'Activo',
+                                                            expirado: 'Expirado en Omada',
+                                                            sin_registro: 'Sin registro',
+                                                            desconocido: 'Sin verificar'
+                                                        };
+                                                    %>
+                                                    <%= etiquetas[s.estadoOmada] %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <form method="POST" action="/admin/sesiones/<%= s.usuario_id %>/desconectar">
+                                                    <input type="hidden" name="mac" value="<%= s.mac %>">
+                                                    <button type="submit" class="btn-desconectar">Desconectar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <%- include('../partials/paginacion', {
+                            paginaActual,
+                            totalPaginas,
+                            total,
+                            inicio,
+                            fin,
+                            ruta: '/admin/sesiones',
+                            busqueda,
+                            rol
+                        }) %>
                     <% } %>
                 </div>
             </main>
@@ -145,3 +277,4 @@
     </div>
 </body>
 </html>
+
