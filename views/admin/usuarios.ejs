@@ -212,14 +212,14 @@
                             >
                         </div>
 
-                        <select name="rol" aria-label="Filtrar por rol">
+                        <select name="rol" aria-label="Filtrar por rol" onchange="this.form.submit()">
                             <option value="">Todos los roles</option>
                             <option value="admin" <%= rol === 'admin' ? 'selected' : '' %>>Administrador</option>
                             <option value="docente" <%= rol === 'docente' ? 'selected' : '' %>>Docente</option>
                             <option value="alumno" <%= rol === 'alumno' ? 'selected' : '' %>>Alumno</option>
                         </select>
 
-                        <select name="estado" aria-label="Filtrar por estado">
+                        <select name="estado" aria-label="Filtrar por estado" onchange="this.form.submit()">
                             <option value="">Todos los estados</option>
                             <option value="activo" <%= estado === 'activo' ? 'selected' : '' %>>Activo</option>
                             <option value="inactivo" <%= estado === 'inactivo' ? 'selected' : '' %>>Inactivo</option>

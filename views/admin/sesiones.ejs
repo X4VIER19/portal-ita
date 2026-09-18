@@ -191,7 +191,7 @@
                         >
                     </div>
 
-                    <select name="rol" aria-label="Filtrar por rol">
+                    <select name="rol" aria-label="Filtrar por rol" onchange="this.form.submit()">
                         <option value="">Todos los roles</option>
                         <option value="admin" <%= rol === 'admin' ? 'selected' : '' %>>Administrador</option>
                         <option value="docente" <%= rol === 'docente' ? 'selected' : '' %>>Docente</option>
