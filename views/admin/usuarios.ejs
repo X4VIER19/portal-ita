@@ -33,7 +33,10 @@
             outline: none;
         }
 
-        .filtros select { width: auto; min-width: 140px; }
+        .filtros select {
+            width: 160px;
+            flex-shrink: 0;
+        }
 
         .campo-busqueda input:focus,
         .filtros select:focus {
@@ -71,6 +74,12 @@
         }
 
         .btn-limpiar:hover { color: var(--color-texto-normal); border-color: var(--color-texto-tenue); }
+
+        .btn-limpiar.deshabilitado {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: default;
+        }
 
         .btn-nuevo {
             flex-shrink: 0;
@@ -214,9 +223,9 @@
 
                         <select name="rol" aria-label="Filtrar por rol" onchange="this.form.submit()">
                             <option value="">Todos los roles</option>
-                            <option value="admin" <%= rol === 'admin' ? 'selected' : '' %>>Administrador</option>
-                            <option value="docente" <%= rol === 'docente' ? 'selected' : '' %>>Docente</option>
-                            <option value="alumno" <%= rol === 'alumno' ? 'selected' : '' %>>Alumno</option>
+                            <option value="admin" <%= filtroRol === 'admin' ? 'selected' : '' %>>Administrador</option>
+                            <option value="docente" <%= filtroRol === 'docente' ? 'selected' : '' %>>Docente</option>
+                            <option value="alumno" <%= filtroRol === 'alumno' ? 'selected' : '' %>>Alumno</option>
                         </select>
 
                         <select name="estado" aria-label="Filtrar por estado" onchange="this.form.submit()">
@@ -229,9 +238,12 @@
                             <i class="ph ph-magnifying-glass"></i> Buscar
                         </button>
 
-                        <% if (busqueda || rol || estado) { %>
-                            <a href="/admin/usuarios" class="btn-limpiar">Limpiar</a>
-                        <% } %>
+                        <a 
+                            href="/admin/usuarios" 
+                            class="btn-limpiar <%= !(busqueda || filtroRol || estado) ? 'deshabilitado' : '' %>"
+                        >
+                            Limpiar
+                        </a>
                     </form>
 
                     <a href="/admin/usuarios/nuevo" class="btn-nuevo">
@@ -242,7 +254,7 @@
                 <div class="tabla-panel">
                     <% if (usuarios.length === 0) { %>
                         <div class="vacio">
-                            <%= (busqueda || rol || estado)
+                            <%= (busqueda || filtroRol || estado)
                                 ? 'No se encontraron usuarios con los criterios de búsqueda.'
                                 : 'Todavía no hay usuarios registrados.' %>
                         </div>
@@ -291,7 +303,7 @@
                             fin,
                             ruta: '/admin/usuarios',
                             busqueda,
-                            rol,
+                            rol: filtroRol,
                             estado
                         }) %>
                     <% } %>

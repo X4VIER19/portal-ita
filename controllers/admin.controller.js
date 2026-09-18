@@ -81,10 +81,10 @@ async function mostrarUsuarios(req, res) {
         : 1;
 
     const busqueda = typeof req.query.busqueda === "string" ? req.query.busqueda.trim() : "";
-    const rol = ["admin", "docente", "alumno"].includes(req.query.rol) ? req.query.rol : "";
+    const filtroRol = ["admin", "docente", "alumno"].includes(req.query.rol) ? req.query.rol : "";
     const estado = ["activo", "inactivo"].includes(req.query.estado) ? req.query.estado : "";
 
-    const filtros = { busqueda, rol, estado };
+    const filtros = { busqueda, rol: filtroRol, estado };
     const total = await contarUsuarios(filtros);
     const totalPaginas = Math.max(1, Math.ceil(total / limite));
     const paginaValida = Math.min(paginaActual, totalPaginas);
@@ -102,7 +102,7 @@ async function mostrarUsuarios(req, res) {
     res.render("admin/usuarios", {
         usuarios,
         busqueda,
-        rol,
+        filtroRol,
         estado,
         paginaActual: paginaValida,
         totalPaginas,
@@ -234,9 +234,9 @@ async function mostrarSesiones(req, res) {
         : 1;
 
     const busqueda = typeof req.query.busqueda === "string" ? req.query.busqueda.trim() : "";
-    const rol = ["admin", "docente", "alumno"].includes(req.query.rol) ? req.query.rol : "";
+    const filtroRol = ["admin", "docente", "alumno"].includes(req.query.rol) ? req.query.rol : "";
 
-    const filtros = { busqueda, rol };
+    const filtros = { busqueda, rol: filtroRol };
     const total = await contarSesiones(filtros);
     const totalPaginas = Math.max(1, Math.ceil(total / limite));
     const paginaValida = Math.min(paginaActual, totalPaginas);
@@ -280,7 +280,7 @@ async function mostrarSesiones(req, res) {
     res.render("admin/sesiones", {
         sesiones: sesionesConEstado,
         busqueda,
-        rol,
+        filtroRol,
         paginaActual: paginaValida,
         totalPaginas,
         total,

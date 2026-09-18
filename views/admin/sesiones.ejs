@@ -37,7 +37,10 @@
             outline: none;
         }
 
-        .filtros select { width: auto; min-width: 150px; }
+        .filtros select {
+            width: 160px;
+            flex-shrink: 0;
+        }
         .campo-busqueda input:focus, .filtros select:focus { border-color: var(--color-marca-primario); }
 
         .btn-filtro, .btn-limpiar {
@@ -64,6 +67,12 @@
         .btn-filtro:hover { background: var(--color-marca-primario-hover); }
         .btn-limpiar { border: 1px solid var(--color-borde); color: var(--color-texto-tenue); }
         .btn-limpiar:hover { color: var(--color-texto-normal); border-color: var(--color-texto-tenue); }
+
+        .btn-limpiar.deshabilitado {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: default;
+        }
 
         .tabla-panel {
             background: var(--color-superficie);
@@ -193,24 +202,27 @@
 
                     <select name="rol" aria-label="Filtrar por rol" onchange="this.form.submit()">
                         <option value="">Todos los roles</option>
-                        <option value="admin" <%= rol === 'admin' ? 'selected' : '' %>>Administrador</option>
-                        <option value="docente" <%= rol === 'docente' ? 'selected' : '' %>>Docente</option>
-                        <option value="alumno" <%= rol === 'alumno' ? 'selected' : '' %>>Alumno</option>
+                        <option value="admin" <%= filtroRol === 'admin' ? 'selected' : '' %>>Administrador</option>
+                        <option value="docente" <%= filtroRol === 'docente' ? 'selected' : '' %>>Docente</option>
+                        <option value="alumno" <%= filtroRol === 'alumno' ? 'selected' : '' %>>Alumno</option>
                     </select>
 
                     <button type="submit" class="btn-filtro">
                         <i class="ph ph-magnifying-glass"></i> Buscar
                     </button>
 
-                    <% if (busqueda || rol) { %>
-                        <a href="/admin/sesiones" class="btn-limpiar">Limpiar</a>
-                    <% } %>
+                    <a 
+                        href="/admin/sesiones" 
+                        class="btn-limpiar <%= !(busqueda || filtroRol) ? 'deshabilitado' : '' %>"
+                    >
+                        Limpiar
+                    </a>
                 </form>
 
                 <div class="tabla-panel">
                     <% if (sesiones.length === 0) { %>
                         <div class="vacio">
-                            <%= (busqueda || rol)
+                            <%= (busqueda || filtroRol)
                                 ? 'No se encontraron sesiones con los criterios de búsqueda.'
                                 : 'No hay sesiones activas en este momento.' %>
                         </div>
@@ -268,7 +280,7 @@
                             fin,
                             ruta: '/admin/sesiones',
                             busqueda,
-                            rol
+                            rol: filtroRol
                         }) %>
                     <% } %>
                 </div>
