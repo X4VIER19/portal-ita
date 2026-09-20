@@ -62,7 +62,7 @@ Desktop.ini
 # ==============================
 # Certificados / claves privadas
 # ==============================
-
+/certs/
 *.pem
 *.key
 *.crt

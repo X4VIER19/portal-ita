@@ -1,5 +1,7 @@
 const express = require("express");
 const path = require("path");
+const https = require("https");
+const fs = require("fs");
 const session = require("express-session");
 require("dotenv").config();
 
@@ -11,6 +13,11 @@ const { iniciarSincronizacionPeriodica } = require("./services/sync");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const sslOptions = {
+    key: fs.readFileSync(path.join(__dirname, "certs", "server.key")),
+    cert: fs.readFileSync(path.join(__dirname, "certs", "server.crt"))
+};
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -40,10 +47,10 @@ app.use("/admin", adminRoutes);
 app.use("/", portalRoutes);
 app.use(errorHandler);
 
-app.listen(PORT, "0.0.0.0", () => {
+https.createServer(sslOptions, app).listen(PORT, "0.0.0.0", () => {
     console.log("--------------------------------");
-    console.log("PORTAL ITA - SERVER");
-    console.log(`Local: http://localhost:${PORT}`);
+    console.log("PORTAL ITA - SERVER HTTPS");
+    console.log(`Local: https://localhost:${PORT}`);
     console.log("--------------------------------");
 
     iniciarSincronizacionPeriodica(5 * 60 * 1000);

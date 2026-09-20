@@ -2,7 +2,7 @@ const axios = require("axios");
 const https = require("https");
 
 axios.get(
-    "https://192.168.10.140:8043",
+    OMADA_URL,
     {
         httpsAgent: new https.Agent({
             rejectUnauthorized: false
