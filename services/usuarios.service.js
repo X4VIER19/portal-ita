@@ -8,7 +8,6 @@ async function buscarUsuarioPorCorreo(correo) {
          LIMIT 1`,
         [correo]
     );
-
     return rows[0] || null;
 }
 
@@ -20,7 +19,6 @@ async function buscarSesionActiva(usuarioId) {
          LIMIT 1`,
         [usuarioId]
     );
-
     return rows[0] || null;
 }
 
@@ -28,40 +26,44 @@ async function guardarSesionActiva(usuarioId, mac) {
     await pool.query(
         `INSERT INTO sesiones_activas (usuario_id, mac)
          VALUES (?, ?)
-         ON DUPLICATE KEY UPDATE
-             mac = VALUES(mac),
-             autorizado_en = CURRENT_TIMESTAMP`,
+         ON DUPLICATE KEY UPDATE mac = VALUES(mac), autorizado_en = CURRENT_TIMESTAMP`,
         [usuarioId, mac]
     );
 }
 
 async function eliminarSesionActiva(usuarioId) {
-    await pool.query(
-        `DELETE FROM sesiones_activas
-         WHERE usuario_id = ?`,
-        [usuarioId]
-    );
+    await pool.query(`DELETE FROM sesiones_activas WHERE usuario_id = ?`, [usuarioId]);
 }
 
 async function listarTodasSesionesActivas() {
-    const [rows] = await pool.query(
-        `SELECT usuario_id, mac
-         FROM sesiones_activas`
-    );
-
+    const [rows] = await pool.query(`SELECT usuario_id, mac FROM sesiones_activas`);
     return rows;
 }
 
-function construirFiltrosUsuarios({ busqueda = "", rol = "", estado = "" }) {
+async function obtenerResumenAdmin() {
+    const [rows] = await pool.query(
+        `SELECT
+            (SELECT COUNT(*) FROM usuarios) AS usuarios_totales,
+            (SELECT COUNT(*) FROM sesiones_activas) AS sesiones_activas,
+            (SELECT COUNT(*) FROM sesiones_activas s INNER JOIN usuarios u ON u.id = s.usuario_id WHERE u.rol = 'docente') AS docentes_activos,
+            (SELECT COUNT(*) FROM sesiones_activas s INNER JOIN usuarios u ON u.id = s.usuario_id WHERE u.rol = 'alumno') AS alumnos_activos`
+    );
+
+    const resumen = rows[0];
+    return {
+        usuariosTotales: Number(resumen.usuarios_totales),
+        sesionesActivas: Number(resumen.sesiones_activas),
+        docentesActivos: Number(resumen.docentes_activos),
+        alumnosActivos: Number(resumen.alumnos_activos)
+    };
+}
+
+function construirFiltrosUsuarios({ busqueda = "", rol = "", estado = "" } = {}) {
     const condiciones = [];
     const valores = [];
 
     if (busqueda) {
-        condiciones.push(`(
-            nombre LIKE ? OR
-            apellido LIKE ? OR
-            correo LIKE ?
-        )`);
+        condiciones.push(`(nombre LIKE ? OR apellido LIKE ? OR correo LIKE ?)`);
         const termino = `%${busqueda}%`;
         valores.push(termino, termino, termino);
     }
@@ -84,26 +86,12 @@ function construirFiltrosUsuarios({ busqueda = "", rol = "", estado = "" }) {
 
 async function contarUsuarios(filtros = {}) {
     const { where, valores } = construirFiltrosUsuarios(filtros);
-
-    const [rows] = await pool.query(
-        `SELECT COUNT(*) AS total
-         FROM usuarios
-         ${where}`,
-        valores
-    );
-
+    const [rows] = await pool.query(`SELECT COUNT(*) AS total FROM usuarios ${where}`, valores);
     return Number(rows[0].total);
 }
 
-async function listarUsuariosPaginados({
-    busqueda = "",
-    rol = "",
-    estado = "",
-    limite = 10,
-    offset = 0
-} = {}) {
+async function listarUsuariosPaginados({ busqueda = "", rol = "", estado = "", limite = 10, offset = 0 } = {}) {
     const { where, valores } = construirFiltrosUsuarios({ busqueda, rol, estado });
-
     const [rows] = await pool.query(
         `SELECT id, nombre, apellido, correo, rol, activo, creado_en
          FROM usuarios
@@ -112,7 +100,6 @@ async function listarUsuariosPaginados({
          LIMIT ? OFFSET ?`,
         [...valores, limite, offset]
     );
-
     return rows;
 }
 
@@ -124,7 +111,6 @@ async function buscarUsuarioPorId(id) {
          LIMIT 1`,
         [id]
     );
-
     return rows[0] || null;
 }
 
@@ -137,23 +123,15 @@ async function crearUsuario({ nombre, apellido, correo, contrasena_hash, rol }) 
 }
 
 async function cambiarEstadoUsuario(id, activo) {
-    await pool.query(
-        `UPDATE usuarios SET activo = ? WHERE id = ?`,
-        [activo, id]
-    );
+    await pool.query(`UPDATE usuarios SET activo = ? WHERE id = ?`, [activo, id]);
 }
 
-function construirFiltrosSesiones({ busqueda = "", rol = "" }) {
+function construirFiltrosSesiones({ busqueda = "", rol = "" } = {}) {
     const condiciones = [];
     const valores = [];
 
     if (busqueda) {
-        condiciones.push(`(
-            u.nombre LIKE ? OR
-            u.apellido LIKE ? OR
-            u.correo LIKE ? OR
-            s.mac LIKE ?
-        )`);
+        condiciones.push(`(u.nombre LIKE ? OR u.apellido LIKE ? OR u.correo LIKE ? OR s.mac LIKE ?)`);
         const termino = `%${busqueda}%`;
         valores.push(termino, termino, termino, termino);
     }
@@ -171,7 +149,6 @@ function construirFiltrosSesiones({ busqueda = "", rol = "" }) {
 
 async function contarSesiones({ busqueda = "", rol = "" } = {}) {
     const { where, valores } = construirFiltrosSesiones({ busqueda, rol });
-
     const [rows] = await pool.query(
         `SELECT COUNT(*) AS total
          FROM sesiones_activas s
@@ -179,21 +156,13 @@ async function contarSesiones({ busqueda = "", rol = "" } = {}) {
          ${where}`,
         valores
     );
-
     return Number(rows[0].total);
 }
 
-async function listarSesionesPaginadas({
-    busqueda = "",
-    rol = "",
-    limite = 10,
-    offset = 0
-} = {}) {
+async function listarSesionesPaginadas({ busqueda = "", rol = "", limite = 10, offset = 0 } = {}) {
     const { where, valores } = construirFiltrosSesiones({ busqueda, rol });
-
     const [rows] = await pool.query(
-        `SELECT s.usuario_id, s.mac, s.autorizado_en,
-                u.nombre, u.apellido, u.correo, u.rol
+        `SELECT s.usuario_id, s.mac, s.autorizado_en, u.nombre, u.apellido, u.correo, u.rol
          FROM sesiones_activas s
          JOIN usuarios u ON u.id = s.usuario_id
          ${where}
@@ -201,7 +170,6 @@ async function listarSesionesPaginadas({
          LIMIT ? OFFSET ?`,
         [...valores, limite, offset]
     );
-
     return rows;
 }
 
@@ -217,7 +185,9 @@ async function actualizarUsuario(id, { nombre, apellido, correo, rol, contrasena
     valores.push(id);
 
     await pool.query(
-        `UPDATE usuarios SET ${campos.join(", ")} WHERE id = ?`,
+        `UPDATE usuarios
+         SET ${campos.join(", ")}
+         WHERE id = ?`,
         valores
     );
 }
@@ -228,6 +198,7 @@ module.exports = {
     guardarSesionActiva,
     eliminarSesionActiva,
     listarTodasSesionesActivas,
+    obtenerResumenAdmin,
     listarUsuariosPaginados,
     contarUsuarios,
     buscarUsuarioPorId,

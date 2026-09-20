@@ -246,7 +246,7 @@
                         </a>
                     </form>
 
-                    <a href="/admin/usuarios/nuevo" class="btn-nuevo">
+                    <a href="/admin/usuarios/nuevo" class="btn-nuevo" data-abrir-modal-usuario>
                         <i class="ph ph-plus"></i> Nuevo usuario
                     </a>
                 </div>
@@ -282,7 +282,11 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="/admin/usuarios/editar/<%= u.id %>" class="btn-toggle">Editar</a>
+                                                <a
+                                                    href="/admin/usuarios/editar/<%= u.id %>"
+                                                    class="btn-toggle"
+                                                    data-editar-usuario="<%= JSON.stringify({ id: u.id, nombre: u.nombre, apellido: u.apellido, correo: u.correo, rol: u.rol }) %>"
+                                                >Editar</a>
                                                 <form method="POST" action="/admin/usuarios/<%= u.id %>/toggle" style="display:inline;">
                                                     <button type="submit" class="btn-toggle">
                                                         <%= u.activo ? 'Desactivar' : 'Activar' %>
@@ -311,5 +315,6 @@
             </main>
         </div>
     </div>
+    <%- include('../partials/modal-usuario') %>
 </body>
 </html>

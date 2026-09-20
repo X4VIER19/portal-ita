@@ -1,0 +1,327 @@
+<style>
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transition: opacity 0.18s ease, visibility 0.18s ease;
+    }
+
+    .modal-overlay.abierto {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .modal-caja {
+        width: 100%;
+        max-width: 500px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+
+        border: 1px solid var(--color-borde);
+        border-radius: 14px;
+
+        background: var(--color-superficie);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+
+        transform: translateY(8px) scale(0.98);
+        transition: transform 0.18s ease;
+    }
+
+    .modal-overlay.abierto .modal-caja {
+        transform: translateY(0) scale(1);
+    }
+
+    .modal-cabecera {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--color-borde);
+    }
+
+    .modal-cabecera h2 {
+        margin: 0;
+        color: var(--color-texto-titulo);
+        font-size: 1.05rem;
+        font-weight: 650;
+    }
+
+    .modal-cerrar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 34px;
+        height: 34px;
+
+        border: 0;
+        border-radius: 7px;
+
+        background: transparent;
+        color: var(--color-texto-tenue);
+
+        font-size: 22px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .modal-cerrar:hover {
+        background: var(--color-info-fondo);
+        color: var(--color-texto-normal);
+    }
+
+    .modal-cuerpo { padding: 22px; }
+
+    .exito-box {
+        background: var(--color-exito-fondo);
+        color: var(--color-exito);
+        padding: 0.7rem 0.9rem;
+        border-radius: var(--radio-base);
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+        .modal-overlay {
+            align-items: flex-end;
+            padding: 0;
+        }
+
+        .modal-caja {
+            max-height: 92vh;
+            border-radius: 14px 14px 0 0;
+        }
+    }
+</style>
+
+<div class="modal-overlay" id="modalUsuario" aria-hidden="true">
+
+    <div
+        class="modal-caja"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalUsuarioTitulo"
+    >
+
+        <div class="modal-cabecera">
+            <h2 id="modalUsuarioTitulo">Nuevo usuario</h2>
+
+            <button
+                type="button"
+                class="modal-cerrar"
+                data-cerrar-modal-usuario
+                aria-label="Cerrar"
+            >
+                &times;
+            </button>
+        </div>
+
+        <div class="modal-cuerpo">
+
+            <div class="error-box" id="modalUsuarioError" role="alert" hidden></div>
+            <div class="exito-box" id="modalUsuarioExito" role="status" hidden></div>
+
+            <form id="formModalUsuario" method="POST" action="/admin/usuarios/nuevo">
+                <%- include('./form-usuario-campos', {
+                    valores: {},
+                    modo: 'crear',
+                    prefijo: 'modal-'
+                }) %>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    (() => {
+        const modal = document.getElementById("modalUsuario");
+        const titulo = document.getElementById("modalUsuarioTitulo");
+        const formulario = document.getElementById("formModalUsuario");
+        const error = document.getElementById("modalUsuarioError");
+        const exito = document.getElementById("modalUsuarioExito");
+
+        const botonEnviar = formulario.querySelector('[type="submit"]');
+        const campoContrasena = formulario.elements.contrasena;
+        const etiquetaContrasena = campoContrasena.labels[0];
+
+        const CAMPOS_USUARIO = ["nombre", "apellido", "correo", "rol"];
+
+        const TEXTOS = {
+            crear: {
+                titulo: "Nuevo usuario",
+                boton: "Crear usuario",
+                enviando: "Creando...",
+                etiquetaContrasena: "Contraseña",
+                ayudaContrasena: ""
+            },
+            editar: {
+                titulo: "Editar usuario",
+                boton: "Guardar cambios",
+                enviando: "Guardando...",
+                etiquetaContrasena: "Nueva contraseña",
+                ayudaContrasena: "Dejar en blanco para no cambiarla"
+            }
+        };
+
+        let disparador = null;
+        let textos = TEXTOS.crear;
+
+        function mostrar(caja, texto) {
+            caja.textContent = texto;
+            caja.hidden = false;
+        }
+
+        function limpiarMensajes() {
+            error.hidden = true;
+            exito.hidden = true;
+        }
+
+        function abrir(origen, usuario) {
+            const editando = Boolean(usuario);
+
+            disparador = origen;
+            textos = editando ? TEXTOS.editar : TEXTOS.crear;
+
+            formulario.reset();
+            limpiarMensajes();
+
+            formulario.action = editando
+                ? `/admin/usuarios/editar/${encodeURIComponent(usuario.id)}`
+                : "/admin/usuarios/nuevo";
+
+            titulo.textContent = textos.titulo;
+            botonEnviar.textContent = textos.boton;
+            etiquetaContrasena.textContent = textos.etiquetaContrasena;
+            campoContrasena.placeholder = textos.ayudaContrasena;
+            campoContrasena.required = !editando;
+
+            if (editando) {
+                for (const campo of CAMPOS_USUARIO) {
+                    formulario.elements[campo].value = usuario[campo] ?? "";
+                }
+            }
+
+            modal.classList.add("abierto");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+
+            setTimeout(() => formulario.elements.nombre.focus(), 50);
+        }
+
+        function cerrar() {
+            modal.classList.remove("abierto");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+
+            formulario.reset();
+            limpiarMensajes();
+
+            if (disparador) {
+                disparador.focus();
+            }
+        }
+
+        document.addEventListener("click", (evento) => {
+            const editarBtn = evento.target.closest("[data-editar-usuario]");
+            const crearBtn = evento.target.closest("[data-abrir-modal-usuario]");
+
+            if (editarBtn) {
+                let usuario;
+
+                try {
+                    usuario = JSON.parse(editarBtn.dataset.editarUsuario);
+                } catch {
+                    return;
+                }
+
+                evento.preventDefault();
+                abrir(editarBtn, usuario);
+                return;
+            }
+
+            if (crearBtn) {
+                evento.preventDefault();
+                abrir(crearBtn, null);
+                return;
+            }
+
+            if (
+                evento.target === modal ||
+                evento.target.closest("[data-cerrar-modal-usuario]")
+            ) {
+                cerrar();
+            }
+        });
+
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape" && modal.classList.contains("abierto")) {
+                cerrar();
+            }
+        });
+
+        formulario.addEventListener("submit", async (evento) => {
+            evento.preventDefault();
+
+            limpiarMensajes();
+            botonEnviar.disabled = true;
+            botonEnviar.textContent = textos.enviando;
+
+            try {
+                const respuesta = await fetch(formulario.action, {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: new URLSearchParams(new FormData(formulario))
+                });
+
+                const resultado = await respuesta.json().catch(() => ({}));
+
+                if (!respuesta.ok || !resultado.ok) {
+                    throw new Error(
+                        resultado.mensaje || "No se pudo guardar el usuario."
+                    );
+                }
+
+                mostrar(exito, resultado.mensaje);
+
+                setTimeout(() => {
+                    const url = new URL(window.location.href);
+
+                    url.searchParams.delete("sync");
+                    url.searchParams.delete("eliminadas");
+
+                    window.location.href = url.toString();
+                }, 800);
+
+            } catch (err) {
+                mostrar(error, err.message);
+
+                botonEnviar.disabled = false;
+                botonEnviar.textContent = textos.boton;
+            }
+        });
+    })();
+</script>

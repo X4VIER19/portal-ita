@@ -1,0 +1,159 @@
+<%
+    const p = typeof prefijo !== 'undefined' ? prefijo : '';
+    const editando = modo === 'editar';
+    const v = valores || {};
+%>
+
+<style>
+    .form-panel {
+        max-width: 480px;
+        background: var(--color-superficie);
+        border: 1px solid var(--color-borde);
+        border-radius: 12px;
+        padding: 2rem;
+    }
+
+    .volver {
+        display: inline-block;
+        margin-bottom: 1.25rem;
+        color: var(--color-texto-tenue);
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .volver:hover { color: var(--color-texto-normal); }
+
+    .campo { margin-bottom: 1.1rem; }
+
+    .campo label {
+        display: block;
+        font-size: 0.82rem;
+        color: var(--color-texto-tenue);
+        margin-bottom: 0.4rem;
+    }
+
+    .campo input, .campo select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.7rem 0.85rem;
+        background: var(--color-fondo-app);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-base);
+        color: var(--color-texto-normal);
+        font-size: 0.92rem;
+    }
+
+    .campo input:focus, .campo select:focus {
+        outline: none;
+        border-color: var(--color-marca-primario-hover);
+        box-shadow: 0 0 0 3px rgba(var(--color-marca-primario-rgb), 0.25);
+    }
+
+    .campo-password-wrapper {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .campo-password-wrapper input { flex: 1; }
+
+    .btn-generar {
+        white-space: nowrap;
+        padding: 0 0.9rem;
+        background: var(--color-fondo-app);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio-base);
+        color: var(--color-texto-normal);
+        font-size: 0.82rem;
+        cursor: pointer;
+    }
+
+    .btn-generar:hover { border-color: var(--color-marca-primario-hover); }
+
+    .btn-guardar {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--color-marca-primario);
+        color: #fff;
+        border: none;
+        border-radius: var(--radio-base);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 0.5rem;
+    }
+
+    .btn-guardar:hover { background: var(--color-marca-primario-hover); }
+    .btn-guardar:disabled { opacity: 0.6; cursor: wait; }
+
+    .error-box {
+        background: var(--color-peligro-fondo);
+        color: var(--color-peligro);
+        padding: 0.7rem 0.9rem;
+        border-radius: var(--radio-base);
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+</style>
+
+<div class="campo">
+    <label for="<%= p %>nombre">Nombre</label>
+    <input id="<%= p %>nombre" name="nombre" type="text" value="<%= v.nombre || '' %>" required>
+</div>
+
+<div class="campo">
+    <label for="<%= p %>apellido">Apellido</label>
+    <input id="<%= p %>apellido" name="apellido" type="text" value="<%= v.apellido || '' %>" required>
+</div>
+
+<div class="campo">
+    <label for="<%= p %>correo">Correo</label>
+    <input id="<%= p %>correo" name="correo" type="text" value="<%= v.correo || '' %>" required>
+</div>
+
+<div class="campo">
+    <label for="<%= p %>rol">Rol</label>
+    <select id="<%= p %>rol" name="rol" required>
+        <option value="">Selecciona un rol</option>
+        <option value="docente" <%= v.rol === 'docente' ? 'selected' : '' %>>Docente</option>
+        <option value="alumno" <%= v.rol === 'alumno' ? 'selected' : '' %>>Alumno</option>
+        <option value="admin" <%= v.rol === 'admin' ? 'selected' : '' %>>Admin</option>
+    </select>
+</div>
+
+<div class="campo">
+    <label for="<%= p %>contrasena"><%= editando ? 'Nueva contraseña' : 'Contraseña' %></label>
+    <div class="campo-password-wrapper">
+        <input
+            id="<%= p %>contrasena"
+            name="contrasena"
+            type="text"
+            <% if (editando) { %>placeholder="Dejar en blanco para no cambiarla"<% } else { %>required<% } %>
+        >
+        <button type="button" class="btn-generar" data-generar-password>Generar aleatoria</button>
+    </div>
+</div>
+
+<button type="submit" class="btn-guardar">
+    <%= editando ? 'Guardar cambios' : 'Crear usuario' %>
+</button>
+
+<script>
+    document.addEventListener("click", (evento) => {
+        const boton = evento.target.closest("[data-generar-password]");
+
+        if (!boton) {
+            return;
+        }
+
+        const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+        const aleatorios = crypto.getRandomValues(new Uint32Array(12));
+
+        boton
+            .closest(".campo-password-wrapper")
+            .querySelector("input")
+            .value = Array.from(
+                aleatorios,
+                (n) => caracteres[n % caracteres.length]
+            ).join("");
+    });
+</script>
