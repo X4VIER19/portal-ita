@@ -46,7 +46,5 @@ app.listen(PORT, "0.0.0.0", () => {
     console.log(`Local: http://localhost:${PORT}`);
     console.log("--------------------------------");
 
-    // Arranca la sincronización BD <-> Omada cada 5 minutos.
-    // También se puede disparar manualmente desde /admin/sesiones.
     iniciarSincronizacionPeriodica(5 * 60 * 1000);
 });

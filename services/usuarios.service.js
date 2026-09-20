@@ -43,9 +43,6 @@ async function eliminarSesionActiva(usuarioId) {
     );
 }
 
-// Trae TODAS las sesiones activas sin paginar. Es para uso interno del
-// servicio de sincronización (services/sync.js), no para vistas de admin
-// (esas siguen usando listarSesionesPaginadas).
 async function listarTodasSesionesActivas() {
     const [rows] = await pool.query(
         `SELECT usuario_id, mac

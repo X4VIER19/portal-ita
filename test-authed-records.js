@@ -25,8 +25,6 @@ async function main() {
         process.exit(0);
     }
 
-    // Ordenamos del más reciente al más antiguo, usando `end` (o `start`
-    // si `end` no viene) como criterio de recencia.
     const ordenados = [...encontrados].sort((a, b) => {
         const finA = a.end || a.start || 0;
         const finB = b.end || b.start || 0;

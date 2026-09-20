@@ -14,18 +14,11 @@ let tokenState = {
     expiresAt: 0
 };
 
-// Códigos de error de Omada para el endpoint "unauth" que, en la práctica,
-// equivalen a un éxito: no hay nada que desautorizar porque el cliente
-// ya no existe en el controlador o ya está en proceso de ser desconectado.
-// Fuente: documentación OpenAPI de Omada, endpoint
-// POST /hotspot/clients/{clientMac}/unauth (sección "Authorized Client").
 const UNAUTH_CODES_EQUIVALENTES_A_EXITO = new Set([
-    -41006, // This client does not exist.
-    -41019  // The client is being disconnected, please wait...
+    -41006,
+    -41019
 ]);
 
-// Determina si una respuesta de unauthClient() debe tratarse como éxito
-// para efectos del flujo de negocio (aunque errorCode no sea 0).
 function unauthEfectivo(respuesta) {
     if (!respuesta || typeof respuesta.errorCode !== "number") {
         return false;
@@ -219,11 +212,6 @@ async function listarAuthedRecords() {
         const response = await client.get(
             `/openapi/v1/${omadacId}/sites/${siteId}/hotspot/authed-records`,
             {
-                // 1000 es el máximo permitido por la API para este endpoint.
-                // Si algún día el total de registros supera 1000 en un solo
-                // site, hará falta paginar (usar totalRows de la respuesta
-                // para saber si se necesitan más páginas). Por ahora, con
-                // el volumen de tu laboratorio, una sola página es suficiente.
                 params: { page: 1, pageSize: 1000 },
                 headers: { "Authorization": `AccessToken=${token}` }
             }

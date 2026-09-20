@@ -146,7 +146,6 @@ async function crearUsuario(req, res) {
             rol
         });
     } catch (err) {
-        // Correo duplicado -> error de formulario, no error 500 genérico
         if (err.code === "ER_DUP_ENTRY") {
             return res.render("admin/usuarios-nuevo", {
                 error: "Ya existe un usuario con ese correo.",
@@ -154,7 +153,7 @@ async function crearUsuario(req, res) {
                 ...req.session.admin
             });
         }
-        throw err; // cualquier otro error lo atrapa errorHandler.js
+        throw err;
     }
 
     res.redirect("/admin/usuarios");
@@ -201,7 +200,6 @@ async function actualizarUsuario(req, res) {
         });
     }
 
-    // La contraseña es opcional al editar: en blanco = se conserva la actual.
     const contrasenaHash = contrasena ? await bcrypt.hash(contrasena, 10) : null;
 
     try {
@@ -249,9 +247,6 @@ async function mostrarSesiones(req, res) {
         offset
     });
 
-    // Intentamos cruzar con el estado real de Omada. Si Omada no
-    // responde (Controller apagado, red caída, etc.)
-    // mostramos lo que tenemos en la BD.
     let registrosOmada = null;
     let omadaError = false;
 
@@ -262,9 +257,6 @@ async function mostrarSesiones(req, res) {
         omadaError = true;
     }
 
-    // Igual que en services/sync.js: nos quedamos con el registro MÁS
-    // RECIENTE de cada MAC (por `start`), porque Omada nunca actualiza un
-    // registro existente, siempre crea uno nuevo por cada auth/unauth.
     let estadoPorMac = null;
     if (registrosOmada) {
         estadoPorMac = new Map();
@@ -291,9 +283,6 @@ async function mostrarSesiones(req, res) {
 
     const inicio = total === 0 ? 0 : offset + 1;
     const fin = Math.min(offset + sesionesConEstado.length, total);
-
-    // Feedback de la sincronización manual (si el usuario acaba de
-    // presionar el botón "Sincronizar con Omada").
     const sync = ["ok", "error"].includes(req.query.sync) ? req.query.sync : null;
     const eliminadas = Number.parseInt(req.query.eliminadas, 10) || 0;
 
@@ -328,9 +317,6 @@ async function desconectarSesion(req, res) {
 }
 
 // POST /admin/sesiones/sincronizar (protegida)
-// Dispara manualmente la misma lógica que corre automáticamente cada
-// N minutos (services/sync.js), y regresa a /admin/sesiones conservando
-// los filtros activos, con un resumen de cuántas sesiones se limpiaron.
 async function sincronizarSesionesManual(req, res) {
     const resultado = await sincronizarSesiones();
 
