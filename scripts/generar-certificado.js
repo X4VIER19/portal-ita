@@ -41,7 +41,7 @@ IP.1 = ${portalIp}
 
 fs.writeFileSync(configPath, opensslConfig, "utf8");
 
-console.log(`🔐 Generando certificado para ${portalIp}...`);
+console.log(`Generando certificado para ${portalIp}...`);
 
 try {
     execSync(

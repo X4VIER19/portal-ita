@@ -142,7 +142,7 @@ async function testAPI() {
             console.log(error.response.status);
             console.log(error.response.data);
         } else {
-            console.log(error.message);
+            console.lo < g(error.message);
         }
     }
 }

@@ -8,6 +8,44 @@ const {
     guardarSesionActiva
 } = require("../services/usuarios.service");
 
+function normalizarMac(mac) {
+    if (typeof mac !== "string") {
+        return null;
+    }
+
+    const macLimpia = mac.trim().toUpperCase();
+
+    const macValida = /^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/.test(macLimpia);
+
+    if (!macValida) {
+        return null;
+    }
+
+    return macLimpia.replace(/:/g, "-");
+}
+
+const locksUsuarios = new Map();
+
+async function adquirirLockUsuario(usuarioId) {
+    while (locksUsuarios.has(usuarioId)) {
+        await locksUsuarios.get(usuarioId);
+    }
+
+    let liberar;
+    const promesa = new Promise((resolve) => {
+        liberar = resolve;
+    });
+
+    locksUsuarios.set(usuarioId, promesa);
+
+    return () => {
+        if (locksUsuarios.get(usuarioId) === promesa) {
+            locksUsuarios.delete(usuarioId);
+            liberar();
+        }
+    };
+}
+
 function guardarRequest(req) {
     const data = {
         timestamp: new Date().toISOString(),
@@ -30,63 +68,135 @@ function guardarRequest(req) {
 // GET /  -> Página que ve el cliente al ser redirigido por Omada.
 function mostrarPortal(req, res) {
     guardarRequest(req);
-    const { clientMac, redirectUrl } = req.query;
+
+    const clientMac = normalizarMac(req.query.clientMac);
+    const { redirectUrl } = req.query;
 
     if (!clientMac) {
         return res.render("portal/sinMac");
     }
 
-    res.render("portal/login", { clientMac, redirectUrl });
+    if (!req.session.clientMac) {
+        req.session.clientMac = clientMac;
+    }
+
+    res.render("portal/login", {
+        clientMac: req.session.clientMac,
+        redirectUrl
+    });
 }
+
 
 // POST /login -> Valida credenciales y aplica la regla de 1 MAC por usuario.
 async function login(req, res) {
-    const { correo, password, clientMac } = req.body;
+    const { correo, password } = req.body;
+    const clientMac = req.session.clientMac;
 
-    if (!correo || !password || !clientMac) {
-        return res.status(400).json({ ok: false, mensaje: "Faltan datos." });
+    if (!clientMac) {
+        return res.status(400).json({
+            ok: false,
+            mensaje: "Sesión del portal inválida o expirada."
+        });
+    }
+
+    if (!correo || !password) {
+        return res.status(400).json({
+            ok: false,
+            mensaje: "Faltan datos."
+        });
     }
 
     const usuario = await buscarUsuarioPorCorreo(correo);
     if (!usuario) {
-        return res.json({ ok: false, mensaje: "Usuario no encontrado." });
+        return res.json({
+            ok: false,
+            mensaje: "Usuario no encontrado."
+        });
     }
 
     if (!usuario.activo) {
-        return res.json({ ok: false, mensaje: "La cuenta está desactivada." });
+        return res.json({
+            ok: false,
+            mensaje: "La cuenta está desactivada."
+        });
     }
 
-    const passwordCorrecta = await bcrypt.compare(password, usuario.contrasena_hash);
+    const passwordCorrecta = await bcrypt.compare(
+        password,
+        usuario.contrasena_hash
+    );
+
     if (!passwordCorrecta) {
-        return res.json({ ok: false, mensaje: "Contraseña incorrecta." });
+        return res.json({
+            ok: false,
+            mensaje: "Contraseña incorrecta."
+        });
     }
 
-    const sesionPrevia = await buscarSesionActiva(usuario.id);
+    const liberarLock = await adquirirLockUsuario(usuario.id);
 
-    if (sesionPrevia && sesionPrevia.mac !== clientMac) {
-        console.log(`Usuario ${correo} cambia de MAC: ${sesionPrevia.mac} -> ${clientMac}`);
+    try {
+        const sesionPrevia = await buscarSesionActiva(usuario.id);
 
-        const resultadoUnauth = await unauthClient(sesionPrevia.mac);
+        if (sesionPrevia && sesionPrevia.mac !== clientMac) {
+            console.log(
+                `Usuario ${correo} cambia de MAC: ` +
+                `${sesionPrevia.mac} -> ${clientMac}`
+            );
 
-        if (!unauthEfectivo(resultadoUnauth)) {
-            console.error(`No se pudo desautorizar la MAC anterior ${sesionPrevia.mac}:`, resultadoUnauth);
-            return res.json({ ok: false, mensaje: "No se pudo cerrar la sesión anterior." });
+            const resultadoUnauth = await unauthClient(
+                sesionPrevia.mac
+            );
+
+            if (!unauthEfectivo(resultadoUnauth)) {
+                console.error(
+                    `No se pudo desautorizar la MAC anterior ` +
+                    `${sesionPrevia.mac}:`,
+                    resultadoUnauth
+                );
+
+                return res.json({
+                    ok: false,
+                    mensaje: "No se pudo cerrar la sesión anterior."
+                });
+            }
+
+            if (resultadoUnauth.errorCode !== 0) {
+                console.log(
+                    `Unauth de ${sesionPrevia.mac} tratado como resuelto ` +
+                    `(errorCode ${resultadoUnauth.errorCode}: ` +
+                    `${resultadoUnauth.msg}). Continuando con el login.`
+                );
+            }
         }
 
-        if (resultadoUnauth.errorCode !== 0) {
-            console.log(`Unauth de ${sesionPrevia.mac} tratado como resuelto (errorCode ${resultadoUnauth.errorCode}: ${resultadoUnauth.msg}). Continuando con el login.`);
+        const resultado = await authClient(clientMac);
+
+        if (resultado.errorCode !== 0) {
+            return res.json({
+                ok: false,
+                mensaje: "Error al autorizar: " + resultado.msg
+            });
         }
+
+        await guardarSesionActiva(
+            usuario.id,
+            clientMac
+        );
+
+        console.log(
+            `Sesión activa: usuario ${usuario.id} ` +
+            `(${correo}) -> ${clientMac}`
+        );
+
+        return res.json({
+            ok: true,
+            mensaje: "Acceso concedido."
+        });
+
+    } finally {
+        liberarLock();
     }
-
-    const resultado = await authClient(clientMac);
-    if (resultado.errorCode !== 0) {
-        return res.json({ ok: false, mensaje: "Error al autorizar: " + resultado.msg });
-    }
-
-    await guardarSesionActiva(usuario.id, clientMac);
-    console.log(`Sesión activa: usuario ${usuario.id} (${correo}) -> ${clientMac}`);
-
-    res.json({ ok: true, mensaje: "Acceso concedido." });
 }
 
 // GET /portal-auth?mac=... -> Autorizar directo por URL (uso manual)
