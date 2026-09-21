@@ -24,6 +24,24 @@ function normalizarMac(mac) {
     return macLimpia.replace(/:/g, "-");
 }
 
+function validarRedirectUrl(url) {
+    if (typeof url !== "string" || !url.trim()) {
+        return "http://sii.altamira.tecnm.mx/";
+    }
+
+    try {
+        const destino = new URL(url);
+
+        if (destino.protocol !== "http:" && destino.protocol !== "https:") {
+            return "http://sii.altamira.tecnm.mx/";
+        }
+
+        return destino.toString();
+    } catch {
+        return "http://sii.altamira.tecnm.mx/";
+    }
+}
+
 const locksUsuarios = new Map();
 
 async function adquirirLockUsuario(usuarioId) {
@@ -70,7 +88,7 @@ function mostrarPortal(req, res) {
     guardarRequest(req);
 
     const clientMac = normalizarMac(req.query.clientMac);
-    const { redirectUrl } = req.query;
+    const redirectUrl = validarRedirectUrl(req.query.redirectUrl);
 
     if (!clientMac) {
         return res.render("portal/sinMac");

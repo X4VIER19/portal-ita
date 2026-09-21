@@ -175,7 +175,7 @@
 
     <script>
         const CLIENT_MAC = <%- JSON.stringify(clientMac) %>;
-        const REDIRECT_FINAL = <%- JSON.stringify(redirectUrl || "http://sii.altamira.tecnm.mx/") %>;
+        const REDIRECT_FINAL = <%- JSON.stringify(redirectUrl || "http://sii.altamira.tecnm.mx/").replace(/</g, "\\u003c") %>;
 
         async function login() {
             const boton = document.getElementById("btnLogin");
