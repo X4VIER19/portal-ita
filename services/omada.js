@@ -14,7 +14,7 @@ let tokenState = {
     expiresAt: 0
 };
 
-// Evita que varias llamadas simultáneas hagan refresh al mismo tiempo.
+// Evita múltiples refresh simultáneos.
 let refreshPromise = null;
 
 const UNAUTH_CODES_EQUIVALENTES_A_EXITO = new Set([
@@ -47,17 +47,11 @@ function esTokenExpirado(error) {
 }
 
 function esTokenExpiradoRespuesta(data) {
-    const mensaje = [
-        data?.msg,
-        data?.message
-    ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-    return mensaje.includes("access token has expired")
-        || mensaje.includes("token has expired")
-        || mensaje.includes("token expired");
+    return esTokenExpirado({
+        response: {
+            data
+        }
+    });
 }
 
 async function obtenerToken() {
@@ -120,7 +114,6 @@ async function obtenerToken() {
 }
 
 async function refrescarToken() {
-    // Si ya existe un refresh en curso, reutilizarlo.
     if (refreshPromise) {
         console.log(
             "Refresh de token ya en curso. Esperando resultado..."
@@ -189,9 +182,7 @@ async function refrescarToken() {
             return tokenState.accessToken;
 
         } catch (error) {
-            console.log(
-                "ERROR AL REFRESCAR TOKEN"
-            );
+            console.log("ERROR AL REFRESCAR TOKEN");
 
             if (error.response) {
                 console.log(
@@ -243,12 +234,25 @@ async function getValidToken() {
 async function ejecutarConToken(callback) {
     let token = await getValidToken();
 
-    let response = await callback(token);
+    try {
+        let response = await callback(token);
 
-    if (
-        response?.data &&
-        esTokenExpiradoRespuesta(response.data)
-    ) {
+        if (
+            response?.data &&
+            esTokenExpiradoRespuesta(response.data)
+        ) {
+            throw new Error(
+                response.data.msg || "Access token expirado."
+            );
+        }
+
+        return response;
+
+    } catch (error) {
+        if (!esTokenExpirado(error)) {
+            throw error;
+        }
+
         console.log(
             "Omada rechazó el AccessToken porque está expirado."
         );
@@ -259,10 +263,8 @@ async function ejecutarConToken(callback) {
 
         token = await refrescarToken();
 
-        response = await callback(token);
+        return await callback(token);
     }
-
-    return response;
 }
 
 async function testAPI() {
@@ -333,10 +335,10 @@ async function authClient(clientMac) {
             console.log(error.response.status);
             console.log(error.response.data);
             return error.response.data;
-        } else {
-            console.log(error.message);
-            throw error;
         }
+
+        console.log(error.message);
+        throw error;
     }
 }
 
@@ -373,11 +375,121 @@ async function unauthClient(clientMac) {
             console.log(error.response.status);
             console.log(error.response.data);
             return error.response.data;
-        } else {
-            console.log(error.message);
-            throw error;
         }
+
+        console.log(error.message);
+        throw error;
     }
+}
+
+/*
+ * ============================================================
+ * PRUEBAS - CAMBIO ATÓMICO DE SESIÓN EN OMADA
+ * ============================================================
+ *
+ * Intenta pasar:
+ *
+ *     MAC anterior -> MAC nueva
+ *
+ * Si el UNAUTH de la MAC anterior falla:
+ *     se detiene.
+ *
+ * Si el AUTH de la MAC nueva devuelve un error:
+ *     intenta restaurar la MAC anterior.
+ *
+ * Los fallos de red/timeout se consideran ambiguos:
+ *     no se realiza compensación automática porque no sabemos
+ *     si Omada alcanzó a aplicar la operación.
+ *
+ * Esta función es para pruebas de robustez y posteriormente
+ * puede integrarse al flujo definitivo del portal.
+ * ============================================================
+ */
+async function cambiarSesionOmada(macAnterior, macNueva) {
+    // FUNCIÓN DE PRUEBAS: no se usa todavía en el login normal.
+
+    if (!macAnterior || !macNueva) {
+        return {
+            ok: false,
+            etapa: "validacion",
+            error: "Faltan MACs."
+        };
+    }
+
+    if (macAnterior === macNueva) {
+        return {
+            ok: true,
+            etapa: "misma_mac"
+        };
+    }
+
+    console.log(`PRUEBA: cambiando sesión ${macAnterior} -> ${macNueva}`);
+
+    // 1. Quitar autorización anterior
+    let resultadoUnauth;
+
+    try {
+        resultadoUnauth = await unauthClient(macAnterior);
+    } catch (error) {
+        return {
+            ok: false,
+            etapa: "unauth_anterior",
+            ambiguo: true,
+            error: error.message
+        };
+    }
+
+    if (!unauthEfectivo(resultadoUnauth)) {
+        return {
+            ok: false,
+            etapa: "unauth_anterior",
+            resultado: resultadoUnauth
+        };
+    }
+
+    // 2. Autorizar nueva MAC
+    let resultadoAuth;
+
+    try {
+        resultadoAuth = await authClient(macNueva);
+    } catch (error) {
+        return {
+            ok: false,
+            etapa: "auth_nueva",
+            ambiguo: true,
+            error: error.message
+        };
+    }
+
+    // 3. Si Omada rechazó la nueva MAC, intentar restaurar la anterior
+    if (resultadoAuth.errorCode !== 0) {
+        console.log("PRUEBA: falló AUTH de nueva MAC. Intentando restaurar anterior...");
+
+        let restauracion;
+
+        try {
+            restauracion = await authClient(macAnterior);
+        } catch (error) {
+            restauracion = {
+                ok: false,
+                ambiguo: true,
+                error: error.message
+            };
+        }
+
+        return {
+            ok: false,
+            etapa: "auth_nueva",
+            resultado: resultadoAuth,
+            restauracion
+        };
+    }
+
+    return {
+        ok: true,
+        etapa: "completado",
+        resultadoAuth
+    };
 }
 
 async function listarAuthedRecords() {
@@ -429,6 +541,7 @@ module.exports = {
     getValidToken,
     authClient,
     unauthClient,
+    unauthEfectivo,
     listarAuthedRecords,
-    unauthEfectivo
+    cambiarSesionOmada
 };

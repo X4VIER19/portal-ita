@@ -1,7 +1,13 @@
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 
-const { authClient, unauthClient, unauthEfectivo, testAPI } = require("../services/omada");
+const {
+    authClient,
+    unauthClient,
+    unauthEfectivo,
+    testAPI
+} = require("../services/omada");
+
 const {
     buscarUsuarioPorCorreo,
     buscarSesionActiva,
@@ -83,6 +89,161 @@ function guardarRequest(req) {
     return data;
 }
 
+async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva) {
+    console.log(
+        `Cambio de sesión: usuario ${usuarioId} ` +
+        `${macAnterior} -> ${macNueva}`
+    );
+
+    // Si la MAC no cambió, no necesitamos tocar Omada.
+    if (macAnterior === macNueva) {
+        await guardarSesionActiva(usuarioId, macNueva);
+
+        return {
+            ok: true,
+            etapa: "misma_mac"
+        };
+    }
+
+    // ---------------------------------------------------------
+    // 1. UNAUTH de la MAC anterior
+    // ---------------------------------------------------------
+
+    let resultadoUnauth;
+
+    try {
+        resultadoUnauth = await unauthClient(macAnterior);
+    } catch (error) {
+        console.error(
+            `Error de red al desautorizar ${macAnterior}:`,
+            error.message
+        );
+        return {
+            ok: false,
+            etapa: "unauth_anterior",
+            ambiguo: true,
+            mensaje: "No se pudo determinar el estado de la sesión anterior."
+        };
+    }
+
+    if (!unauthEfectivo(resultadoUnauth)) {
+        console.error(
+            `No se pudo desautorizar ${macAnterior}:`,
+            resultadoUnauth
+        );
+
+        return {
+            ok: false,
+            etapa: "unauth_anterior",
+            ambiguo: false,
+            mensaje: "No se pudo cerrar la sesión anterior."
+        };
+    }
+
+    // ---------------------------------------------------------
+    // 2. AUTH de la MAC nueva
+    // ---------------------------------------------------------
+
+    let resultadoAuth;
+
+    try {
+        resultadoAuth = await authClient(macNueva);
+    } catch (error) {
+        console.error(
+            `Error de red al autorizar ${macNueva}:`,
+            error.message
+        );
+
+        return {
+            ok: false,
+            etapa: "auth_nueva",
+            ambiguo: true,
+            mensaje: "No se pudo determinar el estado de la nueva autorización."
+        };
+    }
+
+    if (resultadoAuth.errorCode !== 0) {
+        console.error(
+            `Falló AUTH de ${macNueva}:`,
+            resultadoAuth
+        );
+
+        let restauracion;
+        try {
+            restauracion = await authClient(macAnterior);
+        } catch (error) {
+            restauracion = {
+                ok: false,
+                ambiguo: true,
+                mensaje: error.message
+            };
+        }
+
+        return {
+            ok: false,
+            etapa: "auth_nueva",
+            ambiguo: false,
+            mensaje: "No se pudo autorizar la nueva sesión.",
+            resultadoAuth,
+            restauracion
+        };
+    }
+
+    // ---------------------------------------------------------
+    // 3. Guardar la nueva MAC en MySQL
+    // ---------------------------------------------------------
+
+    try {
+        await guardarSesionActiva(usuarioId, macNueva);
+
+    } catch (error) {
+        console.error(
+            `ERROR MYSQL al guardar ${macNueva}:`,
+            error.message
+        );
+
+        // MySQL falló después de que Omada autorizó la nueva MAC.
+        // Intentamos compensar el cambio en Omada.
+
+        let compensacionNueva;
+        let restauracionAnterior;
+
+        try {
+            compensacionNueva = await unauthClient(macNueva);
+        } catch (errorCompensacion) {
+            compensacionNueva = {
+                ok: false,
+                ambiguo: true,
+                mensaje: errorCompensacion.message
+            };
+        }
+
+        try {
+            restauracionAnterior = await authClient(macAnterior);
+        } catch (errorRestauracion) {
+            restauracionAnterior = {
+                ok: false,
+                ambiguo: true,
+                mensaje: errorRestauracion.message
+            };
+        }
+
+        return {
+            ok: false,
+            etapa: "mysql",
+            ambiguo: true,
+            mensaje: "No se pudo guardar la nueva sesión en MySQL.",
+            compensacionNueva,
+            restauracionAnterior
+        };
+    }
+
+    return {
+        ok: true,
+        etapa: "completado"
+    };
+}
+
 // GET /  -> Página que ve el cliente al ser redirigido por Omada.
 function mostrarPortal(req, res) {
     guardarRequest(req);
@@ -156,51 +317,90 @@ async function login(req, res) {
     try {
         const sesionPrevia = await buscarSesionActiva(usuario.id);
 
-        if (sesionPrevia && sesionPrevia.mac !== clientMac) {
-            console.log(
-                `Usuario ${correo} cambia de MAC: ` +
-                `${sesionPrevia.mac} -> ${clientMac}`
-            );
+        if (!sesionPrevia) {
+            // Primera sesión del usuario.
+            let resultadoAuth;
 
-            const resultadoUnauth = await unauthClient(
-                sesionPrevia.mac
-            );
-
-            if (!unauthEfectivo(resultadoUnauth)) {
+            try {
+                resultadoAuth = await authClient(clientMac);
+            } catch (error) {
                 console.error(
-                    `No se pudo desautorizar la MAC anterior ` +
-                    `${sesionPrevia.mac}:`,
-                    resultadoUnauth
+                    `Error de red al autorizar ${clientMac}:`,
+                    error.message
                 );
 
                 return res.json({
                     ok: false,
-                    mensaje: "No se pudo cerrar la sesión anterior."
+                    mensaje: "No se pudo determinar el estado de la autorización."
                 });
             }
 
-            if (resultadoUnauth.errorCode !== 0) {
-                console.log(
-                    `Unauth de ${sesionPrevia.mac} tratado como resuelto ` +
-                    `(errorCode ${resultadoUnauth.errorCode}: ` +
-                    `${resultadoUnauth.msg}). Continuando con el login.`
+            if (resultadoAuth.errorCode !== 0) {
+                return res.json({
+                    ok: false,
+                    mensaje: "Error al autorizar: " + resultadoAuth.msg
+                });
+            }
+
+            try {
+                await guardarSesionActiva(
+                    usuario.id,
+                    clientMac
                 );
+            } catch (error) {
+                console.error(
+                    `ERROR MYSQL al guardar ${clientMac}:`,
+                    error.message
+                );
+
+                // MySQL falló después de autorizar en Omada.
+                // Intentamos quitar la autorización para no dejar
+                // una sesión huérfana en Omada.
+
+                try {
+                    await unauthClient(clientMac);
+                } catch (errorCompensacion) {
+                    console.error(
+                        "No se pudo compensar AUTH nueva:",
+                        errorCompensacion.message
+                    );
+                }
+
+                return res.json({
+                    ok: false,
+                    mensaje: "No se pudo guardar la sesión."
+                });
+            }
+
+        } else if (sesionPrevia.mac === clientMac) {
+            // El usuario ya tiene esta misma MAC autorizada.
+            // No necesitamos cambiar nada en Omada.
+
+            console.log(
+                `Usuario ${correo} ya tiene activa la MAC ${clientMac}.`
+            );
+
+        } else {
+            // Cambio de dispositivo.
+            const resultadoCambio = await cambiarSesionConCompensacion(
+                usuario.id,
+                sesionPrevia.mac,
+                clientMac
+            );
+
+            if (!resultadoCambio.ok) {
+                console.error(
+                    "No se pudo completar el cambio de sesión:",
+                    resultadoCambio
+                );
+
+                return res.json({
+                    ok: false,
+                    mensaje: resultadoCambio.mensaje ||
+                        "No se pudo cambiar la sesión."
+                });
             }
         }
-
-        const resultado = await authClient(clientMac);
-
-        if (resultado.errorCode !== 0) {
-            return res.json({
-                ok: false,
-                mensaje: "Error al autorizar: " + resultado.msg
-            });
-        }
-
-        await guardarSesionActiva(
-            usuario.id,
-            clientMac
-        );
 
         console.log(
             `Sesión activa: usuario ${usuario.id} ` +
