@@ -353,10 +353,6 @@ async function login(req, res) {
                     error.message
                 );
 
-                // MySQL falló después de autorizar en Omada.
-                // Intentamos quitar la autorización para no dejar
-                // una sesión huérfana en Omada.
-
                 try {
                     await unauthClient(clientMac);
                 } catch (errorCompensacion) {

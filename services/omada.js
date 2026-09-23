@@ -267,6 +267,38 @@ async function ejecutarConToken(callback) {
     }
 }
 
+async function obtenerInfoCliente(clientMac) {
+    try {
+        const siteId = process.env.OMADA_SITE_ID;
+        const omadacId = process.env.OMADA_OMADAC_ID;
+
+        const response = await ejecutarConToken(async (token) => {
+            return client.get(
+                `/openapi/v1/${omadacId}/sites/${siteId}/clients/${clientMac}`,
+                {
+                    headers: {
+                        "Authorization": `AccessToken=${token}`
+                    }
+                }
+            );
+        });
+
+        return response.data;
+
+    } catch (error) {
+        console.log(`ERROR AL CONSULTAR INFO DEL CLIENTE ${clientMac}`);
+
+        if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+            return error.response.data;
+        }
+
+        console.log(error.message);
+        throw error;
+    }
+}
+
 async function testAPI() {
     try {
         const response = await ejecutarConToken(async (token) => {
@@ -385,24 +417,6 @@ async function unauthClient(clientMac) {
 /*
  * ============================================================
  * PRUEBAS - CAMBIO ATÓMICO DE SESIÓN EN OMADA
- * ============================================================
- *
- * Intenta pasar:
- *
- *     MAC anterior -> MAC nueva
- *
- * Si el UNAUTH de la MAC anterior falla:
- *     se detiene.
- *
- * Si el AUTH de la MAC nueva devuelve un error:
- *     intenta restaurar la MAC anterior.
- *
- * Los fallos de red/timeout se consideran ambiguos:
- *     no se realiza compensación automática porque no sabemos
- *     si Omada alcanzó a aplicar la operación.
- *
- * Esta función es para pruebas de robustez y posteriormente
- * puede integrarse al flujo definitivo del portal.
  * ============================================================
  */
 async function cambiarSesionOmada(macAnterior, macNueva) {
@@ -536,6 +550,50 @@ async function listarAuthedRecords() {
     }
 }
 
+async function listarClientes() {
+    try {
+        const siteId = process.env.OMADA_SITE_ID;
+        const omadacId = process.env.OMADA_OMADAC_ID;
+
+        const response = await ejecutarConToken(async (token) => {
+            return client.get(
+                `/openapi/v1/${omadacId}/sites/${siteId}/clients`,
+                {
+                    params: {
+                        page: 1,
+                        pageSize: 1000
+                    },
+                    headers: {
+                        "Authorization": `AccessToken=${token}`
+                    }
+                }
+            );
+        });
+
+        if (response.data.errorCode !== 0) {
+            throw new Error(
+                `Omada error: ${response.data.msg}`
+            );
+        }
+
+        return response.data.result.data;
+
+    } catch (error) {
+        console.log(
+            "ERROR AL LISTAR CLIENTES"
+        );
+
+        if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+        } else {
+            console.log(error.message);
+        }
+
+        throw error;
+    }
+}
+
 module.exports = {
     testAPI,
     getValidToken,
@@ -543,5 +601,7 @@ module.exports = {
     unauthClient,
     unauthEfectivo,
     listarAuthedRecords,
-    cambiarSesionOmada
+    cambiarSesionOmada,
+    obtenerInfoCliente,
+    listarClientes
 };
