@@ -1,0 +1,85 @@
+<%- include('../partials/head', { titulo: 'SSIDs desconocidos' }) %>
+<body>
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'ssids',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'SSIDs desconocidos detectados' }) %>
+
+            <main class="contenido-pagina">
+                <a href="/admin/ssids" class="volver">&larr; Volver a SSIDs</a>
+
+                <div class="aviso">
+                    <i class="ph ph-info"></i>
+                    Estos son nombres de SSID que algún dispositivo reportó al
+                    intentar iniciar sesión en el portal, pero que no están
+                    registrados en la tabla de SSIDs. En todos los casos el
+                    acceso ya fue rechazado automáticamente; esta lista es
+                    solo para que decidas si alguno debe darse de alta.
+                </div>
+
+                <div class="tabla-panel">
+                    <% if (ssidsDesconocidos.length === 0) { %>
+                        <div class="vacio">
+                            No se ha detectado ningún SSID desconocido.
+                        </div>
+                    <% } else { %>
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SSID</th>
+                                        <th>Primera detección</th>
+                                        <th>Última detección</th>
+                                        <th>Veces detectado</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% ssidsDesconocidos.forEach(s => { %>
+                                        <tr>
+                                            <td><%= s.nombre_ssid %></td>
+                                            <td><%= new Date(s.primera_deteccion).toLocaleString('es-MX') %></td>
+                                            <td><%= new Date(s.ultima_deteccion).toLocaleString('es-MX') %></td>
+                                            <td><%= s.veces_detectado %></td>
+                                            <td>
+                                                <span class="badge <%= s.revisado ? 'badge-activo' : 'badge-inactivo' %>">
+                                                    <%= s.revisado ? 'Revisado' : 'Pendiente' %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <form
+                                                    method="POST"
+                                                    action="/admin/ssids/desconocidos/<%= s.id %>/revisado"
+                                                    style="display:inline;"
+                                                >
+                                                    <input type="hidden" name="revisado" value="<%= s.revisado ? 'false' : 'true' %>">
+                                                    <button type="submit" class="btn-toggle">
+                                                        <%= s.revisado ? 'Marcar pendiente' : 'Marcar revisado' %>
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    method="POST"
+                                                    action="/admin/ssids/desconocidos/<%= s.id %>/eliminar"
+                                                    style="display:inline;"
+                                                    onsubmit="return confirm('¿Eliminar este registro de diagnóstico?');"
+                                                >
+                                                    <button type="submit" class="btn-toggle">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

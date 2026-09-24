@@ -299,6 +299,55 @@ async function obtenerInfoCliente(clientMac) {
     }
 }
 
+/*
+ * ============================================================
+ * NUEVO: resolución del SSID de origen de un cliente.
+ * ============================================================
+ * Basado en la prueba diagnóstica (scripts/test-ssid-preauth.js):
+ * el campo `result.ssid` de obtenerInfoCliente() ya está disponible
+ * mientras el cliente está PENDING (antes de cualquier login/AUTH),
+ * así que no es necesario esperar a que el usuario se autentique.
+ *
+ * Se incluye un reintento corto para cubrir el caso borde en el que,
+ * en el instante exacto de la consulta, el cliente momentáneamente
+ * no reporta info (ej. roaming entre APs, reconexión).
+ *
+ * No decide nada de negocio aquí (no valida contra ssids_portal ni
+ * contra el rol del usuario): solo devuelve el nombre del SSID o
+ * null si no se pudo determinar tras los reintentos.
+ */
+async function obtenerSsidCliente(clientMac, intentos = 2, esperaMs = 1500) {
+    for (let intento = 1; intento <= intentos; intento++) {
+        let info;
+
+        try {
+            info = await obtenerInfoCliente(clientMac);
+        } catch (error) {
+            console.log(
+                `Intento ${intento}/${intentos}: error al consultar info de ${clientMac}:`,
+                error.message
+            );
+            info = null;
+        }
+
+        const ssid = info?.result?.ssid;
+
+        if (ssid) {
+            return ssid;
+        }
+
+        if (intento < intentos) {
+            await new Promise((resolve) => setTimeout(resolve, esperaMs));
+        }
+    }
+
+    console.log(
+        `No se pudo determinar el SSID de ${clientMac} tras ${intentos} intento(s).`
+    );
+
+    return null;
+}
+
 async function testAPI() {
     try {
         const response = await ejecutarConToken(async (token) => {
@@ -603,5 +652,6 @@ module.exports = {
     listarAuthedRecords,
     cambiarSesionOmada,
     obtenerInfoCliente,
+    obtenerSsidCliente,
     listarClientes
 };

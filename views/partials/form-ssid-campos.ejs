@@ -1,0 +1,44 @@
+<%
+    const editando = modo === 'editar';
+    const v = valores || {};
+%>
+
+<div class="campo">
+    <label for="nombre_ssid">Nombre del SSID</label>
+    <input
+        id="nombre_ssid"
+        name="nombre_ssid"
+        type="text"
+        value="<%= v.nombre_ssid || '' %>"
+        placeholder="Debe coincidir exactamente con el SSID configurado en Omada"
+        required
+    >
+</div>
+
+<div class="campo">
+    <label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo" required>
+        <option value="">Selecciona un tipo</option>
+        <option value="GENERAL" <%= v.tipo === 'GENERAL' ? 'selected' : '' %>>General (Docentes y Alumnos)</option>
+        <option value="DOCENTES" <%= v.tipo === 'DOCENTES' ? 'selected' : '' %>>Docentes</option>
+        <option value="ALUMNOS" <%= v.tipo === 'ALUMNOS' ? 'selected' : '' %>>Alumnos</option>
+    </select>
+</div>
+
+<% if (editando) { %>
+    <div class="campo campo-checkbox">
+        <label for="activo">
+            <input
+                id="activo"
+                name="activo"
+                type="checkbox"
+                <%= v.activo ? 'checked' : '' %>
+            >
+            SSID activo (permite inicio de sesión mientras esté marcado)
+        </label>
+    </div>
+<% } %>
+
+<button type="submit" class="btn-guardar">
+    <%= editando ? 'Guardar cambios' : 'Crear SSID' %>
+</button>

@@ -17,6 +17,19 @@ const {
 const { unauthClient, listarAuthedRecords } = require("../services/omada");
 const { sincronizarSesiones } = require("../services/sync");
 
+const {
+    TIPOS_VALIDOS: TIPOS_SSID_VALIDOS,
+    listarSsids,
+    buscarSsidPorId,
+    crearSsid: crearSsidEnBD,
+    actualizarSsid: actualizarSsidEnBD,
+    eliminarSsid: eliminarSsidEnBD,
+    listarSsidsDesconocidos,
+    contarSsidsDesconocidosPendientes,
+    marcarSsidDesconocidoRevisado,
+    eliminarSsidDesconocido: eliminarSsidDesconocidoEnBD
+} = require("../services/ssids.service");
+
 const ROLES_VALIDOS = ["admin", "docente", "alumno"];
 function esPeticionAjax(req) {
     return (
@@ -576,6 +589,178 @@ async function sincronizarSesionesManual(req, res) {
     );
 }
 
+// ------------------------------------------------------------------
+// NUEVO: administración de SSIDs (/admin/ssids)
+// ------------------------------------------------------------------
+
+// GET /admin/ssids
+async function mostrarSsids(req, res) {
+    const ssids = await listarSsids();
+    const conteoDesconocidos = await contarSsidsDesconocidosPendientes();
+
+    res.render("admin/ssids", {
+        ssids,
+        conteoDesconocidos,
+        ...req.session.admin
+    });
+}
+
+// GET /admin/ssids/nuevo
+function mostrarFormularioNuevoSsid(req, res) {
+    res.render("admin/ssids-nuevo", {
+        error: null,
+        valores: {},
+        ...req.session.admin
+    });
+}
+
+// POST /admin/ssids/nuevo
+async function crearSsid(req, res) {
+    const { nombre_ssid, tipo } = req.body;
+
+    if (!nombre_ssid || !tipo) {
+        return res.status(400).render("admin/ssids-nuevo", {
+            error: "El nombre del SSID y el tipo son obligatorios.",
+            valores: req.body,
+            ...req.session.admin
+        });
+    }
+
+    if (!TIPOS_SSID_VALIDOS.includes(tipo)) {
+        return res.status(400).render("admin/ssids-nuevo", {
+            error: "El tipo seleccionado no es válido.",
+            valores: req.body,
+            ...req.session.admin
+        });
+    }
+
+    try {
+        await crearSsidEnBD({
+            nombre_ssid: nombre_ssid.trim(),
+            tipo
+        });
+    } catch (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.status(409).render("admin/ssids-nuevo", {
+                error: "Ya existe un SSID registrado con ese nombre.",
+                valores: req.body,
+                ...req.session.admin
+            });
+        }
+
+        throw err;
+    }
+
+    res.redirect("/admin/ssids");
+}
+
+// GET /admin/ssids/editar/:id
+async function mostrarFormularioEditarSsid(req, res) {
+    const { id } = req.params;
+
+    const ssid = await buscarSsidPorId(id);
+
+    if (!ssid) {
+        return res.redirect("/admin/ssids");
+    }
+
+    res.render("admin/ssids-editar", {
+        error: null,
+        valores: ssid,
+        ...req.session.admin
+    });
+}
+
+// POST /admin/ssids/editar/:id
+async function actualizarSsid(req, res) {
+    const { id } = req.params;
+    const { nombre_ssid, tipo, activo } = req.body;
+
+    const activoBooleano = activo === "on" || activo === "1" || activo === true;
+
+    if (!nombre_ssid || !tipo) {
+        return res.status(400).render("admin/ssids-editar", {
+            error: "El nombre del SSID y el tipo son obligatorios.",
+            valores: { id, nombre_ssid, tipo, activo: activoBooleano },
+            ...req.session.admin
+        });
+    }
+
+    if (!TIPOS_SSID_VALIDOS.includes(tipo)) {
+        return res.status(400).render("admin/ssids-editar", {
+            error: "El tipo seleccionado no es válido.",
+            valores: { id, nombre_ssid, tipo, activo: activoBooleano },
+            ...req.session.admin
+        });
+    }
+
+    try {
+        await actualizarSsidEnBD(id, {
+            nombre_ssid: nombre_ssid.trim(),
+            tipo,
+            activo: activoBooleano
+        });
+    } catch (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.status(409).render("admin/ssids-editar", {
+                error: "Ya existe otro SSID registrado con ese nombre.",
+                valores: { id, nombre_ssid, tipo, activo: activoBooleano },
+                ...req.session.admin
+            });
+        }
+
+        throw err;
+    }
+
+    res.redirect("/admin/ssids");
+}
+
+// POST /admin/ssids/:id/eliminar
+async function eliminarSsid(req, res) {
+    const { id } = req.params;
+
+    await eliminarSsidEnBD(id);
+
+    res.redirect("/admin/ssids");
+}
+
+// ------------------------------------------------------------------
+// NUEVO: SSIDs desconocidos detectados (/admin/ssids/desconocidos)
+// Solo diagnóstico: no autoriza ni desautoriza nada en Omada.
+// ------------------------------------------------------------------
+
+// GET /admin/ssids/desconocidos
+async function mostrarSsidsDesconocidos(req, res) {
+    const ssidsDesconocidos = await listarSsidsDesconocidos();
+
+    res.render("admin/ssids-desconocidos", {
+        ssidsDesconocidos,
+        ...req.session.admin
+    });
+}
+
+// POST /admin/ssids/desconocidos/:id/revisado
+async function marcarSsidDesconocidoRevisadoController(req, res) {
+    const { id } = req.params;
+    const { revisado } = req.body;
+
+    await marcarSsidDesconocidoRevisado(
+        id,
+        revisado === "true" || revisado === "1" || revisado === true
+    );
+
+    res.redirect("/admin/ssids/desconocidos");
+}
+
+// POST /admin/ssids/desconocidos/:id/eliminar
+async function eliminarSsidDesconocidoController(req, res) {
+    const { id } = req.params;
+
+    await eliminarSsidDesconocidoEnBD(id);
+
+    res.redirect("/admin/ssids/desconocidos");
+}
+
 module.exports = {
     raizAdmin,
     mostrarLogin,
@@ -591,5 +776,14 @@ module.exports = {
     actualizarUsuario,
     mostrarSesiones,
     desconectarSesion,
-    sincronizarSesionesManual
+    sincronizarSesionesManual,
+    mostrarSsids,
+    mostrarFormularioNuevoSsid,
+    crearSsid,
+    mostrarFormularioEditarSsid,
+    actualizarSsid,
+    eliminarSsid,
+    mostrarSsidsDesconocidos,
+    marcarSsidDesconocidoRevisadoController,
+    eliminarSsidDesconocidoController
 };

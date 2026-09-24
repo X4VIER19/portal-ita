@@ -1,0 +1,81 @@
+<%- include('../partials/head', { titulo: 'SSIDs' }) %>
+<body>
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'ssids',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'SSIDs del portal' }) %>
+
+            <main class="contenido-pagina">
+                <div class="toolbar">
+                    <a href="/admin/ssids/desconocidos" class="btn-limpiar">
+                        <i class="ph ph-warning"></i>
+                        SSIDs desconocidos detectados
+                        <% if (conteoDesconocidos > 0) { %>
+                            (<%= conteoDesconocidos %>)
+                        <% } %>
+                    </a>
+
+                    <a href="/admin/ssids/nuevo" class="btn-nuevo">
+                        <i class="ph ph-plus"></i> Nuevo SSID
+                    </a>
+                </div>
+
+                <div class="tabla-panel">
+                    <% if (ssids.length === 0) { %>
+                        <div class="vacio">
+                            Todavía no hay SSIDs registrados. Agrega el primero
+                            para que el portal pueda validar los inicios de
+                            sesión contra él.
+                        </div>
+                    <% } else { %>
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre del SSID</th>
+                                        <th>Tipo</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% ssids.forEach(s => { %>
+                                        <tr>
+                                            <td><%= s.nombre_ssid %></td>
+                                            <td>
+                                                <span class="badge badge-tipo-<%= s.tipo.toLowerCase() %>">
+                                                    <%= s.tipo %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge <%= s.activo ? 'badge-activo' : 'badge-inactivo' %>">
+                                                    <%= s.activo ? 'Activo' : 'Inactivo' %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/ssids/editar/<%= s.id %>" class="btn-toggle">Editar</a>
+                                                <form
+                                                    method="POST"
+                                                    action="/admin/ssids/<%= s.id %>/eliminar"
+                                                    style="display:inline;"
+                                                    onsubmit="return confirm('¿Eliminar este SSID? Los inicios de sesión desde esta red dejarán de validarse contra este registro.');"
+                                                >
+                                                    <button type="submit" class="btn-toggle">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

@@ -15,6 +15,30 @@ CREATE TABLE usuarios (
     UNIQUE KEY uq_usuarios_correo (correo)
 );
 
+CREATE TABLE ssids_portal (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre_ssid VARCHAR(100) NOT NULL,
+    tipo ENUM(
+        'GENERAL',
+        'DOCENTES',
+        'ALUMNOS'
+    ) NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_ssid_nombre (nombre_ssid)
+);
+
+CREATE TABLE ssids_desconocidos_detectados (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre_ssid VARCHAR(100) NOT NULL,
+    primera_deteccion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ultima_deteccion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    veces_detectado INT UNSIGNED NOT NULL DEFAULT 1,
+    revisado BOOLEAN NOT NULL DEFAULT FALSE,
+    UNIQUE KEY uq_ssid_desconocido (nombre_ssid)
+);
+
 CREATE TABLE sesiones_activas (
     usuario_id BIGINT UNSIGNED PRIMARY KEY,
     mac VARCHAR(17) NOT NULL,

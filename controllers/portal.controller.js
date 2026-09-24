@@ -5,6 +5,7 @@ const {
     authClient,
     unauthClient,
     unauthEfectivo,
+    obtenerSsidCliente,
     testAPI
 } = require("../services/omada");
 
@@ -13,6 +14,13 @@ const {
     buscarSesionActiva,
     guardarSesionActiva
 } = require("../services/usuarios.service");
+
+const {
+    buscarSsidActivoPorNombre,
+    registrarSsidDesconocido
+} = require("../services/ssids.service");
+
+const { esCompatible } = require("../utils/compatibilidadSsid");
 
 function normalizarMac(mac) {
     if (typeof mac !== "string") {
@@ -259,6 +267,11 @@ function mostrarPortal(req, res) {
         req.session.clientMac = clientMac;
     }
 
+    // Nota de diseño: el SSID de origen NO se resuelve ni se valida aquí.
+    // Se resuelve en POST /login, justo antes de autorizar en Omada, para
+    // usar el dato más reciente posible (ver scripts/test-ssid-preauth.js
+    // y la bitácora del proyecto para el sustento de esta decisión).
+
     res.render("portal/login", {
         clientMac: req.session.clientMac,
         redirectUrl
@@ -266,7 +279,8 @@ function mostrarPortal(req, res) {
 }
 
 
-// POST /login -> Valida credenciales y aplica la regla de 1 MAC por usuario.
+// POST /login -> Valida credenciales, SSID de origen y aplica la regla
+// de 1 MAC por usuario.
 async function login(req, res) {
     const { correo, password } = req.body;
     const clientMac = req.session.clientMac;
@@ -311,6 +325,73 @@ async function login(req, res) {
             mensaje: "Contraseña incorrecta."
         });
     }
+
+    // ---------------------------------------------------------
+    // Validación de SSID de origen contra el rol del usuario.
+    // Se hace ANTES de tocar Omada o sesiones_activas: si el
+    // usuario no puede usar esta red, no debe generarse ningún
+    // cambio de estado en Omada ni en MySQL.
+    //
+    // Mensaje al usuario: intencionalmente genérico e idéntico
+    // en ambos casos de rechazo (SSID no registrado / SSID
+    // incompatible con el rol), para no revelar la arquitectura
+    // de red. El detalle real queda solo en el log del servidor.
+    // ---------------------------------------------------------
+
+    const ssid = await obtenerSsidCliente(clientMac);
+
+    if (!ssid) {
+        console.error(
+            `No se pudo determinar el SSID de origen para ${clientMac} ` +
+            `(usuario intentando ingresar: ${correo}).`
+        );
+
+        return res.json({
+            ok: false,
+            mensaje:
+                "No se pudo verificar tu red. Reconéctate al WiFi e inténtalo de nuevo."
+        });
+    }
+
+    const ssidConfigurado = await buscarSsidActivoPorNombre(ssid);
+
+    if (!ssidConfigurado) {
+        console.error(
+            `Intento de login desde SSID no registrado: "${ssid}" ` +
+            `(mac=${clientMac}, correo=${correo}).`
+        );
+
+        try {
+            await registrarSsidDesconocido(ssid);
+        } catch (error) {
+            console.error(
+                "No se pudo registrar el SSID desconocido:",
+                error.message
+            );
+        }
+
+        return res.json({
+            ok: false,
+            mensaje: "No tienes acceso a Internet desde esta red."
+        });
+    }
+
+    if (!esCompatible(ssidConfigurado.tipo, usuario.rol)) {
+        console.error(
+            `Rol incompatible con el SSID: usuario ${correo} (rol=${usuario.rol}) ` +
+            `intentó autenticarse desde "${ssid}" (tipo=${ssidConfigurado.tipo}).`
+        );
+
+        return res.json({
+            ok: false,
+            mensaje: "No tienes acceso a Internet desde esta red."
+        });
+    }
+
+    // ---------------------------------------------------------
+    // Fin de la validación de SSID. A partir de aquí, el flujo
+    // es exactamente el mismo que ya estaba probado.
+    // ---------------------------------------------------------
 
     const liberarLock = await adquirirLockUsuario(usuario.id);
 
@@ -400,7 +481,7 @@ async function login(req, res) {
 
         console.log(
             `Sesión activa: usuario ${usuario.id} ` +
-            `(${correo}) -> ${clientMac}`
+            `(${correo}) -> ${clientMac} (ssid=${ssid})`
         );
 
         return res.json({

@@ -1,0 +1,31 @@
+<%- include('../partials/head', { titulo: 'Nuevo SSID' }) %>
+<body>
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'ssids',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'Nuevo SSID' }) %>
+
+            <main class="contenido-pagina">
+                <a href="/admin/ssids" class="volver">&larr; Volver a SSIDs</a>
+
+                <div class="form-panel">
+                    <% if (error) { %>
+                        <div class="error-box"><%= error %></div>
+                    <% } %>
+
+                    <form method="POST" action="/admin/ssids/nuevo">
+                        <%- include('../partials/form-ssid-campos', {
+                            valores,
+                            modo: 'crear'
+                        }) %>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

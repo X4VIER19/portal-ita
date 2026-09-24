@@ -28,4 +28,19 @@ router.get("/sesiones", requiereAdmin, asyncHandler(adminController.mostrarSesio
 router.post("/sesiones/:usuarioId/desconectar", requiereAdmin, asyncHandler(adminController.desconectarSesion));
 router.post("/sesiones/sincronizar", requiereAdmin, asyncHandler(adminController.sincronizarSesionesManual));
 
+// SSIDS
+// IMPORTANTE: la ruta "/ssids/desconocidos" debe declararse ANTES de
+// "/ssids/editar/:id" y "/ssids/nuevo" para que Express no intente
+// interpretarla como un :id.
+router.get("/ssids/desconocidos", requiereAdmin, asyncHandler(adminController.mostrarSsidsDesconocidos));
+router.post("/ssids/desconocidos/:id/revisado", requiereAdmin, asyncHandler(adminController.marcarSsidDesconocidoRevisadoController));
+router.post("/ssids/desconocidos/:id/eliminar", requiereAdmin, asyncHandler(adminController.eliminarSsidDesconocidoController));
+
+router.get("/ssids", requiereAdmin, asyncHandler(adminController.mostrarSsids));
+router.get("/ssids/nuevo", requiereAdmin, adminController.mostrarFormularioNuevoSsid);
+router.post("/ssids/nuevo", requiereAdmin, asyncHandler(adminController.crearSsid));
+router.get("/ssids/editar/:id", requiereAdmin, asyncHandler(adminController.mostrarFormularioEditarSsid));
+router.post("/ssids/editar/:id", requiereAdmin, asyncHandler(adminController.actualizarSsid));
+router.post("/ssids/:id/eliminar", requiereAdmin, asyncHandler(adminController.eliminarSsid));
+
 module.exports = router;
