@@ -288,6 +288,7 @@
                                                     data-editar-usuario="<%= JSON.stringify({ id: u.id, nombre: u.nombre, apellido: u.apellido, correo: u.correo, rol: u.rol }) %>"
                                                 >Editar</a>
                                                 <form method="POST" action="/admin/usuarios/<%= u.id %>/toggle" style="display:inline;">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <button type="submit" class="btn-toggle">
                                                         <%= u.activo ? 'Desactivar' : 'Activar' %>
                                                     </button>

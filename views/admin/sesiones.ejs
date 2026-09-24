@@ -244,6 +244,7 @@
 
                 <div class="toolbar-sesiones">
                     <form method="POST" action="/admin/sesiones/sincronizar">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="hidden" name="busqueda" value="<%= busqueda %>">
                         <input type="hidden" name="rol" value="<%= filtroRol %>">
                         <button type="submit" class="btn-sincronizar">
@@ -325,6 +326,7 @@
                                             </td>
                                             <td>
                                                 <form method="POST" action="/admin/sesiones/<%= s.usuario_id %>/desconectar">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <input type="hidden" name="mac" value="<%= s.mac %>">
                                                     <button type="submit" class="btn-desconectar">Desconectar</button>
                                                 </form>

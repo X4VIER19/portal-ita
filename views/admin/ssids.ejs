@@ -64,6 +64,7 @@
                                                     style="display:inline;"
                                                     onsubmit="return confirm('¿Eliminar este SSID? Los inicios de sesión desde esta red dejarán de validarse contra este registro.');"
                                                 >
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <button type="submit" class="btn-toggle">Eliminar</button>
                                                 </form>
                                             </td>

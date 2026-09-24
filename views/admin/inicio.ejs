@@ -1,9 +1,7 @@
 <%- include('../partials/head', { titulo: 'Inicio' }) %>
 
 <body>
-
     <div class="app-shell">
-
         <%- include('../partials/sidebar', {
             activo: 'inicio',
             admin: {
@@ -149,6 +147,8 @@
                                 method="POST"
                                 class="accion-form"
                             >
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                                 <button
                                     type="submit"
                                     class="accion-card accion-card-button"
@@ -188,8 +188,6 @@
             </main>
         </div>
     </div>
-
-
 
     <style>
 

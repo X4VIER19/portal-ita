@@ -154,6 +154,8 @@
         <p class="subtitulo">Accede con tu cuenta de administrador</p>
 
         <form method="POST" action="/admin/login">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
             <% if (error) { %>
                 <div class="error-box"><%= error %></div>
             <% } %>

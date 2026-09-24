@@ -1,3 +1,5 @@
+const { invalidCsrfTokenError } = require("./csrf");
+
 function mensajeAmigable(err) {
     if (err.code === "ECONNREFUSED" || err.name === "AggregateError") {
         return "No se pudo conectar a la base de datos. Verifica que el contenedor de MySQL esté corriendo (docker compose ps).";
@@ -20,6 +22,32 @@ function mensajeAmigable(err) {
 
 
 function errorHandler(err, req, res, next) {
+    // ------------------------------------------------------------
+    // NUEVO: token CSRF inválido o ausente.
+    // Se compara por identidad porque csrf-sync reutiliza una misma
+    // instancia de error para todos los rechazos de validación.
+    // Casos típicos: formulario abierto en una pestaña vieja después
+    // de que la sesión expiró, o un intento real de CSRF.
+    // ------------------------------------------------------------
+    if (err === invalidCsrfTokenError) {
+        console.error("=== CSRF RECHAZADO ===");
+        console.error(`Ruta: ${req.method} ${req.originalUrl}`);
+        console.error(`IP: ${req.ip}`);
+        console.error("=======================");
+
+        if (req.originalUrl.startsWith("/admin")) {
+            return res.status(403).render("admin/error", {
+                mensaje:
+                    "Tu sesión de formulario expiró o no es válida. Recarga la página e inténtalo de nuevo."
+            });
+        }
+
+        return res.status(403).json({
+            ok: false,
+            mensaje: "Tu sesión expiró. Recarga la página e inténtalo de nuevo."
+        });
+    }
+
     console.error("=== ERROR ===");
     console.error(err);
     console.error("=============");

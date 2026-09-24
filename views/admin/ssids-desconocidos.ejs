@@ -57,6 +57,7 @@
                                                     action="/admin/ssids/desconocidos/<%= s.id %>/revisado"
                                                     style="display:inline;"
                                                 >
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <input type="hidden" name="revisado" value="<%= s.revisado ? 'false' : 'true' %>">
                                                     <button type="submit" class="btn-toggle">
                                                         <%= s.revisado ? 'Marcar pendiente' : 'Marcar revisado' %>
@@ -68,6 +69,7 @@
                                                     style="display:inline;"
                                                     onsubmit="return confirm('¿Eliminar este registro de diagnóstico?');"
                                                 >
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <button type="submit" class="btn-toggle">Eliminar</button>
                                                 </form>
                                             </td>

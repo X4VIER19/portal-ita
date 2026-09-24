@@ -95,6 +95,8 @@
     }
 </style>
 
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
 <div class="campo">
     <label for="<%= p %>nombre">Nombre</label>
     <input id="<%= p %>nombre" name="nombre" type="text" value="<%= v.nombre || '' %>" required>

@@ -176,6 +176,7 @@
     <script>
         const CLIENT_MAC = <%- JSON.stringify(clientMac) %>;
         const REDIRECT_FINAL = <%- JSON.stringify(redirectUrl || "http://sii.altamira.tecnm.mx/").replace(/</g, "\\u003c") %>;
+        const CSRF_TOKEN = <%- JSON.stringify(csrfToken) %>;
 
         async function login() {
             const boton = document.getElementById("btnLogin");
@@ -191,7 +192,10 @@
             try {
                 const resp = await fetch("/login", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-Token": CSRF_TOKEN
+                    },
                     body: JSON.stringify({ correo, password, clientMac: CLIENT_MAC })
                 });
                 const data = await resp.json();

@@ -9,6 +9,7 @@ const adminRoutes = require("./routes/admin.routes");
 const errorHandler = require("./middleware/errorHandler");
 const sessionStore = require("./services/sessionStore");
 const { iniciarSincronizacionPeriodica } = require("./services/sync");
+const { attachCsrfToken, csrfSynchronisedProtection } = require("./middleware/csrf");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,10 +37,23 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            maxAge: 1000 * 60 * 60 * 8
+            maxAge: 1000 * 60 * 60 * 8,
+            // sameSite: 'lax' es la primera línea de defensa contra CSRF
+            // (el navegador ya no envía la cookie de sesión en la mayoría
+            // de las peticiones cross-site). El token CSRF de abajo es la
+            // segunda línea, para los casos que sameSite no cubre.
+            sameSite: "lax"
         }
     })
 );
+
+// ------------------------------------------------------------------
+// Protección CSRF (ver middleware/csrf.js).
+// Debe ir DESPUÉS de session() (necesita req.session) y ANTES de
+// montar las rutas, para que aplique a todo /admin y a todo el portal.
+// ------------------------------------------------------------------
+app.use(attachCsrfToken);
+app.use(csrfSynchronisedProtection);
 
 app.use("/admin", adminRoutes);
 app.use("/", portalRoutes);

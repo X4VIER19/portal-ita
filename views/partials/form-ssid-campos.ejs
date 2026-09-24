@@ -3,6 +3,8 @@
     const v = valores || {};
 %>
 
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
 <div class="campo">
     <label for="nombre_ssid">Nombre del SSID</label>
     <input
