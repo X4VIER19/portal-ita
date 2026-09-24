@@ -38,6 +38,11 @@ function normalizarMac(mac) {
     return macLimpia.replace(/:/g, "-");
 }
 
+
+const DOMINIOS_PERMITIDOS = [
+    "sii.altamira.tecnm.mx"
+];
+
 function validarRedirectUrl(url) {
     if (typeof url !== "string" || !url.trim()) {
         return "http://sii.altamira.tecnm.mx/";
@@ -389,9 +394,28 @@ async function login(req, res) {
     }
 
     // ---------------------------------------------------------
-    // Fin de la validación de SSID. A partir de aquí, el flujo
-    // es exactamente el mismo que ya estaba probado.
+    // Fin de la validación de SSID. Regeneramos el ID de sesión
+    // (previene session fixation) antes de continuar, preservando
+    // el clientMac ya validado.
     // ---------------------------------------------------------
+
+    try {
+        await new Promise((resolve, reject) => {
+            req.session.regenerate((err) => {
+                if (err) return reject(err);
+                resolve();
+            });
+        });
+    } catch (error) {
+        console.error("Error al regenerar sesión del portal:", error.message);
+
+        return res.status(500).json({
+            ok: false,
+            mensaje: "No se pudo iniciar sesión. Intenta de nuevo."
+        });
+    }
+
+    req.session.clientMac = clientMac;
 
     const liberarLock = await adquirirLockUsuario(usuario.id);
 
