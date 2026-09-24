@@ -4,11 +4,20 @@ const router = express.Router();
 const adminController = require("../controllers/admin.controller");
 const { requiereAdmin } = require("../middleware/adminAuth");
 const asyncHandler = require("../utils/asyncHandler");
+const {
+    limiteAdminPorIp,
+    limiteAdminPorCuenta
+} = require("../middleware/rateLimiters");
 
 // AUTH ADMIN
 router.get("/", adminController.raizAdmin);
 router.get("/login", adminController.mostrarLogin);
-router.post("/login", asyncHandler(adminController.login));
+router.post(
+    "/login",
+    limiteAdminPorIp,
+    limiteAdminPorCuenta,
+    asyncHandler(adminController.login)
+);
 router.get("/logout", adminController.logout);
 
 // INICIO
