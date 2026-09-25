@@ -33,6 +33,11 @@
     gap: 10px;
 }
 
+/* La tabla de sesiones es un panel independiente de sus controles. */
+.filtros-sesiones {
+    margin-bottom: 18px;
+}
+
 .campo-busqueda {
     flex: 1;
     min-width: 220px;
