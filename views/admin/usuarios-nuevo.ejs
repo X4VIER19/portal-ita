@@ -17,7 +17,7 @@
                         <div class="error-box"><%= error %></div>
                     <% } %>
 
-                    <form method="POST" action="/admin/usuarios/nuevo">
+                    <form method="POST" action="/admin/usuarios/nuevo" class="formulario-usuario">
                         <%- include('../partials/form-usuario-campos', {
                             valores,
                             modo: 'crear',

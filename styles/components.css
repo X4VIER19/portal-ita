@@ -1,17 +1,8 @@
-/* ==========================================================================
-   ESTILOS TEMPORALES — ADMIN (tablas, badges, formularios, avisos)
+/* ========================================================================== 
+   COMPONENTES COMPARTIDOS - ADMIN (tablas, badges, formularios, avisos)
    --------------------------------------------------------------------------
-   Este archivo cubre clases que en el proyecto real viven dentro de bloques
-   <style> embebidos en cada vista (usuarios.ejs, sesiones.ejs, etc.) y que
-   aún no se han compartido como CSS centralizado.
-
-   Se construyó únicamente con las variables ya definidas en tokens.css
-   (colores de marca, superficie, texto, éxito/peligro/info) para que
-   combine en paleta con el resto del panel.
-
-   Pendiente (a tu cargo, como acordamos): normalizar/fusionar esto con el
-   partials.css real cuando lo tengas centralizado, evitando duplicar reglas
-   si algunas de estas clases ya existen ahí con otros valores.
+   Controles reutilizados por las vistas administrativas. Los colores se
+   consumen exclusivamente desde tokens.css.
    ========================================================================== */
 
 
@@ -512,3 +503,139 @@ td.mac {
     color: var(--color-texto-tenue);
     padding: 0 4px;
 }
+
+/* Modal de usuario */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+
+.modal-overlay.abierto {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-caja {
+    width: 100%;
+    max-width: 500px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+
+    border: 1px solid var(--color-borde);
+    border-radius: 14px;
+
+    background: var(--color-superficie);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+
+    transform: translateY(8px) scale(0.98);
+    transition: transform 0.18s ease;
+}
+
+.modal-overlay.abierto .modal-caja {
+    transform: translateY(0) scale(1);
+}
+
+.modal-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.modal-cabecera h2 {
+    margin: 0;
+    color: var(--color-texto-titulo);
+    font-size: 1.05rem;
+    font-weight: 650;
+}
+
+.modal-cerrar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: transparent;
+    color: var(--color-texto-tenue);
+
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-cerrar:hover {
+    background: var(--color-info-fondo);
+    color: var(--color-texto-normal);
+}
+
+.modal-cuerpo { padding: 22px; }
+
+.exito-box {
+    background: var(--color-exito-fondo);
+    color: var(--color-exito);
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--radio-base);
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+@media (max-width: 600px) {
+    .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .modal-caja {
+        max-height: 92vh;
+        border-radius: 14px 14px 0 0;
+    }
+}
+
+
+/* Campos específicos del formulario de usuario */
+.formulario-usuario .campo-password-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.formulario-usuario .campo-password-wrapper input { flex: 1; }
+
+.formulario-usuario .btn-generar {
+    white-space: nowrap;
+    padding: 0 0.9rem;
+    background: var(--color-fondo-app);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-base);
+    color: var(--color-texto-normal);
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.formulario-usuario .btn-generar:hover { border-color: var(--color-marca-primario-hover); }
+.formulario-usuario .btn-guardar { width: 100%; }
+.formulario-usuario .btn-guardar:disabled { opacity: 0.6; cursor: wait; }

@@ -1,0 +1,167 @@
+/* Inicio de sesión administrativo */
+.admin-login-page {
+        background-image:
+            linear-gradient(160deg, rgba(8,14,26,0.92) 0%, rgba(8,14,26,0.80) 60%, rgba(8,14,26,0.90) 100%),
+            url('/assets/fondo_ITA.webp');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+    }
+
+    .marca-superior { text-align: center; margin-bottom: 1.75rem; }
+
+    .marca-superior .sigla {
+        font-size: 0.8rem;
+        letter-spacing: 0.03em;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 0.3rem;
+    }
+
+    .marca-superior .titulo {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: rgba(255,255,255,0.92);
+    }
+
+    .login-card {
+        background: rgba(19, 27, 46, 0.42);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        width: 100%;
+        max-width: 400px;
+        padding: 2.75rem 2.25rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .login-card h1 {
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.01em;
+    }
+
+    .login-card .subtitulo {
+        text-align: center;
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.5);
+        margin-bottom: 1.75rem;
+    }
+
+    .error-box {
+        background: rgba(232, 129, 77, 0.18);
+        color: #ff9d76;
+        padding: 0.75rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+        text-align: center;
+        border: 1px solid rgba(232, 129, 77, 0.3);
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+
+    .form-group label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+    }
+
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+
+    .input-wrapper input {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        background: rgba(0, 0, 0, 0.28);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 0.95rem;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .input-wrapper input::placeholder { color: rgba(255, 255, 255, 0.30); }
+
+    .input-wrapper input:focus {
+        outline: none;
+        border-color: var(--color-marca-primario-hover);
+        box-shadow: 0 0 0 3px rgba(var(--color-marca-primario-rgb), 0.30);
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+    .input-wrapper input:-webkit-autofill,
+    .input-wrapper input:-webkit-autofill:hover,
+    .input-wrapper input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #ffffff;
+        -webkit-box-shadow: 0 0 0px 1000px rgba(10, 14, 24, 0.55) inset;
+        box-shadow: 0 0 0px 1000px rgba(10, 14, 24, 0.55) inset;
+        transition: background-color 9999s ease-in-out 0s;
+        caret-color: #ffffff;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        transition: color 0.15s ease;
+    }
+
+    .toggle-password:hover { color: #ffffff; }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.85rem;
+        background: var(--color-marca-primario);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.97rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1.25rem;
+        transition: background-color 0.15s ease;
+    }
+
+    .btn-submit:hover { background: var(--color-marca-primario-hover); }
+
+/* Página de error */
+.admin-error-page {
+        background: var(--color-fondo-app);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        text-align: center;
+    }
+.admin-error-page .caja {
+        max-width: 420px;
+    }
+.admin-error-page h1 { color: var(--color-texto-titulo); margin-bottom: 0.75rem; }
+.admin-error-page p { color: var(--color-texto-tenue); margin-bottom: 1.5rem; }
+.admin-error-page a {
+        display: inline-block;
+        padding: 0.7rem 1.5rem;
+        background: var(--color-marca-primario);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+.admin-error-page a:hover { background: var(--color-marca-primario-hover); }
