@@ -1,4 +1,7 @@
 const { rateLimit, ipKeyGenerator } = require("express-rate-limit");
+const {
+    construirCorreoInstitucional
+} = require("../utils/correoInstitucional");
 
 const VENTANA_MS = 30 * 1000; // 15 minutos
 
@@ -9,12 +12,19 @@ const VENTANA_MS = 30 * 1000; // 15 minutos
  * romper la normalización de IPv6 (varias direcciones IPv6 distintas
  * pueden pertenecer al mismo cliente/subred).
  */
-function keyPorCuenta(req) {
+function keyPorCuentaAdmin(req) {
     const correo = typeof req.body?.correo === "string"
         ? req.body.correo.trim().toLowerCase()
         : "sin-correo";
 
     return `${ipKeyGenerator(req.ip)}:${correo}`;
+}
+
+function keyPorCuentaPortal(req) {
+    const correo = construirCorreoInstitucional(req.body?.usuario);
+    const identificador = correo || "usuario-invalido";
+
+    return `${ipKeyGenerator(req.ip)}:${identificador}`;
 }
 
 // ------------------------------------------------------------------
@@ -39,7 +49,7 @@ const limiteAdminPorCuenta = rateLimit({
     limit: 6,
     standardHeaders: "draft-7",
     legacyHeaders: false,
-    keyGenerator: keyPorCuenta,
+    keyGenerator: keyPorCuentaAdmin,
     handler: (req, res) => {
         res.status(429).render("admin/login", {
             error:
@@ -71,7 +81,7 @@ const limitePortalPorCuenta = rateLimit({
     limit: 6,
     standardHeaders: "draft-7",
     legacyHeaders: false,
-    keyGenerator: keyPorCuenta,
+    keyGenerator: keyPorCuentaPortal,
     handler: (req, res) => {
         res.status(429).json({
             ok: false,

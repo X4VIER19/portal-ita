@@ -15,8 +15,11 @@
         </div>
 
         <div class="campo">
-            <label for="correo">Correo</label>
-            <input id="correo" type="email" placeholder="correo@altamira.tecnm.mx" autocomplete="username">
+            <label for="usuario">Usuario institucional</label>
+            <div class="usuario-institucional">
+                <input id="usuario" type="text" placeholder="l22820075" autocomplete="username" autocapitalize="none" spellcheck="false">
+                <span class="usuario-dominio">@altamira.tecnm.mx</span>
+            </div>
         </div>
 
         <div class="campo">
@@ -36,7 +39,7 @@
         async function login() {
             const boton = document.getElementById("btnLogin");
             const mensaje = document.getElementById("mensaje");
-            const correo = document.getElementById("correo").value;
+            const usuario = document.getElementById("usuario").value;
             const password = document.getElementById("password").value;
 
             boton.disabled = true;
@@ -51,7 +54,7 @@
                         "Content-Type": "application/json",
                         "X-CSRF-Token": CSRF_TOKEN
                     },
-                    body: JSON.stringify({ correo, password, clientMac: CLIENT_MAC })
+                    body: JSON.stringify({ usuario, password, clientMac: CLIENT_MAC })
                 });
                 const data = await resp.json();
 

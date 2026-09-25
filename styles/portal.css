@@ -116,6 +116,47 @@
         caret-color: #ffffff;
     }
 
+.usuario-institucional {
+    display: flex;
+    align-items: stretch;
+}
+
+.usuario-institucional input {
+    min-width: 0;
+    border-radius: 8px 0 0 8px;
+}
+
+.usuario-dominio {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.8rem;
+    background: rgba(0, 0, 0, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 0;
+    border-radius: 0 8px 8px 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 430px) {
+    .usuario-institucional {
+        flex-direction: column;
+    }
+
+    .usuario-institucional input {
+        border-radius: 8px 8px 0 0;
+    }
+
+    .usuario-dominio {
+        justify-content: flex-end;
+        min-height: 34px;
+        border-top: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0 0 8px 8px;
+    }
+}
+
 .portal-login-page button {
         width: 100%;
         padding: 0.85rem;

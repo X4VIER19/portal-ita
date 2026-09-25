@@ -21,6 +21,9 @@ const {
 } = require("../services/ssids.service");
 
 const { esCompatible } = require("../utils/compatibilidadSsid");
+const {
+    construirCorreoInstitucional
+} = require("../utils/correoInstitucional");
 
 function normalizarMac(mac) {
     if (typeof mac !== "string") {
@@ -287,7 +290,8 @@ function mostrarPortal(req, res) {
 // POST /login -> Valida credenciales, SSID de origen y aplica la regla
 // de 1 MAC por usuario.
 async function login(req, res) {
-    const { correo, password } = req.body;
+    const { usuario: usuarioInstitucional, password } = req.body;
+    const correo = construirCorreoInstitucional(usuarioInstitucional);
     const clientMac = req.session.clientMac;
 
     if (!clientMac) {
@@ -297,10 +301,17 @@ async function login(req, res) {
         });
     }
 
-    if (!correo || !password) {
+    if (!usuarioInstitucional || !password) {
         return res.status(400).json({
             ok: false,
             mensaje: "Faltan datos."
+        });
+    }
+
+    if (!correo) {
+        return res.status(400).json({
+            ok: false,
+            mensaje: "Escribe únicamente la parte de tu correo anterior a @altamira.tecnm.mx."
         });
     }
 
