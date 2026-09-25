@@ -143,15 +143,40 @@
     #mensaje.error { color: var(--color-peligro); }
     #mensaje.exito { color: var(--color-exito); }
 
-/* Portal sin MAC */
-.portal-sin-mac-page {
-        background: var(--color-fondo-app);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-        text-align: center;
-    }
-.portal-sin-mac-page h1 { color: var(--color-texto-titulo); margin-bottom: 0.5rem; }
-.portal-sin-mac-page p { color: var(--color-texto-tenue); max-width: 40ch; }
+/* Página pública mostrada al entrar sin parámetros de Omada */
+.portal-publico-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 5vw, 2rem);
+    background-image:
+        linear-gradient(160deg, rgba(8, 14, 26, 0.92), rgba(8, 14, 26, 0.8)),
+        url('/assets/fondo_ITA.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.portal-publico-card {
+    width: 100%;
+    max-width: 520px;
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(19, 27, 46, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    text-align: center;
+}
+
+.portal-publico-card h1 {
+    color: var(--color-texto-titulo);
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+}

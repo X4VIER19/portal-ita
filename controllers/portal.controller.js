@@ -265,7 +265,7 @@ function mostrarPortal(req, res) {
     const redirectUrl = validarRedirectUrl(req.query.redirectUrl);
 
     if (!clientMac) {
-        return res.render("portal/sinMac");
+        return res.render("portal/inicio");
     }
 
     if (!req.session.clientMac) {
