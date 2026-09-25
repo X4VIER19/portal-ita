@@ -17,7 +17,7 @@
                         <div class="error-box"><%= error %></div>
                     <% } %>
 
-                    <form method="POST" action="/admin/usuarios/editar/<%= valores.id %>" class="formulario-usuario">
+                    <form method="POST" action="/admin/usuarios/editar/<%= valores.id %>" class="formulario-usuario" autocomplete="off">
                         <%- include('../partials/form-usuario-campos', {
                             valores,
                             modo: 'editar',

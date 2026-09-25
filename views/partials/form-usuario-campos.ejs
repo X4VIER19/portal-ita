@@ -29,7 +29,7 @@
             type="text"
             value="<%= usuarioInstitucional %>"
             placeholder="l22820075"
-            autocomplete="username"
+            autocomplete="off"
             autocapitalize="none"
             spellcheck="false"
             required
@@ -55,6 +55,7 @@
             id="<%= p %>contrasena"
             name="contrasena"
             type="password"
+            autocomplete="new-password"
             <% if (editando) { %>placeholder="Dejar en blanco para no cambiarla"<% } else { %>required<% } %>
         >
         <button type="button" class="btn-mostrar-password" data-toggle-password aria-label="Mostrar contraseña">

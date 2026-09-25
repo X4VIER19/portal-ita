@@ -1,0 +1,129 @@
+<div class="modal-overlay" id="modalSsid" aria-hidden="true">
+    <div
+        class="modal-caja"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalSsidTitulo"
+    >
+        <div class="modal-cabecera">
+            <h2 id="modalSsidTitulo">Nuevo SSID</h2>
+            <button
+                type="button"
+                class="modal-cerrar"
+                data-cerrar-modal-ssid
+                aria-label="Cerrar"
+            >
+                &times;
+            </button>
+        </div>
+
+        <div class="modal-cuerpo">
+            <div class="error-box" id="modalSsidError" role="alert" hidden></div>
+            <div class="exito-box" id="modalSsidExito" role="status" hidden></div>
+
+            <form id="formModalSsid" method="POST" action="/admin/ssids/nuevo" autocomplete="off">
+                <%- include('./form-ssid-campos', {
+                    valores: {},
+                    modo: 'crear'
+                }) %>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    (() => {
+        const modal = document.getElementById("modalSsid");
+        const formulario = document.getElementById("formModalSsid");
+        const error = document.getElementById("modalSsidError");
+        const exito = document.getElementById("modalSsidExito");
+        const botonEnviar = formulario.querySelector('[type="submit"]');
+        let disparador = null;
+
+        function mostrar(caja, texto) {
+            caja.textContent = texto;
+            caja.hidden = false;
+        }
+
+        function limpiarMensajes() {
+            error.hidden = true;
+            exito.hidden = true;
+        }
+
+        function abrir(origen) {
+            disparador = origen;
+            formulario.reset();
+            limpiarMensajes();
+            botonEnviar.disabled = false;
+            botonEnviar.textContent = "Crear SSID";
+            modal.classList.add("abierto");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            setTimeout(() => formulario.elements.nombre_ssid.focus(), 50);
+        }
+
+        function cerrar() {
+            modal.classList.remove("abierto");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+            formulario.reset();
+            limpiarMensajes();
+            disparador?.focus();
+        }
+
+        document.addEventListener("click", (evento) => {
+            const abrirBtn = evento.target.closest("[data-abrir-modal-ssid]");
+
+            if (abrirBtn) {
+                evento.preventDefault();
+                abrir(abrirBtn);
+                return;
+            }
+
+            if (
+                evento.target === modal ||
+                evento.target.closest("[data-cerrar-modal-ssid]")
+            ) {
+                cerrar();
+            }
+        });
+
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape" && modal.classList.contains("abierto")) {
+                cerrar();
+            }
+        });
+
+        formulario.addEventListener("submit", async (evento) => {
+            evento.preventDefault();
+            limpiarMensajes();
+            botonEnviar.disabled = true;
+            botonEnviar.textContent = "Creando...";
+
+            try {
+                const respuesta = await fetch(formulario.action, {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: new URLSearchParams(new FormData(formulario))
+                });
+
+                const resultado = await respuesta.json().catch(() => ({}));
+
+                if (!respuesta.ok || !resultado.ok) {
+                    throw new Error(resultado.mensaje || "No se pudo crear el SSID.");
+                }
+
+                mostrar(exito, resultado.mensaje);
+                setTimeout(() => window.location.reload(), 700);
+            } catch (err) {
+                mostrar(error, err.message);
+                botonEnviar.disabled = false;
+                botonEnviar.textContent = "Crear SSID";
+            }
+        });
+    })();
+</script>

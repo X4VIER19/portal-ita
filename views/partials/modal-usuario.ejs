@@ -26,7 +26,7 @@
             <div class="error-box" id="modalUsuarioError" role="alert" hidden></div>
             <div class="exito-box" id="modalUsuarioExito" role="status" hidden></div>
 
-            <form id="formModalUsuario" method="POST" action="/admin/usuarios/nuevo" class="formulario-usuario">
+            <form id="formModalUsuario" method="POST" action="/admin/usuarios/nuevo" class="formulario-usuario" autocomplete="off">
                 <%- include('./form-usuario-campos', {
                     valores: {},
                     modo: 'crear',

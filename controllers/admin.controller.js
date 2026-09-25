@@ -644,21 +644,24 @@ function mostrarFormularioNuevoSsid(req, res) {
 // POST /admin/ssids/nuevo
 async function crearSsid(req, res) {
     const { nombre_ssid, tipo } = req.body;
+    const rechazar = (status, mensaje) => {
+        if (esPeticionAjax(req)) {
+            return res.status(status).json({ ok: false, mensaje });
+        }
 
-    if (!nombre_ssid || !tipo) {
-        return res.status(400).render("admin/ssids-nuevo", {
-            error: "El nombre del SSID y el tipo son obligatorios.",
+        return res.status(status).render("admin/ssids-nuevo", {
+            error: mensaje,
             valores: req.body,
             ...req.session.admin
         });
+    };
+
+    if (!nombre_ssid || !tipo) {
+        return rechazar(400, "El nombre del SSID y el tipo son obligatorios.");
     }
 
     if (!TIPOS_SSID_VALIDOS.includes(tipo)) {
-        return res.status(400).render("admin/ssids-nuevo", {
-            error: "El tipo seleccionado no es válido.",
-            valores: req.body,
-            ...req.session.admin
-        });
+        return rechazar(400, "El tipo seleccionado no es válido.");
     }
 
     try {
@@ -668,14 +671,17 @@ async function crearSsid(req, res) {
         });
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
-            return res.status(409).render("admin/ssids-nuevo", {
-                error: "Ya existe un SSID registrado con ese nombre.",
-                valores: req.body,
-                ...req.session.admin
-            });
+            return rechazar(409, "Ya existe un SSID registrado con ese nombre.");
         }
 
         throw err;
+    }
+
+    if (esPeticionAjax(req)) {
+        return res.status(201).json({
+            ok: true,
+            mensaje: "SSID creado correctamente."
+        });
     }
 
     res.redirect("/admin/ssids");
