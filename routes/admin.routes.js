@@ -39,6 +39,7 @@ router.post("/sesiones/sincronizar", requiereAdmin, asyncHandler(adminController
 
 // AUTORIZACIONES DE OMADA SIN SESIÓN EN MYSQL
 router.get("/autorizaciones-huerfanas", requiereAdmin, asyncHandler(adminController.mostrarAutorizacionesHuerfanas));
+router.post("/autorizaciones-huerfanas/limpiar", requiereAdmin, asyncHandler(adminController.limpiarRegistrosAutorizacionesHuerfanas));
 router.post("/autorizaciones-huerfanas/:id/desautorizar", requiereAdmin, asyncHandler(adminController.desautorizarAutorizacionHuerfana));
 
 // SSIDS

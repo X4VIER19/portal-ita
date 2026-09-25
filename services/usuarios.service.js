@@ -60,7 +60,8 @@ async function obtenerResumenAdmin() {
             (SELECT COUNT(*) FROM usuarios) AS usuarios_totales,
             (SELECT COUNT(*) FROM sesiones_activas) AS sesiones_activas,
             (SELECT COUNT(*) FROM sesiones_activas s INNER JOIN usuarios u ON u.id = s.usuario_id WHERE u.rol = 'docente') AS docentes_activos,
-            (SELECT COUNT(*) FROM sesiones_activas s INNER JOIN usuarios u ON u.id = s.usuario_id WHERE u.rol = 'alumno') AS alumnos_activos`
+            (SELECT COUNT(*) FROM sesiones_activas s INNER JOIN usuarios u ON u.id = s.usuario_id WHERE u.rol = 'alumno') AS alumnos_activos,
+            (SELECT COUNT(*) FROM autorizaciones_huerfanas WHERE estado = 'ACTIVA') AS huerfanas_pendientes`
     );
 
     const resumen = rows[0];
@@ -68,7 +69,8 @@ async function obtenerResumenAdmin() {
         usuariosTotales: Number(resumen.usuarios_totales),
         sesionesActivas: Number(resumen.sesiones_activas),
         docentesActivos: Number(resumen.docentes_activos),
-        alumnosActivos: Number(resumen.alumnos_activos)
+        alumnosActivos: Number(resumen.alumnos_activos),
+        huerfanasPendientes: Number(resumen.huerfanas_pendientes)
     };
 }
 

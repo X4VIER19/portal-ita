@@ -77,6 +77,24 @@ async function listarAutorizacionesHuerfanas() {
     return rows;
 }
 
+async function contarAutorizacionesHuerfanasPendientes() {
+    const [rows] = await pool.query(
+        `SELECT COUNT(*) AS total
+         FROM autorizaciones_huerfanas
+         WHERE estado = 'ACTIVA'`
+    );
+
+    return Number(rows[0].total);
+}
+
+async function eliminarRegistrosAutorizacionesHuerfanas() {
+    const [resultado] = await pool.query(
+        `DELETE FROM autorizaciones_huerfanas`
+    );
+
+    return resultado.affectedRows;
+}
+
 async function buscarAutorizacionHuerfanaPorId(id) {
     const [rows] = await pool.query(
         `SELECT id, mac, ssid, estado
@@ -101,6 +119,8 @@ async function marcarAutorizacionHuerfanaResuelta(id) {
 module.exports = {
     sincronizarAutorizacionesHuerfanas,
     listarAutorizacionesHuerfanas,
+    contarAutorizacionesHuerfanasPendientes,
+    eliminarRegistrosAutorizacionesHuerfanas,
     buscarAutorizacionHuerfanaPorId,
     marcarAutorizacionHuerfanaResuelta
 };

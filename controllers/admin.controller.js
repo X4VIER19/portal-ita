@@ -19,6 +19,8 @@ const { unauthClient, unauthEfectivo, listarAuthedRecords } = require("../servic
 const { sincronizarSesiones } = require("../services/sync");
 const {
     listarAutorizacionesHuerfanas,
+    contarAutorizacionesHuerfanasPendientes,
+    eliminarRegistrosAutorizacionesHuerfanas,
     buscarAutorizacionHuerfanaPorId,
     marcarAutorizacionHuerfanaResuelta
 } = require("../services/autorizacionesHuerfanas.service");
@@ -769,16 +771,31 @@ async function eliminarSsidDesconocidoController(req, res) {
 
 // GET /admin/autorizaciones-huerfanas
 async function mostrarAutorizacionesHuerfanas(req, res) {
-    const autorizaciones = await listarAutorizacionesHuerfanas();
-    const resultado = ["desautorizada", "asociada", "error"].includes(req.query.resultado)
+    const [autorizaciones, pendientes] = await Promise.all([
+        listarAutorizacionesHuerfanas(),
+        contarAutorizacionesHuerfanasPendientes()
+    ]);
+    const resultado = ["desautorizada", "asociada", "limpiados", "error"].includes(req.query.resultado)
         ? req.query.resultado
         : null;
+    const cantidadEliminada = Number.parseInt(req.query.cantidad, 10) || 0;
 
     res.render("admin/autorizaciones-huerfanas", {
         autorizaciones,
+        pendientes,
         resultado,
+        cantidadEliminada,
         ...req.session.admin
     });
+}
+
+// POST /admin/autorizaciones-huerfanas/limpiar
+async function limpiarRegistrosAutorizacionesHuerfanas(req, res) {
+    const cantidad = await eliminarRegistrosAutorizacionesHuerfanas();
+
+    res.redirect(
+        `/admin/autorizaciones-huerfanas?resultado=limpiados&cantidad=${cantidad}`
+    );
 }
 
 // POST /admin/autorizaciones-huerfanas/:id/desautorizar
@@ -844,5 +861,6 @@ module.exports = {
     marcarSsidDesconocidoRevisadoController,
     eliminarSsidDesconocidoController,
     mostrarAutorizacionesHuerfanas,
+    limpiarRegistrosAutorizacionesHuerfanas,
     desautorizarAutorizacionHuerfana
 };

@@ -17,10 +17,27 @@
                     registra; la desautorización requiere una acción manual.
                 </div>
 
+                <div class="toolbar">
+                    <strong>Autorizaciones pendientes: <%= pendientes %></strong>
+
+                    <% if (autorizaciones.length > 0) { %>
+                        <form
+                            method="POST"
+                            action="/admin/autorizaciones-huerfanas/limpiar"
+                            onsubmit="return confirm('¿Eliminar todos los registros? Las autorizaciones activas volverán a detectarse en la siguiente sincronización.');"
+                        >
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button type="submit" class="btn-desconectar">Limpiar registros</button>
+                        </form>
+                    <% } %>
+                </div>
+
                 <% if (resultado === 'desautorizada') { %>
                     <div class="aviso">La MAC fue desautorizada correctamente.</div>
                 <% } else if (resultado === 'asociada') { %>
                     <div class="aviso">La MAC ya tiene una sesión válida y no fue desconectada.</div>
+                <% } else if (resultado === 'limpiados') { %>
+                    <div class="aviso">Se eliminaron <%= cantidadEliminada %> registro(s).</div>
                 <% } else if (resultado === 'error') { %>
                     <div class="aviso">No se pudo completar la desautorización.</div>
                 <% } %>
