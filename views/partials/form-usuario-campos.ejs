@@ -2,6 +2,9 @@
     const p = typeof prefijo !== 'undefined' ? prefijo : '';
     const editando = modo === 'editar';
     const v = valores || {};
+    const usuarioInstitucional = typeof v.correo === 'string'
+        ? v.correo.split('@')[0]
+        : '';
 %>
 
 
@@ -18,8 +21,21 @@
 </div>
 
 <div class="campo">
-    <label for="<%= p %>correo">Correo</label>
-    <input id="<%= p %>correo" name="correo" type="text" value="<%= v.correo || '' %>" required>
+    <label for="<%= p %>correo">Usuario institucional</label>
+    <div class="correo-institucional">
+        <input
+            id="<%= p %>correo"
+            name="correo"
+            type="text"
+            value="<%= usuarioInstitucional %>"
+            placeholder="l22820075"
+            autocomplete="username"
+            autocapitalize="none"
+            spellcheck="false"
+            required
+        >
+        <span class="correo-dominio">@altamira.tecnm.mx</span>
+    </div>
 </div>
 
 <div class="campo">

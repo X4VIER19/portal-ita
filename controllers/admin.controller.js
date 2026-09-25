@@ -18,6 +18,9 @@ const {
 const { unauthClient, unauthEfectivo, listarAuthedRecords } = require("../services/omada");
 const { sincronizarSesiones } = require("../services/sync");
 const {
+    construirCorreoInstitucional
+} = require("../utils/correoInstitucional");
+const {
     listarAutorizacionesHuerfanas,
     contarAutorizacionesHuerfanasPendientes,
     eliminarRegistrosAutorizacionesHuerfanas,
@@ -269,7 +272,8 @@ function mostrarFormularioNuevo(req, res) {
 // POST /admin/usuarios/nuevo (protegida)
 // Responde JSON si viene del modal (AJAX) y HTML/redirect si viene del formulario normal.
 async function crearUsuario(req, res) {
-    const { nombre, apellido, correo, contrasena, rol } = req.body;
+    const { nombre, apellido, correo: usuarioInstitucional, contrasena, rol } = req.body;
+    const correo = construirCorreoInstitucional(usuarioInstitucional);
 
     const rechazar = (status, mensaje) =>
         rechazarFormulario(req, res, {
@@ -279,8 +283,15 @@ async function crearUsuario(req, res) {
             valores: req.body
         });
 
-    if (!nombre || !apellido || !correo || !contrasena || !rol) {
+    if (!nombre || !apellido || !usuarioInstitucional || !contrasena || !rol) {
         return rechazar(400, "Todos los campos son obligatorios.");
+    }
+
+    if (!correo) {
+        return rechazar(
+            400,
+            "Escribe únicamente la parte del correo anterior a @altamira.tecnm.mx."
+        );
     }
 
     if (!ROLES_VALIDOS.includes(rol)) {
@@ -350,18 +361,26 @@ async function mostrarFormularioEditar(req, res) {
 // Responde JSON si viene del modal (AJAX) y HTML/redirect si viene del formulario normal.
 async function actualizarUsuario(req, res) {
     const { id } = req.params;
-    const { nombre, apellido, correo, rol, contrasena } = req.body;
+    const { nombre, apellido, correo: usuarioInstitucional, rol, contrasena } = req.body;
+    const correo = construirCorreoInstitucional(usuarioInstitucional);
 
     const rechazar = (status, mensaje) =>
         rechazarFormulario(req, res, {
             status,
             mensaje,
             vista: "admin/usuarios-editar",
-            valores: { id, nombre, apellido, correo, rol }
+            valores: { id, nombre, apellido, correo: usuarioInstitucional, rol }
         });
 
-    if (!nombre || !apellido || !correo || !rol) {
+    if (!nombre || !apellido || !usuarioInstitucional || !rol) {
         return rechazar(400, "Nombre, apellido, correo y rol son obligatorios.");
+    }
+
+    if (!correo) {
+        return rechazar(
+            400,
+            "Escribe únicamente la parte del correo anterior a @altamira.tecnm.mx."
+        );
     }
 
     if (!ROLES_VALIDOS.includes(rol)) {

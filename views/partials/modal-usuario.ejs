@@ -105,7 +105,11 @@
 
             if (editando) {
                 for (const campo of CAMPOS_USUARIO) {
-                    formulario.elements[campo].value = usuario[campo] ?? "";
+                    const valor = campo === "correo"
+                        ? (usuario.correo || "").split("@")[0]
+                        : usuario[campo];
+
+                    formulario.elements[campo].value = valor ?? "";
                 }
             }
 

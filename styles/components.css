@@ -639,3 +639,45 @@ td.mac {
 .formulario-usuario .btn-generar:hover { border-color: var(--color-marca-primario-hover); }
 .formulario-usuario .btn-guardar { width: 100%; }
 .formulario-usuario .btn-guardar:disabled { opacity: 0.6; cursor: wait; }
+
+.correo-institucional {
+    display: flex;
+    align-items: stretch;
+}
+
+.correo-institucional input {
+    min-width: 0;
+    flex: 1;
+    border-radius: var(--radio-base) 0 0 var(--radio-base) !important;
+}
+
+.correo-dominio {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    background: var(--color-fondo-app);
+    border: 1px solid var(--color-borde);
+    border-left: 0;
+    border-radius: 0 var(--radio-base) var(--radio-base) 0;
+    color: var(--color-texto-tenue);
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+    .correo-institucional {
+        flex-direction: column;
+    }
+
+    .correo-institucional input {
+        border-radius: var(--radio-base) var(--radio-base) 0 0 !important;
+    }
+
+    .correo-dominio {
+        justify-content: flex-end;
+        min-height: 34px;
+        border-top: 0;
+        border-left: 1px solid var(--color-borde);
+        border-radius: 0 0 var(--radio-base) var(--radio-base);
+    }
+}
