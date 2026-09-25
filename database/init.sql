@@ -42,9 +42,23 @@ CREATE TABLE ssids_desconocidos_detectados (
 CREATE TABLE sesiones_activas (
     usuario_id BIGINT UNSIGNED PRIMARY KEY,
     mac VARCHAR(17) NOT NULL,
+    ssid VARCHAR(100) NULL,
     autorizado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uq_sesiones_mac (mac),
     CONSTRAINT fk_sesiones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
+);
+
+CREATE TABLE autorizaciones_huerfanas (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    mac VARCHAR(17) NOT NULL,
+    ssid VARCHAR(100) NOT NULL,
+    admin_name VARCHAR(150) NULL,
+    omada_start BIGINT NULL,
+    primera_deteccion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ultima_deteccion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('ACTIVA', 'RESUELTA') NOT NULL DEFAULT 'ACTIVA',
+    resuelta_en DATETIME NULL,
+    UNIQUE KEY uq_huerfana_mac_ssid (mac, ssid)
 );
 
 CREATE TABLE sessions (

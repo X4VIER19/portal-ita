@@ -1,0 +1,81 @@
+<%- include('../partials/head', { titulo: 'Autorizaciones sin usuario' }) %>
+<body>
+    <div class="app-shell">
+        <%- include('../partials/sidebar', {
+            activo: 'huerfanas',
+            admin: { nombre, apellido, rol }
+        }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'Autorizaciones sin usuario' }) %>
+
+            <main class="contenido-pagina">
+                <div class="aviso">
+                    <i class="ph ph-info"></i>
+                    Estas MAC aparecen autorizadas en un SSID administrado por el portal,
+                    pero no tienen una sesión asociada en MySQL. La sincronización solo las
+                    registra; la desautorización requiere una acción manual.
+                </div>
+
+                <% if (resultado === 'desautorizada') { %>
+                    <div class="aviso">La MAC fue desautorizada correctamente.</div>
+                <% } else if (resultado === 'asociada') { %>
+                    <div class="aviso">La MAC ya tiene una sesión válida y no fue desconectada.</div>
+                <% } else if (resultado === 'error') { %>
+                    <div class="aviso">No se pudo completar la desautorización.</div>
+                <% } %>
+
+                <div class="tabla-panel">
+                    <% if (autorizaciones.length === 0) { %>
+                        <div class="vacio">No se han detectado autorizaciones sin usuario.</div>
+                    <% } else { %>
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>MAC</th>
+                                        <th>SSID</th>
+                                        <th>Origen Omada</th>
+                                        <th>Primera detección</th>
+                                        <th>Última detección</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% autorizaciones.forEach(a => { %>
+                                        <tr>
+                                            <td class="mac"><%= a.mac %></td>
+                                            <td><%= a.ssid %></td>
+                                            <td><%= a.admin_name || 'N/D' %></td>
+                                            <td><%= new Date(a.primera_deteccion).toLocaleString('es-MX') %></td>
+                                            <td><%= new Date(a.ultima_deteccion).toLocaleString('es-MX') %></td>
+                                            <td>
+                                                <span class="badge <%= a.estado === 'ACTIVA' ? 'badge-inactivo' : 'badge-activo' %>">
+                                                    <%= a.estado === 'ACTIVA' ? 'Pendiente' : 'Resuelta' %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <% if (a.estado === 'ACTIVA') { %>
+                                                    <form
+                                                        method="POST"
+                                                        action="/admin/autorizaciones-huerfanas/<%= a.id %>/desautorizar"
+                                                        onsubmit="return confirm('¿Desautorizar esta MAC en Omada?');"
+                                                    >
+                                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                        <button type="submit" class="btn-desconectar">Desautorizar</button>
+                                                    </form>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

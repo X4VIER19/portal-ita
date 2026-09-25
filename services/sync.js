@@ -3,6 +3,9 @@ const {
     listarTodasSesionesActivas,
     eliminarSesionActiva
 } = require("./usuarios.service");
+const {
+    sincronizarAutorizacionesHuerfanas
+} = require("./autorizacionesHuerfanas.service");
 
 function obtenerUltimoEstadoPorMac(registros) {
     const mapa = new Map();
@@ -54,18 +57,17 @@ async function sincronizarSesiones() {
         )
     );
 
-    for (const [mac, registro] of estadoPorMac) {
-        if (registro.valid !== true) {
-            continue;
-        }
+    const huerfanas = await sincronizarAutorizacionesHuerfanas(
+        [...estadoPorMac.values()],
+        macsEnMySQL
+    );
 
-        if (!macsEnMySQL.has(mac)) {
-            console.log(
-                `Sync diagnóstico: autorización huérfana detectada ` +
-                `(mac=${mac}, ssid=${registro.ssid || "N/D"}, ` +
-                `adminName=${registro.adminName || "N/D"}).`
-            );
-        }
+    for (const registro of huerfanas) {
+        console.log(
+            `Sync: autorización huérfana registrada ` +
+            `(mac=${registro.mac}, ssid=${registro.ssid}, ` +
+            `adminName=${registro.adminName || "N/D"}).`
+        );
     }
 
     let eliminadas = 0;
@@ -103,6 +105,7 @@ async function sincronizarSesiones() {
     return {
         revisadas: sesiones.length,
         eliminadas,
+        huerfanas: huerfanas.length,
         error: false
     };
 }

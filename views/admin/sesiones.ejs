@@ -297,6 +297,7 @@
                                     <tr>
                                         <th>Usuario</th>
                                         <th>MAC</th>
+                                        <th>SSID</th>
                                         <th>Autorizado desde</th>
                                         <th>Estado en Omada</th>
                                         <th></th>
@@ -310,6 +311,7 @@
                                                 <span class="mac"><%= s.correo %></span>
                                             </td>
                                             <td class="mac"><%= s.mac %></td>
+                                            <td><%= s.ssid || 'Desconocido' %></td>
                                             <td><%= new Date(s.autorizado_en).toLocaleString('es-MX') %></td>
                                             <td>
                                                 <span class="badge badge-<%= s.estadoOmada %>">

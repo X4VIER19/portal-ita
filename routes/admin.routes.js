@@ -37,6 +37,10 @@ router.get("/sesiones", requiereAdmin, asyncHandler(adminController.mostrarSesio
 router.post("/sesiones/:usuarioId/desconectar", requiereAdmin, asyncHandler(adminController.desconectarSesion));
 router.post("/sesiones/sincronizar", requiereAdmin, asyncHandler(adminController.sincronizarSesionesManual));
 
+// AUTORIZACIONES DE OMADA SIN SESIÓN EN MYSQL
+router.get("/autorizaciones-huerfanas", requiereAdmin, asyncHandler(adminController.mostrarAutorizacionesHuerfanas));
+router.post("/autorizaciones-huerfanas/:id/desautorizar", requiereAdmin, asyncHandler(adminController.desautorizarAutorizacionHuerfana));
+
 // SSIDS
 // IMPORTANTE: la ruta "/ssids/desconocidos" debe declararse ANTES de
 // "/ssids/editar/:id" y "/ssids/nuevo" para que Express no intente

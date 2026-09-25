@@ -102,7 +102,7 @@ function guardarRequest(req) {
     return data;
 }
 
-async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva) {
+async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva, ssidNueva) {
     console.log(
         `Cambio de sesión: usuario ${usuarioId} ` +
         `${macAnterior} -> ${macNueva}`
@@ -110,7 +110,7 @@ async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva) {
 
     // Si la MAC no cambió, no necesitamos tocar Omada.
     if (macAnterior === macNueva) {
-        await guardarSesionActiva(usuarioId, macNueva);
+        await guardarSesionActiva(usuarioId, macNueva, ssidNueva);
 
         return {
             ok: true,
@@ -207,7 +207,7 @@ async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva) {
     // ---------------------------------------------------------
 
     try {
-        await guardarSesionActiva(usuarioId, macNueva);
+        await guardarSesionActiva(usuarioId, macNueva, ssidNueva);
 
     } catch (error) {
         console.error(
@@ -450,7 +450,8 @@ async function login(req, res) {
             try {
                 await guardarSesionActiva(
                     usuario.id,
-                    clientMac
+                    clientMac,
+                    ssid
                 );
             } catch (error) {
                 console.error(
@@ -473,12 +474,62 @@ async function login(req, res) {
                 });
             }
 
-        } else if (sesionPrevia.mac === clientMac) {
+        } else if (
+            sesionPrevia.mac === clientMac &&
+            sesionPrevia.ssid === ssid
+        ) {
             // El usuario ya tiene esta misma MAC autorizada.
-            // No necesitamos cambiar nada en Omada.
+            // El SSID tampoco cambió, así que no necesitamos tocar Omada.
 
             console.log(
                 `Usuario ${correo} ya tiene activa la MAC ${clientMac}.`
+            );
+
+        } else if (sesionPrevia.mac === clientMac) {
+            // Mismo dispositivo, pero conectado ahora desde otro SSID.
+            // La autorización previa no garantiza acceso en el nuevo
+            // contexto de red, por lo que se autoriza nuevamente en Omada.
+            let resultadoAuth;
+
+            try {
+                resultadoAuth = await authClient(clientMac);
+            } catch (error) {
+                console.error(
+                    `Error de red al autorizar ${clientMac} en ${ssid}:`,
+                    error.message
+                );
+
+                return res.json({
+                    ok: false,
+                    mensaje: "No se pudo determinar el estado de la autorización."
+                });
+            }
+
+            if (resultadoAuth.errorCode !== 0) {
+                return res.json({
+                    ok: false,
+                    mensaje: "Error al autorizar: " + resultadoAuth.msg
+                });
+            }
+
+            try {
+                await guardarSesionActiva(usuario.id, clientMac, ssid);
+            } catch (error) {
+                console.error(
+                    `ERROR MYSQL al actualizar el SSID de ${clientMac}:`,
+                    error.message
+                );
+
+                return res.json({
+                    ok: false,
+                    mensaje: "La red fue autorizada, pero no se pudo actualizar la sesión. Intenta de nuevo."
+                });
+            }
+
+            console.log(
+                `Cambio de SSID para ${correo}: ` +
+                `${sesionPrevia.ssid || "desconocido"} -> ${ssid} ` +
+                `(mac=${clientMac}).`
             );
 
         } else {
@@ -486,7 +537,8 @@ async function login(req, res) {
             const resultadoCambio = await cambiarSesionConCompensacion(
                 usuario.id,
                 sesionPrevia.mac,
-                clientMac
+                clientMac,
+                ssid
             );
 
             if (!resultadoCambio.ok) {

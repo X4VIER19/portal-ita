@@ -10,12 +10,18 @@ const {
     listarSesionesPaginadas,
     contarSesiones,
     eliminarSesionActiva,
+    buscarSesionActivaPorMac,
     actualizarUsuario: actualizarUsuarioEnBD,
     obtenerResumenAdmin
 } = require("../services/usuarios.service");
 
-const { unauthClient, listarAuthedRecords } = require("../services/omada");
+const { unauthClient, unauthEfectivo, listarAuthedRecords } = require("../services/omada");
 const { sincronizarSesiones } = require("../services/sync");
+const {
+    listarAutorizacionesHuerfanas,
+    buscarAutorizacionHuerfanaPorId,
+    marcarAutorizacionHuerfanaResuelta
+} = require("../services/autorizacionesHuerfanas.service");
 
 const {
     TIPOS_VALIDOS: TIPOS_SSID_VALIDOS,
@@ -761,6 +767,57 @@ async function eliminarSsidDesconocidoController(req, res) {
     res.redirect("/admin/ssids/desconocidos");
 }
 
+// GET /admin/autorizaciones-huerfanas
+async function mostrarAutorizacionesHuerfanas(req, res) {
+    const autorizaciones = await listarAutorizacionesHuerfanas();
+    const resultado = ["desautorizada", "asociada", "error"].includes(req.query.resultado)
+        ? req.query.resultado
+        : null;
+
+    res.render("admin/autorizaciones-huerfanas", {
+        autorizaciones,
+        resultado,
+        ...req.session.admin
+    });
+}
+
+// POST /admin/autorizaciones-huerfanas/:id/desautorizar
+async function desautorizarAutorizacionHuerfana(req, res) {
+    const autorizacion = await buscarAutorizacionHuerfanaPorId(req.params.id);
+
+    if (!autorizacion || autorizacion.estado !== "ACTIVA") {
+        return res.redirect("/admin/autorizaciones-huerfanas?resultado=error");
+    }
+
+    // Evita desautorizar una MAC que haya obtenido una sesión válida desde
+    // la última sincronización y antes de la acción del administrador.
+    const sesionActual = await buscarSesionActivaPorMac(autorizacion.mac);
+
+    if (sesionActual) {
+        await marcarAutorizacionHuerfanaResuelta(autorizacion.id);
+        return res.redirect("/admin/autorizaciones-huerfanas?resultado=asociada");
+    }
+
+    let resultadoUnauth;
+
+    try {
+        resultadoUnauth = await unauthClient(autorizacion.mac);
+    } catch (error) {
+        console.error(
+            `No se pudo desautorizar la MAC huérfana ${autorizacion.mac}:`,
+            error.message
+        );
+        return res.redirect("/admin/autorizaciones-huerfanas?resultado=error");
+    }
+
+    if (!unauthEfectivo(resultadoUnauth)) {
+        return res.redirect("/admin/autorizaciones-huerfanas?resultado=error");
+    }
+
+    await marcarAutorizacionHuerfanaResuelta(autorizacion.id);
+    res.redirect("/admin/autorizaciones-huerfanas?resultado=desautorizada");
+}
+
 module.exports = {
     raizAdmin,
     mostrarLogin,
@@ -785,5 +842,7 @@ module.exports = {
     eliminarSsid,
     mostrarSsidsDesconocidos,
     marcarSsidDesconocidoRevisadoController,
-    eliminarSsidDesconocidoController
+    eliminarSsidDesconocidoController,
+    mostrarAutorizacionesHuerfanas,
+    desautorizarAutorizacionHuerfana
 };

@@ -13,7 +13,7 @@ async function buscarUsuarioPorCorreo(correo) {
 
 async function buscarSesionActiva(usuarioId) {
     const [rows] = await pool.query(
-        `SELECT usuario_id, mac, autorizado_en
+        `SELECT usuario_id, mac, ssid, autorizado_en
          FROM sesiones_activas
          WHERE usuario_id = ?
          LIMIT 1`,
@@ -22,12 +22,26 @@ async function buscarSesionActiva(usuarioId) {
     return rows[0] || null;
 }
 
-async function guardarSesionActiva(usuarioId, mac) {
+async function buscarSesionActivaPorMac(mac) {
+    const [rows] = await pool.query(
+        `SELECT usuario_id, mac, ssid, autorizado_en
+         FROM sesiones_activas
+         WHERE mac = ?
+         LIMIT 1`,
+        [mac]
+    );
+    return rows[0] || null;
+}
+
+async function guardarSesionActiva(usuarioId, mac, ssid) {
     await pool.query(
-        `INSERT INTO sesiones_activas (usuario_id, mac)
-         VALUES (?, ?)
-         ON DUPLICATE KEY UPDATE mac = VALUES(mac), autorizado_en = CURRENT_TIMESTAMP`,
-        [usuarioId, mac]
+        `INSERT INTO sesiones_activas (usuario_id, mac, ssid)
+         VALUES (?, ?, ?)
+         ON DUPLICATE KEY UPDATE
+            mac = VALUES(mac),
+            ssid = VALUES(ssid),
+            autorizado_en = CURRENT_TIMESTAMP`,
+        [usuarioId, mac, ssid]
     );
 }
 
@@ -36,7 +50,7 @@ async function eliminarSesionActiva(usuarioId) {
 }
 
 async function listarTodasSesionesActivas() {
-    const [rows] = await pool.query(`SELECT usuario_id, mac FROM sesiones_activas`);
+    const [rows] = await pool.query(`SELECT usuario_id, mac, ssid FROM sesiones_activas`);
     return rows;
 }
 
@@ -131,9 +145,9 @@ function construirFiltrosSesiones({ busqueda = "", rol = "" } = {}) {
     const valores = [];
 
     if (busqueda) {
-        condiciones.push(`(u.nombre LIKE ? OR u.apellido LIKE ? OR u.correo LIKE ? OR s.mac LIKE ?)`);
+        condiciones.push(`(u.nombre LIKE ? OR u.apellido LIKE ? OR u.correo LIKE ? OR s.mac LIKE ? OR s.ssid LIKE ?)`);
         const termino = `%${busqueda}%`;
-        valores.push(termino, termino, termino, termino);
+        valores.push(termino, termino, termino, termino, termino);
     }
 
     if (["admin", "docente", "alumno"].includes(rol)) {
@@ -162,7 +176,7 @@ async function contarSesiones({ busqueda = "", rol = "" } = {}) {
 async function listarSesionesPaginadas({ busqueda = "", rol = "", limite = 10, offset = 0 } = {}) {
     const { where, valores } = construirFiltrosSesiones({ busqueda, rol });
     const [rows] = await pool.query(
-        `SELECT s.usuario_id, s.mac, s.autorizado_en, u.nombre, u.apellido, u.correo, u.rol
+        `SELECT s.usuario_id, s.mac, s.ssid, s.autorizado_en, u.nombre, u.apellido, u.correo, u.rol
          FROM sesiones_activas s
          JOIN usuarios u ON u.id = s.usuario_id
          ${where}
@@ -195,6 +209,7 @@ async function actualizarUsuario(id, { nombre, apellido, correo, rol, contrasena
 module.exports = {
     buscarUsuarioPorCorreo,
     buscarSesionActiva,
+    buscarSesionActivaPorMac,
     guardarSesionActiva,
     eliminarSesionActiva,
     listarTodasSesionesActivas,
