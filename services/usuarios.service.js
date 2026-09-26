@@ -2,7 +2,10 @@ const pool = require("./database");
 
 async function buscarUsuarioPorCorreo(correo) {
     const [rows] = await pool.query(
-        `SELECT id, nombre, apellido, correo, contrasena_hash, rol, activo
+        `SELECT id, nombre, apellido, correo, contrasena_hash,
+                requiere_cambio_contrasena, contrasena_temporal_expira_en,
+                version_credencial, contrasena_actualizada_en,
+                rol, activo
          FROM usuarios
          WHERE correo = ?
          LIMIT 1`,
@@ -109,7 +112,9 @@ async function contarUsuarios(filtros = {}) {
 async function listarUsuariosPaginados({ busqueda = "", rol = "", estado = "", limite = 10, offset = 0 } = {}) {
     const { where, valores } = construirFiltrosUsuarios({ busqueda, rol, estado });
     const [rows] = await pool.query(
-        `SELECT id, nombre, apellido, correo, rol, activo, creado_en
+        `SELECT id, nombre, apellido, correo, rol, activo,
+                requiere_cambio_contrasena, contrasena_temporal_expira_en,
+                creado_en
          FROM usuarios
          ${where}
          ORDER BY creado_en DESC
@@ -121,7 +126,9 @@ async function listarUsuariosPaginados({ busqueda = "", rol = "", estado = "", l
 
 async function buscarUsuarioPorId(id) {
     const [rows] = await pool.query(
-        `SELECT id, nombre, apellido, correo, rol, activo
+        `SELECT id, nombre, apellido, correo, rol, activo,
+                requiere_cambio_contrasena, contrasena_temporal_expira_en,
+                version_credencial, contrasena_actualizada_en
          FROM usuarios
          WHERE id = ?
          LIMIT 1`,

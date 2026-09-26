@@ -89,6 +89,7 @@ Aplica únicamente la migración necesaria, desde un cliente MySQL y después de
 SOURCE database/migration_ssids.sql;
 SOURCE database/migration_sesiones_ssid.sql;
 SOURCE database/migration_autorizaciones_huerfanas.sql;
+SOURCE database/migration_restablecimiento_contrasena.sql;
 ```
 
 Las migraciones incluidas son idempotentes cuando corresponde y están destinadas a instalaciones previas del portal.
@@ -139,6 +140,7 @@ La sesión local almacena el último SSID desde el que el portal procesó el log
 - Revisa `trust proxy` y el almacenamiento de rate limiting antes de desplegar detrás de un proxy inverso o con varias instancias.
 - No copies tokens OAuth, contraseñas, cookies o respuestas completas de autenticación a issues, commits o documentación.
 - Los logs utilizan JSON y respetan `LOG_LEVEL` (`debug`, `info`, `warn` o `error`). El valor recomendado normalmente es `info`; usa `debug` solo durante diagnósticos controlados.
+- Las contraseñas provisionales tienen una vigencia predeterminada de 48 horas. Puede ajustarse entre 1 y 168 horas mediante `TEMP_PASSWORD_TTL_HOURS`.
 - La captura de redirecciones de Omada está desactivada por defecto. Para un diagnóstico temporal, usa `OMADA_CAPTURE_REQUESTS=true`: genera `omada-capturas.jsonl` con metadatos mínimos, sin valores de parámetros, headers, cookies ni cuerpos. El archivo rota al alcanzar 1 MiB y conserva solo la captura anterior.
 
 ## Pruebas manuales realizadas
