@@ -1,0 +1,46 @@
+<%- include('../partials/head', { titulo: 'Restablecer contraseña', hojasEstilo: ['portal'] }) %>
+<body class="portal-login-page">
+    <div class="marca-superior">
+        <p class="sigla">Instituto Tecnológico de Altamira</p>
+        <p class="titulo">Cuenta institucional</p>
+    </div>
+
+    <div class="card acceso-card">
+        <h1>Restablecer contraseña</h1>
+        <p class="subtitulo">Utiliza la contraseña provisional entregada por Centro de Cómputo</p>
+
+        <div class="acceso-contenido">
+            <% if (error) { %>
+                <div class="mensaje-formulario error"><%= error %></div>
+            <% } %>
+
+        <form method="POST" action="/restablecer" autocomplete="off">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+            <div class="campo">
+                <label for="usuario">Usuario institucional</label>
+                <div class="usuario-institucional">
+                    <input id="usuario" name="usuario" type="text" placeholder="usuario" value="<%= usuario %>" autocomplete="username" required>
+                    <span class="usuario-dominio">@altamira.tecnm.mx</span>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="contrasenaProvisional">Contraseña provisional</label>
+                <div class="campo-password-login">
+                    <input id="contrasenaProvisional" name="contrasenaProvisional" placeholder="Contraseña provisional" type="password" autocomplete="current-password" required>
+                    <button type="button" class="toggle-password-login" data-toggle-password-login aria-label="Mostrar contraseña">
+                        <i class="ph ph-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit">Continuar</button>
+        </form>
+
+            <a class="enlace-restablecer" href="/">Volver al portal</a>
+        </div>
+    </div>
+    <%- include('../partials/toggle-password-login') %>
+</body>
+</html>

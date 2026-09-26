@@ -91,9 +91,38 @@ const limitePortalPorCuenta = rateLimit({
     }
 });
 
+const limiteRestablecimientoPorIp = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 20,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    handler: (req, res) => {
+        res.status(429).render("portal/restablecer", {
+            error: "Demasiados intentos desde esta red. Espera unos minutos e inténtalo de nuevo.",
+            usuario: req.body?.usuario || ""
+        });
+    }
+});
+
+const limiteRestablecimientoPorCuenta = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 6,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    keyGenerator: keyPorCuentaPortal,
+    handler: (req, res) => {
+        res.status(429).render("portal/restablecer", {
+            error: "Demasiados intentos con estos datos. Espera unos minutos e inténtalo de nuevo.",
+            usuario: req.body?.usuario || ""
+        });
+    }
+});
+
 module.exports = {
     limiteAdminPorIp,
     limiteAdminPorCuenta,
     limitePortalPorIp,
-    limitePortalPorCuenta
+    limitePortalPorCuenta,
+    limiteRestablecimientoPorIp,
+    limiteRestablecimientoPorCuenta
 };

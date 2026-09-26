@@ -31,6 +31,11 @@ router.post("/usuarios/nuevo", requiereAdmin, asyncHandler(adminController.crear
 router.post("/usuarios/:id/toggle", requiereAdmin, asyncHandler(adminController.toggleActivo));
 router.get("/usuarios/editar/:id", requiereAdmin, asyncHandler(adminController.mostrarFormularioEditar));
 router.post("/usuarios/editar/:id", requiereAdmin, asyncHandler(adminController.actualizarUsuario));
+router.post(
+    "/usuarios/:id/restablecer-contrasena",
+    requiereAdmin,
+    asyncHandler(adminController.restablecerContrasenaUsuario)
+);
 
 // SESIONES
 router.get("/sesiones", requiereAdmin, asyncHandler(adminController.mostrarSesiones));

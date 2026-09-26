@@ -36,7 +36,7 @@
         border-radius: 16px;
         padding: 2.75rem 2.25rem;
         width: 100%;
-        max-width: 400px;
+        max-width: 440px;
         box-shadow: 0 12px 32px rgba(0,0,0,0.35);
     }
 
@@ -173,6 +173,28 @@
 .portal-login-page button:hover { background: var(--color-marca-primario-hover); }
 .portal-login-page button:disabled { background: var(--color-texto-tenue); cursor: default; }
 
+.campo-password-login { position: relative; }
+
+.campo-password-login input { padding-right: 3rem; }
+
+.portal-login-page .toggle-password-login {
+    position: absolute;
+    top: 50%;
+    right: 0.9rem;
+    width: auto;
+    margin: 0;
+    padding: 0.25rem;
+    transform: translateY(-50%);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.1rem;
+}
+
+.portal-login-page .toggle-password-login:hover {
+    background: transparent;
+    color: #ffffff;
+}
+
     #mensaje {
         margin-top: 0.75rem;
         font-size: 0.85rem;
@@ -183,6 +205,40 @@
     #mensaje:empty { margin-top: 0; }
     #mensaje.error { color: var(--color-peligro); }
     #mensaje.exito { color: var(--color-exito); }
+
+.enlace-restablecer {
+    display: block;
+    margin-top: 1rem;
+    color: var(--color-marca-primario-hover);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.enlace-principal {
+    padding: 0.85rem;
+    background: var(--color-marca-primario);
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.enlace-principal:hover { background: var(--color-marca-primario-hover); }
+
+.resultado-restablecimiento { text-align: center; }
+
+.mensaje-formulario {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.mensaje-formulario.error {
+    color: var(--color-peligro);
+    background: rgba(232, 129, 77, 0.12);
+    border: 1px solid rgba(232, 129, 77, 0.3);
+}
 
 /* Página pública mostrada al entrar sin parámetros de Omada */
 .portal-publico-page {

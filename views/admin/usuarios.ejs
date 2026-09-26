@@ -79,6 +79,9 @@
                                                 <span class="badge <%= u.activo ? 'badge-activo' : 'badge-inactivo' %>">
                                                     <%= u.activo ? 'Activo' : 'Inactivo' %>
                                                 </span>
+                                                <% if (u.requiere_cambio_contrasena) { %>
+                                                    <span class="badge">Cambio pendiente</span>
+                                                <% } %>
                                             </td>
                                             <td>
                                                 <a
@@ -91,6 +94,10 @@
                                                     <button type="submit" class="btn-toggle">
                                                         <%= u.activo ? 'Desactivar' : 'Activar' %>
                                                     </button>
+                                                </form>
+                                                <form method="POST" action="/admin/usuarios/<%= u.id %>/restablecer-contrasena" style="display:inline;" data-restablecer-contrasena>
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <button type="submit" class="btn-toggle">Restablecer contraseña</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -116,5 +123,6 @@
         </div>
     </div>
     <%- include('../partials/modal-usuario') %>
+    <%- include('../partials/modal-contrasena-provisional') %>
 </body>
 </html>

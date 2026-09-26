@@ -1,0 +1,48 @@
+<%- include('../partials/head', { titulo: 'Contraseña provisional' }) %>
+<body>
+    <div class="app-shell">
+        <%- include('../partials/sidebar', { activo: 'usuarios', admin: { nombre, apellido, rol } }) %>
+
+        <div class="contenido-principal">
+            <%- include('../partials/topbar', { tituloSeccion: 'Contraseña provisional' }) %>
+
+            <main class="contenido-pagina">
+                <div class="form-panel">
+                    <h2>Entrega esta contraseña una sola vez</h2>
+                    <p><strong>Usuario:</strong> <%= usuario.nombre %> <%= usuario.apellido %> - <%= usuario.correo %></p>
+                    <p><strong>Expira:</strong> <%= new Date(expiraEn).toLocaleString('es-MX') %></p>
+
+                    <div class="credencial-provisional">
+                        <code id="contrasenaProvisional"><%= contrasenaProvisional %></code>
+                        <button type="button" class="btn-toggle" id="copiarContrasena">Copiar</button>
+                    </div>
+
+                    <p>Esta contraseña no volverá a mostrarse. El usuario debe utilizarla en <code>/restablecer</code> antes de acceder al portal.</p>
+                    <a href="/admin/usuarios" class="btn-nuevo">Volver a usuarios</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("copiarContrasena").addEventListener("click", async () => {
+            const boton = document.getElementById("copiarContrasena");
+            const elemento = document.getElementById("contrasenaProvisional");
+            const valor = elemento.textContent;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(valor);
+                boton.textContent = "Copiada";
+                return;
+            }
+
+            const seleccion = window.getSelection();
+            const rango = document.createRange();
+            rango.selectNodeContents(elemento);
+            seleccion.removeAllRanges();
+            seleccion.addRange(rango);
+            boton.textContent = "Seleccionada";
+        });
+    </script>
+</body>
+</html>

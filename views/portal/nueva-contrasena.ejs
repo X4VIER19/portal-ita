@@ -1,0 +1,46 @@
+<%- include('../partials/head', { titulo: 'Nueva contraseña', hojasEstilo: ['portal'] }) %>
+<body class="portal-login-page">
+    <div class="marca-superior">
+        <p class="sigla">Instituto Tecnológico de Altamira</p>
+        <p class="titulo">Cuenta institucional</p>
+    </div>
+
+    <div class="card acceso-card">
+        <h1>Crea tu nueva contraseña</h1>
+        <p class="subtitulo">Debe contener entre 12 y 64 caracteres</p>
+
+        <div class="acceso-contenido">
+            <% if (error) { %>
+                <div class="mensaje-formulario error"><%= error %></div>
+            <% } %>
+
+        <form method="POST" action="/restablecer/nueva-contrasena" autocomplete="off">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+            <div class="campo">
+                <label for="nuevaContrasena">Nueva contraseña</label>
+                <div class="campo-password-login">
+                    <input id="nuevaContrasena" name="nuevaContrasena" type="password" minlength="12" maxlength="64" autocomplete="new-password" required>
+                    <button type="button" class="toggle-password-login" data-toggle-password-login aria-label="Mostrar contraseña">
+                        <i class="ph ph-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="confirmarContrasena">Confirmar contraseña</label>
+                <div class="campo-password-login">
+                    <input id="confirmarContrasena" name="confirmarContrasena" type="password" minlength="12" maxlength="64" autocomplete="new-password" required>
+                    <button type="button" class="toggle-password-login" data-toggle-password-login aria-label="Mostrar contraseña">
+                        <i class="ph ph-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit">Guardar nueva contraseña</button>
+            </form>
+        </div>
+    </div>
+    <%- include('../partials/toggle-password-login') %>
+</body>
+</html>

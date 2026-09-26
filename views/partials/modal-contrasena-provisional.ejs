@@ -1,0 +1,119 @@
+<div class="modal-overlay" id="modalContrasenaProvisional" aria-hidden="true">
+    <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="modalContrasenaTitulo">
+        <div class="modal-cabecera">
+            <h2 id="modalContrasenaTitulo">Contraseña provisional</h2>
+            <button type="button" class="modal-cerrar" data-cerrar-modal-contrasena aria-label="Cerrar">&times;</button>
+        </div>
+
+        <div class="modal-cuerpo">
+            <p class="modal-texto">Entrega esta contraseña únicamente al usuario indicado. No volverá a mostrarse.</p>
+            <p><strong id="modalContrasenaUsuario"></strong></p>
+            <p class="modal-texto" id="modalContrasenaCorreo"></p>
+            <p class="modal-texto">Expira: <span id="modalContrasenaExpiracion"></span></p>
+
+            <div class="credencial-provisional">
+                <code id="modalContrasenaValor"></code>
+                <button type="button" class="btn-toggle" id="modalContrasenaCopiar">Copiar</button>
+            </div>
+
+            <p class="modal-texto">El usuario debe introducirla en <code>/restablecer</code> y crear una contraseña nueva.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (() => {
+        const modal = document.getElementById("modalContrasenaProvisional");
+        const usuario = document.getElementById("modalContrasenaUsuario");
+        const correo = document.getElementById("modalContrasenaCorreo");
+        const expiracion = document.getElementById("modalContrasenaExpiracion");
+        const valor = document.getElementById("modalContrasenaValor");
+        const copiar = document.getElementById("modalContrasenaCopiar");
+        let formularioActivo = null;
+
+        function abrir(resultado, formulario) {
+            formularioActivo = formulario;
+            usuario.textContent = resultado.usuario;
+            correo.textContent = resultado.correo;
+            expiracion.textContent = new Date(resultado.expiraEn).toLocaleString("es-MX");
+            valor.textContent = resultado.contrasenaProvisional;
+            copiar.textContent = "Copiar";
+            modal.classList.add("abierto");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            setTimeout(() => copiar.focus(), 50);
+        }
+
+        function cerrar() {
+            modal.classList.remove("abierto");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+            valor.textContent = "";
+            window.location.reload();
+        }
+
+        document.querySelectorAll("[data-restablecer-contrasena]").forEach((formulario) => {
+            formulario.addEventListener("submit", async (evento) => {
+                evento.preventDefault();
+
+                if (!window.confirm("Se reemplazará la contraseña actual y el usuario deberá crear una nueva. ¿Continuar?")) {
+                    return;
+                }
+
+                const boton = formulario.querySelector("button[type='submit']");
+                boton.disabled = true;
+                boton.textContent = "Generando...";
+
+                try {
+                    const respuesta = await fetch(formulario.action, {
+                        method: "POST",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "X-Requested-With": "XMLHttpRequest"
+                        },
+                        body: new URLSearchParams(new FormData(formulario))
+                    });
+                    const resultado = await respuesta.json().catch(() => ({}));
+
+                    if (!respuesta.ok || !resultado.ok) {
+                        throw new Error(resultado.mensaje || "No se pudo generar la contraseña provisional.");
+                    }
+
+                    abrir(resultado, formulario);
+                } catch (error) {
+                    window.alert(error.message);
+                    boton.disabled = false;
+                    boton.textContent = "Restablecer contraseña";
+                }
+            });
+        });
+
+        copiar.addEventListener("click", async () => {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(valor.textContent);
+                copiar.textContent = "Copiada";
+                return;
+            }
+
+            const seleccion = window.getSelection();
+            const rango = document.createRange();
+            rango.selectNodeContents(valor);
+            seleccion.removeAllRanges();
+            seleccion.addRange(rango);
+            copiar.textContent = "Seleccionada";
+        });
+
+        document.addEventListener("click", (evento) => {
+            if (evento.target === modal || evento.target.closest("[data-cerrar-modal-contrasena]")) {
+                cerrar();
+            }
+        });
+
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape" && modal.classList.contains("abierto")) {
+                cerrar();
+            }
+        });
+    })();
+</script>

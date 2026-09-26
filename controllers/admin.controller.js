@@ -12,7 +12,8 @@ const {
     eliminarSesionActiva,
     buscarSesionActivaPorMac,
     actualizarUsuario: actualizarUsuarioEnBD,
-    obtenerResumenAdmin
+    obtenerResumenAdmin,
+    asignarContrasenaProvisional
 } = require("../services/usuarios.service");
 
 const { unauthClient, unauthEfectivo, listarAuthedRecords } = require("../services/omada");
@@ -42,6 +43,10 @@ const {
 } = require("../services/ssids.service");
 
 const ROLES_VALIDOS = ["admin", "docente", "alumno"];
+const {
+    generarContrasenaProvisional,
+    calcularExpiracionContrasenaTemporal
+} = require("../utils/contrasenaProvisional");
 function esPeticionAjax(req) {
     return (
         req.headers.accept?.includes("application/json") ||
@@ -413,6 +418,54 @@ async function actualizarUsuario(req, res) {
     }
 
     res.redirect("/admin/usuarios");
+}
+
+// POST /admin/usuarios/:id/restablecer-contrasena
+async function restablecerContrasenaUsuario(req, res) {
+    const usuario = await buscarUsuarioPorId(req.params.id);
+
+    if (!usuario) {
+        return res.status(404).render("admin/error", {
+            mensaje: "El usuario seleccionado no existe."
+        });
+    }
+
+    if (Number(usuario.id) === Number(req.session.admin.id)) {
+        return res.status(400).render("admin/error", {
+            mensaje: "No puedes restablecer tu propia contraseña desde la sesión administrativa actual."
+        });
+    }
+
+    const contrasenaProvisional = generarContrasenaProvisional();
+    const expiraEn = calcularExpiracionContrasenaTemporal();
+    const actualizado = await asignarContrasenaProvisional(
+        usuario.id,
+        await bcrypt.hash(contrasenaProvisional, 10),
+        expiraEn
+    );
+
+    if (!actualizado) {
+        return res.status(409).render("admin/error", {
+            mensaje: "No fue posible restablecer la contraseña del usuario."
+        });
+    }
+
+    if (esPeticionAjax(req)) {
+        return res.json({
+            ok: true,
+            usuario: `${usuario.nombre} ${usuario.apellido}`,
+            correo: usuario.correo,
+            contrasenaProvisional,
+            expiraEn: expiraEn.toISOString()
+        });
+    }
+
+    res.render("admin/contrasena-provisional", {
+        usuario,
+        contrasenaProvisional,
+        expiraEn,
+        ...req.session.admin
+    });
 }
 
 // GET /admin/sesiones
@@ -873,6 +926,7 @@ module.exports = {
     toggleActivo,
     mostrarFormularioEditar,
     actualizarUsuario,
+    restablecerContrasenaUsuario,
     mostrarSesiones,
     desconectarSesion,
     sincronizarSesionesManual,

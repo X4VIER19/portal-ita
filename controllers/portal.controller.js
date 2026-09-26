@@ -369,6 +369,14 @@ async function login(req, res) {
         });
     }
 
+    if (usuario.requiere_cambio_contrasena) {
+        return res.status(403).json({
+            ok: false,
+            codigo: "CAMBIO_CONTRASENA_REQUERIDO",
+            mensaje: "Debes establecer una nueva contraseña antes de acceder."
+        });
+    }
+
     // ---------------------------------------------------------
     // Validación de SSID de origen contra el rol del usuario.
     // Se hace ANTES de tocar Omada o sesiones_activas: si el

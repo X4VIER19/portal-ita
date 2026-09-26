@@ -137,6 +137,52 @@ async function buscarUsuarioPorId(id) {
     return rows[0] || null;
 }
 
+async function buscarCredencialUsuarioPorId(id) {
+    const [rows] = await pool.query(
+        `SELECT id, correo, contrasena_hash, activo,
+                requiere_cambio_contrasena, contrasena_temporal_expira_en,
+                version_credencial
+         FROM usuarios
+         WHERE id = ?
+         LIMIT 1`,
+        [id]
+    );
+    return rows[0] || null;
+}
+
+async function asignarContrasenaProvisional(id, contrasenaHash, expiraEn) {
+    const [resultado] = await pool.query(
+        `UPDATE usuarios
+         SET contrasena_hash = ?,
+             requiere_cambio_contrasena = TRUE,
+             contrasena_temporal_expira_en = ?,
+             version_credencial = version_credencial + 1,
+             contrasena_actualizada_en = NULL
+         WHERE id = ?`,
+        [contrasenaHash, expiraEn, id]
+    );
+
+    return resultado.affectedRows === 1;
+}
+
+async function completarCambioContrasena(id, versionCredencial, contrasenaHash) {
+    const [resultado] = await pool.query(
+        `UPDATE usuarios
+         SET contrasena_hash = ?,
+             requiere_cambio_contrasena = FALSE,
+             contrasena_temporal_expira_en = NULL,
+             version_credencial = version_credencial + 1,
+             contrasena_actualizada_en = CURRENT_TIMESTAMP
+         WHERE id = ?
+           AND version_credencial = ?
+           AND requiere_cambio_contrasena = TRUE
+           AND contrasena_temporal_expira_en > CURRENT_TIMESTAMP`,
+        [contrasenaHash, id, versionCredencial]
+    );
+
+    return resultado.affectedRows === 1;
+}
+
 async function crearUsuario({ nombre, apellido, correo, contrasena_hash, rol }) {
     await pool.query(
         `INSERT INTO usuarios (nombre, apellido, correo, contrasena_hash, rol)
@@ -226,6 +272,9 @@ module.exports = {
     listarUsuariosPaginados,
     contarUsuarios,
     buscarUsuarioPorId,
+    buscarCredencialUsuarioPorId,
+    asignarContrasenaProvisional,
+    completarCambioContrasena,
     crearUsuario,
     cambiarEstadoUsuario,
     listarSesionesPaginadas,
