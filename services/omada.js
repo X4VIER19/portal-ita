@@ -1,5 +1,6 @@
 const axios = require("axios");
 const https = require("https");
+const logger = require("../utils/logger");
 
 const client = axios.create({
     baseURL: process.env.OMADA_URL,
@@ -21,6 +22,17 @@ const UNAUTH_CODES_EQUIVALENTES_A_EXITO = new Set([
     -41006,
     -41019
 ]);
+
+function contextoErrorOmada(error, contexto = {}) {
+    return {
+        ...contexto,
+        errorName: error?.name,
+        errorMessage: error?.message,
+        errorCode: error?.code,
+        httpStatus: error?.response?.status,
+        omadaErrorCode: error?.response?.data?.errorCode
+    };
+}
 
 function unauthEfectivo(respuesta) {
     if (!respuesta || typeof respuesta.errorCode !== "number") {
@@ -91,23 +103,12 @@ async function obtenerToken() {
             expiresAt: Date.now() + (expiresIn - 60) * 1000
         };
 
-        console.log(
-            "Token obtenido correctamente. Expira en",
-            expiresIn,
-            "segundos."
-        );
+        logger.info("omada.token.obtained", { expiresInSeconds: expiresIn });
 
         return tokenState.accessToken;
 
     } catch (error) {
-        console.log("ERROR AL OBTENER TOKEN");
-
-        if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
-        } else {
-            console.log(error.message);
-        }
+        logger.error("omada.token.obtain_failed", contextoErrorOmada(error));
 
         throw error;
     }
@@ -115,25 +116,19 @@ async function obtenerToken() {
 
 async function refrescarToken() {
     if (refreshPromise) {
-        console.log(
-            "Refresh de token ya en curso. Esperando resultado..."
-        );
+        logger.debug("omada.token.refresh_already_running");
 
         return refreshPromise;
     }
 
     refreshPromise = (async () => {
         try {
-            console.log("Intentando REFRESH TOKEN...");
-            console.log(
-                "Refresh token disponible:",
-                !!tokenState.refreshToken
-            );
+            logger.debug("omada.token.refresh_started", {
+                refreshTokenAvailable: Boolean(tokenState.refreshToken)
+            });
 
             if (!tokenState.refreshToken) {
-                console.log(
-                    "No existe refreshToken. Se solicitará un token nuevo."
-                );
+                logger.info("omada.token.refresh_unavailable");
 
                 return await obtenerToken();
             }
@@ -173,37 +168,14 @@ async function refrescarToken() {
                 expiresAt: Date.now() + (expiresIn - 60) * 1000
             };
 
-            console.log(
-                "Token refrescado correctamente. Expira en",
-                expiresIn,
-                "segundos."
-            );
+            logger.info("omada.token.refreshed", { expiresInSeconds: expiresIn });
 
             return tokenState.accessToken;
 
         } catch (error) {
-            console.log("ERROR AL REFRESCAR TOKEN");
-
-            if (error.response) {
-                console.log(
-                    "HTTP:",
-                    error.response.status
-                );
-
-                console.log(
-                    "Respuesta Omada:",
-                    error.response.data
-                );
-            } else {
-                console.log(
-                    "Error:",
-                    error.message
-                );
-            }
-
-            console.log(
-                "Se intentará obtener un token nuevo mediante Client Credentials."
-            );
+            logger.warn("omada.token.refresh_failed", contextoErrorOmada(error, {
+                fallback: "client_credentials"
+            }));
 
             return await obtenerToken();
 
@@ -221,9 +193,7 @@ async function getValidToken() {
     }
 
     if (Date.now() >= tokenState.expiresAt) {
-        console.log(
-            "AccessToken considerado expirado localmente."
-        );
+        logger.debug("omada.token.expired_locally");
 
         return refrescarToken();
     }
@@ -253,13 +223,7 @@ async function ejecutarConToken(callback) {
             throw error;
         }
 
-        console.log(
-            "Omada rechazó el AccessToken porque está expirado."
-        );
-
-        console.log(
-            "Intentando refrescar token y repetir la operación una sola vez..."
-        );
+        logger.warn("omada.token.rejected_as_expired", { retry: true });
 
         token = await refrescarToken();
 
@@ -286,15 +250,16 @@ async function obtenerInfoCliente(clientMac) {
         return response.data;
 
     } catch (error) {
-        console.log(`ERROR AL CONSULTAR INFO DEL CLIENTE ${clientMac}`);
-
         if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
+            logger.warn("omada.client_info.rejected", contextoErrorOmada(error, {
+                clientMac
+            }));
             return error.response.data;
         }
 
-        console.log(error.message);
+        logger.error("omada.client_info.failed", contextoErrorOmada(error, {
+            clientMac
+        }));
         throw error;
     }
 }
@@ -323,10 +288,11 @@ async function obtenerSsidCliente(clientMac, intentos = 2, esperaMs = 1500) {
         try {
             info = await obtenerInfoCliente(clientMac);
         } catch (error) {
-            console.log(
-                `Intento ${intento}/${intentos}: error al consultar info de ${clientMac}:`,
-                error.message
-            );
+            logger.debug("omada.ssid_lookup.attempt_failed", contextoErrorOmada(error, {
+                clientMac,
+                attempt: intento,
+                maxAttempts: intentos
+            }));
             info = null;
         }
 
@@ -341,9 +307,10 @@ async function obtenerSsidCliente(clientMac, intentos = 2, esperaMs = 1500) {
         }
     }
 
-    console.log(
-        `No se pudo determinar el SSID de ${clientMac} tras ${intentos} intento(s).`
-    );
+    logger.warn("omada.ssid_lookup.not_found", {
+        clientMac,
+        attempts: intentos
+    });
 
     return null;
 }
@@ -366,18 +333,14 @@ async function testAPI() {
             );
         });
 
-        console.log(response.data);
+        logger.debug("omada.sites.listed", {
+            errorCode: response.data?.errorCode,
+            resultCount: response.data?.result?.data?.length
+        });
         return response.data;
 
     } catch (error) {
-        console.log("ERROR API SITES");
-
-        if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
-        } else {
-            console.log(error.message);
-        }
+        logger.error("omada.sites.list_failed", contextoErrorOmada(error));
 
         throw error;
     }
@@ -400,25 +363,27 @@ async function authClient(clientMac) {
             );
         });
 
-        console.log(
-            `AUTH -> ${clientMac}:`,
-            response.data
-        );
+        const registrarResultado = response.data?.errorCode === 0
+            ? logger.info
+            : logger.warn;
+        registrarResultado("omada.client.auth_result", {
+            clientMac,
+            omadaErrorCode: response.data?.errorCode
+        });
 
         return response.data;
 
     } catch (error) {
-        console.log(
-            `ERROR AL AUTORIZAR ${clientMac}`
-        );
-
         if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
+            logger.warn("omada.client.auth_rejected", contextoErrorOmada(error, {
+                clientMac
+            }));
             return error.response.data;
         }
 
-        console.log(error.message);
+        logger.error("omada.client.auth_failed", contextoErrorOmada(error, {
+            clientMac
+        }));
         throw error;
     }
 }
@@ -440,25 +405,27 @@ async function unauthClient(clientMac) {
             );
         });
 
-        console.log(
-            `UNAUTH -> ${clientMac}:`,
-            response.data
-        );
+        const registrarResultado = unauthEfectivo(response.data)
+            ? logger.info
+            : logger.warn;
+        registrarResultado("omada.client.unauth_result", {
+            clientMac,
+            omadaErrorCode: response.data?.errorCode
+        });
 
         return response.data;
 
     } catch (error) {
-        console.log(
-            `ERROR AL DESAUTORIZAR ${clientMac}`
-        );
-
         if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
+            logger.warn("omada.client.unauth_rejected", contextoErrorOmada(error, {
+                clientMac
+            }));
             return error.response.data;
         }
 
-        console.log(error.message);
+        logger.error("omada.client.unauth_failed", contextoErrorOmada(error, {
+            clientMac
+        }));
         throw error;
     }
 }
@@ -486,7 +453,10 @@ async function cambiarSesionOmada(macAnterior, macNueva) {
         };
     }
 
-    console.log(`PRUEBA: cambiando sesión ${macAnterior} -> ${macNueva}`);
+    logger.debug("omada.test_session_change.started", {
+        previousMac: macAnterior,
+        newMac: macNueva
+    });
 
     // 1. Quitar autorización anterior
     let resultadoUnauth;
@@ -526,7 +496,11 @@ async function cambiarSesionOmada(macAnterior, macNueva) {
 
     // 3. Si Omada rechazó la nueva MAC, intentar restaurar la anterior
     if (resultadoAuth.errorCode !== 0) {
-        console.log("PRUEBA: falló AUTH de nueva MAC. Intentando restaurar anterior...");
+        logger.warn("omada.test_session_change.auth_failed", {
+            newMac: macNueva,
+            omadaErrorCode: resultadoAuth.errorCode,
+            restorePrevious: true
+        });
 
         let restauracion;
 
@@ -584,16 +558,7 @@ async function listarAuthedRecords() {
         return response.data.result.data;
 
     } catch (error) {
-        console.log(
-            "ERROR AL LISTAR AUTHED-RECORDS"
-        );
-
-        if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
-        } else {
-            console.log(error.message);
-        }
+        logger.error("omada.authed_records.list_failed", contextoErrorOmada(error));
 
         throw error;
     }
@@ -628,16 +593,7 @@ async function listarClientes() {
         return response.data.result.data;
 
     } catch (error) {
-        console.log(
-            "ERROR AL LISTAR CLIENTES"
-        );
-
-        if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
-        } else {
-            console.log(error.message);
-        }
+        logger.error("omada.clients.list_failed", contextoErrorOmada(error));
 
         throw error;
     }
