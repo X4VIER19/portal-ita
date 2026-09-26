@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const bcrypt = require("bcrypt");
 
 const {
@@ -86,23 +87,49 @@ async function adquirirLockUsuario(usuarioId) {
     };
 }
 
-function guardarRequest(req) {
-    const data = {
+// La captura de redirecciones existe solo para diagnosticar integraciones con
+// Omada. Está desactivada por defecto y nunca guarda valores, headers, cookies
+// ni cuerpos de petición.
+const CAPTURAS_HABILITADAS = process.env.OMADA_CAPTURE_REQUESTS === "true";
+const RUTA_CAPTURAS = path.join(__dirname, "..", "omada-capturas.jsonl");
+const RUTA_CAPTURAS_ANTERIOR = `${RUTA_CAPTURAS}.1`;
+const TAMANO_MAXIMO_CAPTURAS = 1024 * 1024; // 1 MiB
+
+function rotarCapturasSiEsNecesario(tamanoNuevaLinea) {
+    if (!fs.existsSync(RUTA_CAPTURAS)) {
+        return;
+    }
+
+    const { size } = fs.statSync(RUTA_CAPTURAS);
+
+    if (size + tamanoNuevaLinea <= TAMANO_MAXIMO_CAPTURAS) {
+        return;
+    }
+
+    fs.rmSync(RUTA_CAPTURAS_ANTERIOR, { force: true });
+    fs.renameSync(RUTA_CAPTURAS, RUTA_CAPTURAS_ANTERIOR);
+}
+
+function guardarCapturaSegura(req) {
+    if (!CAPTURAS_HABILITADAS) {
+        return;
+    }
+
+    const captura = {
         timestamp: new Date().toISOString(),
         method: req.method,
-        url: req.originalUrl,
-        query: req.query,
-        headers: req.headers,
-        body: req.body
+        path: req.path,
+        parametrosRecibidos: Object.keys(req.query || {}).sort(),
+        clientMacValida: Boolean(normalizarMac(req.query?.clientMac))
     };
+    const linea = `${JSON.stringify(captura)}\n`;
 
-    fs.appendFileSync(
-        "omada-capturas.json",
-        JSON.stringify(data, null, 2) + ",\n",
-        "utf8"
-    );
-
-    return data;
+    try {
+        rotarCapturasSiEsNecesario(Buffer.byteLength(linea, "utf8"));
+        fs.appendFileSync(RUTA_CAPTURAS, linea, "utf8");
+    } catch (error) {
+        console.error("No se pudo guardar la captura de diagnóstico:", error.message);
+    }
 }
 
 async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva, ssidNueva) {
@@ -262,7 +289,7 @@ async function cambiarSesionConCompensacion(usuarioId, macAnterior, macNueva, ss
 
 // GET /  -> Página que ve el cliente al ser redirigido por Omada.
 function mostrarPortal(req, res) {
-    guardarRequest(req);
+    guardarCapturaSegura(req);
 
     const clientMac = normalizarMac(req.query.clientMac);
     const redirectUrl = validarRedirectUrl(req.query.redirectUrl);

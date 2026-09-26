@@ -42,6 +42,8 @@ data/
 .DS_Store
 Thumbs.db
 omada-capturas.json
+omada-capturas.jsonl
+omada-capturas.jsonl.1
 
 
 # ==============================

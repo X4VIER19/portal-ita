@@ -138,6 +138,7 @@ La sesión local almacena el último SSID desde el que el portal procesó el log
 - Usa HTTPS con un certificado válido antes de producción. El comando `npm run generate-cert` genera un certificado de laboratorio a partir de `PORTAL_IP`; no sustituye un certificado confiable.
 - Revisa `trust proxy` y el almacenamiento de rate limiting antes de desplegar detrás de un proxy inverso o con varias instancias.
 - No copies tokens OAuth, contraseñas, cookies o respuestas completas de autenticación a issues, commits o documentación.
+- La captura de redirecciones de Omada está desactivada por defecto. Para un diagnóstico temporal, usa `OMADA_CAPTURE_REQUESTS=true`: genera `omada-capturas.jsonl` con metadatos mínimos, sin valores de parámetros, headers, cookies ni cuerpos. El archivo rota al alcanzar 1 MiB y conserva solo la captura anterior.
 
 ## Pruebas manuales realizadas
 
