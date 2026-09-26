@@ -104,6 +104,10 @@
             copiar.textContent = "Seleccionada";
         });
 
+        window.addEventListener("mostrar-contrasena-provisional", (evento) => {
+            abrir(evento.detail, null);
+        });
+
         document.addEventListener("click", (evento) => {
             if (evento.target === modal || evento.target.closest("[data-cerrar-modal-contrasena]")) {
                 cerrar();

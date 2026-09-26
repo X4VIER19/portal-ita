@@ -17,6 +17,7 @@ Portal cautivo externo para la red del Instituto Tecnológico de Altamira, integ
 - Sincronización manual y periódica con las autorizaciones vigentes de Omada.
 - Detección y gestión de autorizaciones huérfanas: presentes en Omada sin sesión asociada en MySQL.
 - Protección CSRF para operaciones modificadoras y límites de intentos de inicio de sesión.
+- Creación y restablecimiento administrado mediante contraseñas provisionales de uso único.
 
 ## Tecnologías
 
@@ -101,13 +102,15 @@ Las migraciones incluidas son idempotentes cuando corresponde y están destinada
 - Cuando Omada redirige un cliente con `clientMac`, la ruta `/` muestra el login cautivo.
 - El usuario escribe únicamente la parte anterior a `@altamira.tecnm.mx`.
 - El backend consulta el SSID actual en Omada, valida la compatibilidad con el rol y autoriza la MAC.
-- Si se abre `/` sin una MAC de cliente, se muestra el boceto público para restablecimiento de contraseña. Aún no incluye funcionalidad de cambio de contraseña.
+- Las cuentas nuevas reciben una contraseña provisional y no pueden acceder a la red hasta sustituirla en `/restablecer`.
+- Una contraseña provisional expira, solo puede utilizarse durante el cambio obligatorio y queda invalidada al guardar la contraseña definitiva.
 
 ### Panel administrativo
 
 Accede a `/admin` para iniciar sesión como administrador. Desde el panel es posible:
 
 - Gestionar usuarios y SSID.
+- Crear usuarios con contraseña provisional y restablecer credenciales existentes de forma administrada.
 - Consultar, buscar, sincronizar y desconectar sesiones activas.
 - Consultar SSID desconocidos detectados.
 - Revisar autorizaciones huérfanas y desautorizarlas de forma controlada.

@@ -49,25 +49,18 @@
         const exito = document.getElementById("modalUsuarioExito");
 
         const botonEnviar = formulario.querySelector('[type="submit"]');
-        const campoContrasena = formulario.elements.contrasena;
-        const etiquetaContrasena = campoContrasena.labels[0];
-
         const CAMPOS_USUARIO = ["nombre", "apellido", "correo", "rol"];
 
         const TEXTOS = {
             crear: {
                 titulo: "Nuevo usuario",
                 boton: "Crear usuario",
-                enviando: "Creando...",
-                etiquetaContrasena: "Contraseña",
-                ayudaContrasena: ""
+                enviando: "Creando..."
             },
             editar: {
                 titulo: "Editar usuario",
                 boton: "Guardar cambios",
-                enviando: "Guardando...",
-                etiquetaContrasena: "Nueva contraseña",
-                ayudaContrasena: "Dejar en blanco para no cambiarla"
+                enviando: "Guardando..."
             }
         };
 
@@ -99,10 +92,6 @@
 
             titulo.textContent = textos.titulo;
             botonEnviar.textContent = textos.boton;
-            etiquetaContrasena.textContent = textos.etiquetaContrasena;
-            campoContrasena.placeholder = textos.ayudaContrasena;
-            campoContrasena.required = !editando;
-
             if (editando) {
                 for (const campo of CAMPOS_USUARIO) {
                     const valor = campo === "correo"
@@ -195,6 +184,15 @@
                     throw new Error(
                         resultado.mensaje || "No se pudo guardar el usuario."
                     );
+                }
+
+                if (!resultado.mensaje && resultado.contrasenaProvisional) {
+                    cerrar();
+                    window.dispatchEvent(new CustomEvent(
+                        "mostrar-contrasena-provisional",
+                        { detail: resultado }
+                    ));
+                    return;
                 }
 
                 mostrar(exito, resultado.mensaje);

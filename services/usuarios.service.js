@@ -183,12 +183,18 @@ async function completarCambioContrasena(id, versionCredencial, contrasenaHash) 
     return resultado.affectedRows === 1;
 }
 
-async function crearUsuario({ nombre, apellido, correo, contrasena_hash, rol }) {
-    await pool.query(
-        `INSERT INTO usuarios (nombre, apellido, correo, contrasena_hash, rol)
-         VALUES (?, ?, ?, ?, ?)`,
-        [nombre, apellido, correo, contrasena_hash, rol]
+async function crearUsuario({ nombre, apellido, correo, contrasena_hash, rol, expira_en }) {
+    const [resultado] = await pool.query(
+        `INSERT INTO usuarios (
+            nombre, apellido, correo, contrasena_hash, rol,
+            requiere_cambio_contrasena, contrasena_temporal_expira_en,
+            version_credencial
+         )
+         VALUES (?, ?, ?, ?, ?, TRUE, ?, 1)`,
+        [nombre, apellido, correo, contrasena_hash, rol, expira_en]
     );
+
+    return resultado.insertId;
 }
 
 async function cambiarEstadoUsuario(id, activo) {
@@ -242,22 +248,12 @@ async function listarSesionesPaginadas({ busqueda = "", rol = "", limite = 10, o
     return rows;
 }
 
-async function actualizarUsuario(id, { nombre, apellido, correo, rol, contrasena_hash }) {
-    const campos = ["nombre = ?", "apellido = ?", "correo = ?", "rol = ?"];
-    const valores = [nombre, apellido, correo, rol];
-
-    if (contrasena_hash) {
-        campos.push("contrasena_hash = ?");
-        valores.push(contrasena_hash);
-    }
-
-    valores.push(id);
-
+async function actualizarUsuario(id, { nombre, apellido, correo, rol }) {
     await pool.query(
         `UPDATE usuarios
-         SET ${campos.join(", ")}
+         SET nombre = ?, apellido = ?, correo = ?, rol = ?
          WHERE id = ?`,
-        valores
+        [nombre, apellido, correo, rol, id]
     );
 }
 

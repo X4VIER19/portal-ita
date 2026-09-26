@@ -277,7 +277,7 @@ function mostrarFormularioNuevo(req, res) {
 // POST /admin/usuarios/nuevo (protegida)
 // Responde JSON si viene del modal (AJAX) y HTML/redirect si viene del formulario normal.
 async function crearUsuario(req, res) {
-    const { nombre, apellido, correo: usuarioInstitucional, contrasena, rol } = req.body;
+    const { nombre, apellido, correo: usuarioInstitucional, rol } = req.body;
     const correo = construirCorreoInstitucional(usuarioInstitucional);
 
     const rechazar = (status, mensaje) =>
@@ -288,7 +288,7 @@ async function crearUsuario(req, res) {
             valores: req.body
         });
 
-    if (!nombre || !apellido || !usuarioInstitucional || !contrasena || !rol) {
+    if (!nombre || !apellido || !usuarioInstitucional || !rol) {
         return rechazar(400, "Todos los campos son obligatorios.");
     }
 
@@ -303,13 +303,18 @@ async function crearUsuario(req, res) {
         return rechazar(400, "El rol seleccionado no es válido.");
     }
 
+    const contrasenaProvisional = generarContrasenaProvisional();
+    const expiraEn = calcularExpiracionContrasenaTemporal();
+    let usuarioId;
+
     try {
-        await crearUsuarioEnBD({
+        usuarioId = await crearUsuarioEnBD({
             nombre,
             apellido,
             correo,
-            contrasena_hash: await bcrypt.hash(contrasena, 10),
-            rol
+            contrasena_hash: await bcrypt.hash(contrasenaProvisional, 10),
+            rol,
+            expira_en: expiraEn
         });
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
@@ -322,11 +327,19 @@ async function crearUsuario(req, res) {
     if (esPeticionAjax(req)) {
         return res.status(201).json({
             ok: true,
-            mensaje: "Usuario creado correctamente."
+            usuario: `${nombre} ${apellido}`,
+            correo,
+            contrasenaProvisional,
+            expiraEn: expiraEn.toISOString()
         });
     }
 
-    res.redirect("/admin/usuarios");
+    res.status(201).render("admin/contrasena-provisional", {
+        usuario: { id: usuarioId, nombre, apellido, correo, rol },
+        contrasenaProvisional,
+        expiraEn,
+        ...req.session.admin
+    });
 }
 
 // POST /admin/usuarios/:id/toggle
@@ -366,7 +379,7 @@ async function mostrarFormularioEditar(req, res) {
 // Responde JSON si viene del modal (AJAX) y HTML/redirect si viene del formulario normal.
 async function actualizarUsuario(req, res) {
     const { id } = req.params;
-    const { nombre, apellido, correo: usuarioInstitucional, rol, contrasena } = req.body;
+    const { nombre, apellido, correo: usuarioInstitucional, rol } = req.body;
     const correo = construirCorreoInstitucional(usuarioInstitucional);
 
     const rechazar = (status, mensaje) =>
@@ -397,10 +410,7 @@ async function actualizarUsuario(req, res) {
             nombre,
             apellido,
             correo,
-            rol,
-            contrasena_hash: contrasena
-                ? await bcrypt.hash(contrasena, 10)
-                : null
+            rol
         });
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {

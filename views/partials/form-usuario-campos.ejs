@@ -28,7 +28,7 @@
             name="correo"
             type="text"
             value="<%= usuarioInstitucional %>"
-            placeholder="..."
+            placeholder="usuario"
             autocomplete="off"
             autocapitalize="none"
             spellcheck="false"
@@ -48,61 +48,6 @@
     </select>
 </div>
 
-<div class="campo">
-    <label for="<%= p %>contrasena"><%= editando ? 'Nueva contraseña' : 'Contraseña' %></label>
-    <div class="campo-password-wrapper">
-        <input
-            id="<%= p %>contrasena"
-            name="contrasena"
-            type="password"
-            autocomplete="new-password"
-            <% if (editando) { %>placeholder="Dejar en blanco para no cambiarla"<% } else { %>required<% } %>
-        >
-        <button type="button" class="btn-mostrar-password" data-toggle-password aria-label="Mostrar contraseña">
-            <i class="ph ph-eye"></i>
-        </button>
-        <button type="button" class="btn-generar" data-generar-password>Generar aleatoria</button>
-    </div>
-</div>
-
 <button type="submit" class="btn-guardar">
     <%= editando ? 'Guardar cambios' : 'Crear usuario' %>
 </button>
-
-<script>
-    document.addEventListener("click", (evento) => {
-        const botonGenerar = evento.target.closest("[data-generar-password]");
-
-        if (botonGenerar) {
-            const caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
-            const aleatorios = crypto.getRandomValues(new Uint32Array(12));
-
-            botonGenerar
-                .closest(".campo-password-wrapper")
-                .querySelector("input")
-                .value = Array.from(
-                    aleatorios,
-                    (n) => caracteres[n % caracteres.length]
-                ).join("");
-
-            return;
-        }
-
-        const botonToggle = evento.target.closest("[data-toggle-password]");
-
-        if (botonToggle) {
-            const input = botonToggle
-                .closest(".campo-password-wrapper")
-                .querySelector("input");
-
-            const icono = botonToggle.querySelector("i");
-            const mostrando = input.getAttribute("type") === "text";
-
-            input.setAttribute("type", mostrando ? "password" : "text");
-
-            if (icono) {
-                icono.className = mostrando ? "ph ph-eye" : "ph ph-eye-slash";
-            }
-        }
-    });
-</script>
