@@ -10,6 +10,7 @@ const adminRoutes = require("./routes/admin.routes");
 const errorHandler = require("./middleware/errorHandler");
 const sessionStore = require("./services/sessionStore");
 const { iniciarSincronizacionPeriodica } = require("./services/sync");
+const { attachCsrfToken, csrfSynchronisedProtection } = require("./middleware/csrf");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,9 +40,15 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 8
+        maxAge: 1000 * 60 * 60 * 8,
+        sameSite: "lax",
+        secure: true
     }
 }));
+
+// Debe ejecutarse después de session() y antes de montar las rutas.
+app.use(attachCsrfToken);
+app.use(csrfSynchronisedProtection);
 
 app.use("/admin", adminRoutes);
 app.use("/", portalRoutes);
