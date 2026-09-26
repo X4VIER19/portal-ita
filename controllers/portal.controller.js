@@ -645,21 +645,11 @@ async function testOmada(req, res) {
     res.json({ mensaje: "Ruta funcionando", respuesta: token });
 }
 
-// GET /oauth/callback
-function oauthCallback(req, res) {
-    console.log("=== OAUTH CALLBACK RECIBIDO ===");
-    console.log("Query:", req.query);
-    console.log("================================\n");
-
-    res.json({ mensaje: "Callback recibido", query: req.query });
-}
-
 module.exports = {
     mostrarPortal,
     login,
     autorizarPorUrl,
     testAuth,
     testUnauth,
-    testOmada,
-    oauthCallback
+    testOmada
 };

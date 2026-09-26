@@ -16,6 +16,4 @@ router.post(
     asyncHandler(portalController.login)
 );
 
-router.get("/oauth/callback", portalController.oauthCallback);
-
 module.exports = router;
